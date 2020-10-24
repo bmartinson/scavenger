@@ -5,4 +5,58 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
+
+  >* {
+    position: absolute;
+  }
+
+  .animate {
+    opacity: 1;
+    transform: scale(0.5);
+    top: 0em;
+    animation-delay: 2s;
+    animation: fadeIn ease 2s, shrinkUp ease 3s;
+  }
+
+  ul {
+    list-style-type: decimal;
+  }
+
+  .content {
+    position: absolute;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    top: 13em;
+  }
+}
+
+@keyframes fadeIn {
+
+  0% {
+    opacity: 0;
+  }
+
+  100% {
+    opacity: 1;
+  }
+}
+
+@keyframes shrinkUp {
+
+  0% {
+    transform: scale(1);
+    top: calc(50% - 8em);
+  }
+
+  60% {
+    transform: scale(1);
+    top: calc(50% - 8em);
+  }
+
+  100% {
+    transform: scale(0.5);
+    top: 0em;
+  }
 }

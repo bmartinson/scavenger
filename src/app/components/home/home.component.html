@@ -1,7 +1,28 @@
-<scavenger-icon-holder>
+<scavenger-icon-holder class="animate">
   <scavenger-qr-search></scavenger-qr-search>
 </scavenger-icon-holder>
 
-<p>
-  Keep on searching! Your next clue may be around the corner!
-</p>
+<h1 [@inOutAnimation]
+    *ngIf="showTitle">
+  Keep Searching!
+</h1>
+
+<div [@inOutAnimation]
+     *ngIf="showContent"
+     class="content">
+  <h2>Look For Clues</h2>
+
+  <p>
+    Your next clue may be just around the corner! Look for posted QR codes to experience the next stop on your hunt!
+  </p>
+
+  <ul>
+    <li>Look for placards with QR codes.</li>
+    <li>Open your phone's camera app.</li>
+    <li>Point your camera at the QR code.</li>
+    <li>Click the link that pop's up.</li>
+  </ul>
+
+  <p>Enjoy your adventure!</p>
+
+</div>

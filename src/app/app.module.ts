@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { FaIconLibrary, FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { faMap, faMapSigns, faQrcode } from '@fortawesome/free-solid-svg-icons';
 import { AppRoutingModule } from './app-routing.module';
@@ -19,6 +20,7 @@ import { QRSearchComponent } from './components/qr-search/qr-search.component';
   ],
   imports: [
     AppRoutingModule,
+    BrowserAnimationsModule,
     BrowserModule,
     FontAwesomeModule
   ],
