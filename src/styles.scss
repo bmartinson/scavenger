@@ -1,1 +1,43 @@
-/* You can add global styles to this file, and also import other style files */
+@import "app/styles/common";
+@import "app/styles/fonts";
+
+html,
+body,
+scavenger-root {
+  overflow: auto;
+  margin: 0 !important;
+  width: 100%;
+  height: 100% !important;
+  font-size: $root-font-size;
+  font-family: Roboto, Open Sans, sans-serif;
+  background-color: $light-grey;
+  color: $dark-grey;
+}
+
+scavenger-root {
+  display: flex;
+}
+
+::selection {
+  background: $white;
+  color: $blue;
+}
+
+::-moz-selection {
+  background: $white;
+  color: $blue;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p {
+  text-align: center;
+}
+
+p {
+  margin-top: 1.5em;
+}

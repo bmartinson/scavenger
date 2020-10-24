@@ -1,0 +1,16 @@
+@import "../../styles/common";
+
+:host {
+  border-radius: 50%;
+  border: 5px solid $light-grey;
+  box-shadow: 3px 3px 10px $darker-grey;
+  background-color: $white;
+
+  .inset {
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    box-shadow: inset 1px 1px 6px $darker-grey;
+    position: absolute;
+  }
+}
