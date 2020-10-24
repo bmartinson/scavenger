@@ -31,32 +31,3 @@
     top: 13em;
   }
 }
-
-@keyframes fadeIn {
-
-  0% {
-    opacity: 0;
-  }
-
-  100% {
-    opacity: 1;
-  }
-}
-
-@keyframes shrinkUp {
-
-  0% {
-    transform: scale(1);
-    top: calc(50% - 8em);
-  }
-
-  60% {
-    transform: scale(1);
-    top: calc(50% - 8em);
-  }
-
-  100% {
-    transform: scale(0.5);
-    top: 0em;
-  }
-}
