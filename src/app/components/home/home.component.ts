@@ -21,7 +21,7 @@ export class HomeComponent {
 
         setTimeout(() => {
           this.showContent = true;
-        }, 500);
+        }, 750);
       }, 1500);
     }, 3000);
   }
