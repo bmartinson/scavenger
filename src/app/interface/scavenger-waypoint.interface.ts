@@ -1,5 +1,6 @@
-export interface IScavengerWaypoint {
-  id: string;
+import { IScavengerModel } from './scavenger-model.interface';
+
+export interface IScavengerWaypoint extends IScavengerModel {
   name: string;
   
   /**
