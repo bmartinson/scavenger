@@ -4,5 +4,5 @@ export interface IScavengerHunt {
   id: string;
   name: string;
   type: ScavengerHuntType;
-  waypoints: IScavengerWaypoint[];
+  waypoints: Array<IScavengerWaypoint[]>; // waypoints[stage][waypoint]
 }
