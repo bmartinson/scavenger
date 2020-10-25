@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { IScavengerSession } from '../interface/scavenger-session.interface';
+
 @Injectable({
   providedIn: 'root',
 })
@@ -12,19 +13,18 @@ export class AppService {
   constructor() {
     const rawSession: string = localStorage.getItem(AppService.SESSION_STORAGE_KEY);
 
-    if (!rawSession) {
+    if (!!rawSession) {
       try {
         // load the current scavenger hunt in use by the user that is in storage
         this.session = JSON.parse(rawSession);
       } catch (e: any) {
-        // clear storage if we couldn't load the game
+        // clear storage if we couldn't load an existing game - the data was corrupted
         localStorage.clear();
       }
     }
 
-    console.warn(localStorage.getItem(AppService.SESSION_STORAGE_KEY));
-
     if (!this.session) {
+      // the session was no loaded successfully from local storage, so create a new session for the user
       const now: Date = new Date();
       const seed: number = Math.floor(Math.random() * 101);
 
