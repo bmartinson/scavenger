@@ -1,5 +1,4 @@
 /**
- *
  * This enumerable type defines the various types of scavenger hunts that
  * can be played. At present, there are three different types of hunts.
  *
@@ -20,7 +19,6 @@
  * only be gather a specified number of times. This type of hunt
  * is unordered in nature and simply require that a player find as
  * many of the waypoints as they can before their opponents.
- *
  */
  
 export enum ScavengerHuntType {
