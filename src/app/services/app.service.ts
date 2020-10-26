@@ -31,6 +31,8 @@ export class AppService {
       this.session = {
         id: `${seed}-${now.getUTCHours()}-${now.getUTCMinutes()}-${now.getUTCSeconds()}-${now.getUTCMilliseconds()}`,
         user: `Brian Martinson`,
+        active: false,
+        idHunt: '',
       };
     }
 

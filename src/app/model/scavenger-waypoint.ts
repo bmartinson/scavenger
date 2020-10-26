@@ -1,4 +1,4 @@
-import { IScavengerSession } from '../interface/scavenger-session.interface.ts';
+import { IScavengerWaypoint } from '../interface/scavenger-waypoint.interface';
 import { ScavengerModel } from './scavenger-model';
 
 export class ScavengerWaypoint extends ScavengerModel implements IScavengerWaypoint {
@@ -41,7 +41,7 @@ export class ScavengerWaypoint extends ScavengerModel implements IScavengerWaypo
 
   /* * * * * Core Class Implementation * * * * */
 
-  constructor(data?: IScavengerSession) {
+  constructor(data?: IScavengerWaypoint) {
     super(data);
 
     this._name = data?.name;
@@ -53,11 +53,11 @@ export class ScavengerWaypoint extends ScavengerModel implements IScavengerWaypo
 
   public toObject(): IScavengerWaypoint {
     return Object.assign(super.toObject(), {
-      name: this.name;
-      value: this.value;
-      valid: this.valid;
-      dialog: this.dialog;
-      outOfOrderDialog: this.outOfOrderDialog;
+      name: this.name,
+      value: this.value,
+      valid: this.valid,
+      dialog: this.dialog,
+      outOfOrderDialog: this.outOfOrderDialog,
     });
   }
 

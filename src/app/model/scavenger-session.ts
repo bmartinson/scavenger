@@ -1,8 +1,8 @@
-import { IScavengerSession } from '../interface/scavenger-session.interface.ts';
+import { IScavengerSession } from '../interface/scavenger-session.interface';
 import { ScavengerModel } from './scavenger-model';
 
 export class ScavengerSession extends ScavengerModel implements IScavengerSession {
-  
+
   private _user: string;
   private _idHunt: string;
   private _active: boolean;
@@ -30,12 +30,12 @@ export class ScavengerSession extends ScavengerModel implements IScavengerSessio
     this._idHunt = data?.idHunt;
     this._active = data?.active;
   }
-    
+
   public toObject(): IScavengerSession {
     return Object.assign(super.toObject(), {
-      user: this.user;
-      idHunt: this.idHunt;
-      active: this.active;
+      user: this.user,
+      idHunt: this.idHunt,
+      active: this.active,
     });
   }
 

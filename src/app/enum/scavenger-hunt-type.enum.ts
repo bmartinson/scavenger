@@ -15,12 +15,12 @@
  * waypoints in any order.
  *
  * Race hunts are multi-player scavenger hunts that require game
- * syncrhonization across a sequence of players where waypoints can
+ * synchronization across a sequence of players where waypoints can
  * only be gather a specified number of times. This type of hunt
  * is unordered in nature and simply require that a player find as
  * many of the waypoints as they can before their opponents.
  */
- 
+
 export enum ScavengerHuntType {
   ORDERED = 1,
   UNORDERED = 2,
