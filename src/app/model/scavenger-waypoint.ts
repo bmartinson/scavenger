@@ -2,7 +2,7 @@ import { IScavengerSession } from '../interface/scavenger-session.interface.ts';
 import { ScavengerModel } from './scavenger-model';
 
 export class ScavengerWaypoint extends ScavengerModel implements IScavengerWaypoint {
-  
+
   private _name: string;
   private _value: number;
   private _valid: boolean;
@@ -22,15 +22,15 @@ export class ScavengerWaypoint extends ScavengerModel implements IScavengerWaypo
   public get valid(): boolean {
     return this._valid;
   }
-  
+
   public get dialog(): string[] {
     if (!this._dialog) {
       this._dialog = ['You did it!'];
     }
-    
+
     return this._dialog;
   }
-  
+
   public get outOfOrderDialog(): string[] {
     if (!this._outOfOrderDialog) {
       this._outOfOrderDialog = ['Better back track! You missed a waypoint!'];
@@ -50,7 +50,7 @@ export class ScavengerWaypoint extends ScavengerModel implements IScavengerWaypo
     this._dialog = data?.dialog;
     this._outOfOrderDialog = data?.outOfOrderDialog;
   }
-    
+
   public toObject(): IScavengerWaypoint {
     return Object.assign(super.toObject(), {
       name: this.name;
