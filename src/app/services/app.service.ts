@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { BehaviorSubject, Observable, Subject } from 'rxjs';
 import { IScavengerSession } from '../interface/scavenger-session.interface';
 
 @Injectable({
@@ -9,7 +10,33 @@ export class AppService {
   private static SESSION_STORAGE_KEY = 'scavenger-games-current-session';
 
   /* * * * * UI Properties * * * * */
-  public showNavigation: boolean;
+  private _showNavigation: boolean;
+
+  public set showNavigation(value: boolean) {
+    if (this._showNavigation !== value) {
+      if (!this._navigation$) {
+        this._navigation$ = new BehaviorSubject<boolean>(!!value);
+      }
+
+      this._showNavigation = value;
+      this._navigation$.next(value);
+    }
+  }
+
+  public get showNavigation(): boolean {
+    return this._showNavigation;
+  }
+
+  /* * * * * Observables * * * * */
+  private _navigation$: BehaviorSubject<boolean>;
+
+  public get navigation$(): Observable<boolean> {
+    if (!this._navigation$) {
+      this._navigation$ = new BehaviorSubject<boolean>(!!this.showNavigation);
+    }
+
+    return this._navigation$.asObservable();
+  }
 
   /* * * * * Application State * * * * */
   private session: IScavengerSession;

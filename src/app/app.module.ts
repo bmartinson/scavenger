@@ -10,8 +10,9 @@ import { HomeComponent } from './components/home/home.component';
 import { IconHolderComponent } from './components/icon-holder/icon-holder.component';
 import { LoaderComponent } from './components/loader/loader.component';
 import { NavigationComponent } from './components/navigation/navigation.component';
-import { NoClueComponent } from './components/no-clue/no-clue.component';
+import { NoWaypointComponent } from './components/no-waypoint/no-waypoint.component';
 import { QRSearchComponent } from './components/qr-search/qr-search.component';
+import { WaypointComponent } from './components/waypoint/waypoint.component';
 
 @NgModule({
   declarations: [
@@ -21,8 +22,9 @@ import { QRSearchComponent } from './components/qr-search/qr-search.component';
     IconHolderComponent,
     LoaderComponent,
     NavigationComponent,
-    NoClueComponent,
-    QRSearchComponent
+    NoWaypointComponent,
+    QRSearchComponent,
+    WaypointComponent
   ],
   imports: [
     AppRoutingModule,

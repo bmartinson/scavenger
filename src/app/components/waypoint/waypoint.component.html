@@ -1,0 +1,19 @@
+<scavenger-icon-holder class="animate">
+  <scavenger-qr-search></scavenger-qr-search>
+</scavenger-icon-holder>
+
+<h1 [@inOutAnimation]
+    *ngIf="showTitle">
+  Great find!
+</h1>
+
+<div [@inOutAnimation]
+     *ngIf="showContent"
+     class="content">
+  <h2>You found a waypoint</h2>
+
+  <p>
+    Some interactive content will be available here.
+  </p>
+
+</div>

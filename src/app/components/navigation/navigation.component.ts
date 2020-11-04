@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { AppService } from '../../services/app.service';
+import { ScavengerRouteComponent } from '../scavenger-route/scavenger-route.component';
 
 @Component({
   selector: 'scavenger-navigation',

@@ -1,6 +1,8 @@
 import { Injectable } from '@angular/core';
 import { ActivatedRouteSnapshot, CanActivate, CanActivateChild, CanLoad, Route, Router, RouterStateSnapshot, UrlSegment, UrlTree } from '@angular/router';
 import { Observable } from 'rxjs';
+import { NoWaypointComponent } from './components/no-waypoint/no-waypoint.component';
+import { WaypointComponent } from './components/waypoint/waypoint.component';
 import { AppService } from './services/app.service';
 
 @Injectable({
@@ -16,7 +18,8 @@ export class CanActivateGuard implements CanActivate, CanActivateChild, CanLoad 
     state: RouterStateSnapshot): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
 
     // manage the display of the navigation bar
-    this.appService.showNavigation = next.url.length === 0 || next.url.length > 0 && next.url[0].path.indexOf('no-clue') === -1;
+    this.appService.showNavigation = next.component !== WaypointComponent &&
+      next.component !== NoWaypointComponent;
 
     return true;
   }
