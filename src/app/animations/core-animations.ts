@@ -1,4 +1,4 @@
-import { animate, style, transition, trigger } from '@angular/animations';
+import { animate, query, style, transition, trigger } from '@angular/animations';
 
 export const dropDownAnimation = trigger(
   'dropDownAnimation',
@@ -6,15 +6,15 @@ export const dropDownAnimation = trigger(
     transition(
       ':enter',
       [
-        style({ top: 0 }),
-        animate('.5s ease-out', style({ top: '3em' })),
+        style({ top: -100, position: 'absolute' }),
+        animate('.5s ease-out', style({ top: 0, position: 'absolute' })),
       ],
     ),
     transition(
       ':leave',
       [
-        style({ top: '3em' }),
-        animate('.5s ease-in', style({ top: 0 })),
+        style({ top: '0' }),
+        animate('.5s ease-in', style({ top: -100 })),
       ],
     ),
   ],

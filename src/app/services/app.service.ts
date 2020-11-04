@@ -8,6 +8,10 @@ export class AppService {
 
   private static SESSION_STORAGE_KEY = 'scavenger-games-current-session';
 
+  /* * * * * UI Properties * * * * */
+  public showNavigation: boolean;
+
+  /* * * * * Application State * * * * */
   private session: IScavengerSession;
 
   constructor() {

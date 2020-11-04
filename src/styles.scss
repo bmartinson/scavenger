@@ -10,7 +10,7 @@ scavenger-root {
   height: 100% !important;
   font-size: $root-font-size;
   font-family: Roboto, Open Sans, sans-serif;
-  background-color: $light-grey;
+  background-color: $white;
   color: $dark-grey;
 }
 
@@ -19,12 +19,12 @@ scavenger-root {
 }
 
 ::selection {
-  background: $white;
+  background: transparent;
   color: $blue;
 }
 
 ::-moz-selection {
-  background: $white;
+  background: transparent;
   color: $blue;
 }
 
@@ -41,4 +41,24 @@ h6 {
 p {
   text-align: center;
   margin: 1.25em;
+}
+
+a {
+  font-family: Roboto, Open Sans, sans-serif;
+}
+
+a:link {
+  font-family: Roboto, Open Sans, sans-serif;
+}
+
+a:visited {
+  font-family: Roboto, Open Sans, sans-serif;
+}
+
+a:hover {
+  font-family: Roboto, Open Sans, sans-serif;
+}
+
+a:active {
+  font-family: Roboto, Open Sans, sans-serif;
 }
