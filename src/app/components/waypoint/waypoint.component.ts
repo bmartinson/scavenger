@@ -48,15 +48,6 @@ export class WaypointComponent extends ScavengerRouteComponent {
 
     this.titleService.setTitle(`${ScavengerRouteComponent.BASE_PAGE_TITLE} - Waypoint`);
 
-    const waypointStatus: ScavengerWaypointStatus = this.appService.scanWaypoint(
-      this.activatedRoute.snapshot.paramMap.get('idHunt'),
-      this.activatedRoute.snapshot.paramMap.get('idWaypoint'),
-    );
-
-    console.warn('Waypoint Status', waypointStatus);
-
-    this.isValid = false;
-
     setTimeout(() => {
       this.showTitle = true;
 

@@ -1,8 +1,10 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable, Subject } from 'rxjs';
+import { ScavengerHuntType } from '../enum/scavenger-hunt-type.enum';
 import { ScavengerWaypointStatus } from '../enum/scavenger-waypoint.enum';
-import { IScavengerSession } from '../interface/scavenger-session.interface';
+import { IScavengerHunt } from '../interface/scavenger-hunt.interface';
 import { ScavengerSession } from '../model/scavenger-session';
+import { ScavengerWaypoint } from '../model/scavenger-waypoint';
 
 @Injectable({
   providedIn: 'root',
@@ -84,8 +86,22 @@ export class AppService {
     localStorage.setItem(AppService.SESSION_STORAGE_KEY, JSON.stringify(this.session));
   }
 
-  public scanWaypoint(idHunt: string, idWaypoint: string): ScavengerWaypointStatus {
-    return ScavengerWaypointStatus.VALID;
+  public async scanWaypoint(idHunt: string, idWaypoint: string): Promise<ScavengerWaypointStatus> {
+    if (!this.session.hunt) {
+      // we do not have an active hunt, so we need to load from the server
+      try {
+        const hunt: IScavengerHunt = await this.loadTestingHunt(idHunt);
+
+        // assign the hunt
+        this.session.setHunt(hunt);
+
+        return ScavengerWaypointStatus.START;
+      } catch (e) {
+        return ScavengerWaypointStatus.INVALID;
+      }
+    }
+
+    return Promise.resolve(ScavengerWaypointStatus.VALID);
   }
 
   /* * * * * Setters * * * * */
@@ -97,6 +113,24 @@ export class AppService {
    */
   public setUser(value: string): void {
     this.session.user = value;
+  }
+
+  /* * * * * TESTING * * * * */
+
+  private async loadTestingHunt(idHunt: string): Promise<IScavengerHunt> {
+    if (idHunt !== '27f60be732e1004fced13f3a55f7f51f') {
+      return Promise.reject();
+    }
+
+    return Promise.resolve(
+      {
+        id: '27f60be732e1004fced13f3a55f7f51f',
+        name: 'Testing Hunt',
+        type: ScavengerHuntType.ORDERED,
+        startingWaypoint: undefined,
+        idCurrentWaypoint: '',
+      },
+    );
   }
 
 }

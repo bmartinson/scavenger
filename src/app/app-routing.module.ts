@@ -1,10 +1,11 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { CanActivateGuard } from './can-activate.guard';
 import { AboutComponent } from './components/about/about.component';
 import { HomeComponent } from './components/home/home.component';
 import { NoWaypointComponent } from './components/no-waypoint/no-waypoint.component';
 import { WaypointComponent } from './components/waypoint/waypoint.component';
+import { CanActivateWaypointGuard } from './guards/can-activate-waypoint.guard';
+import { CanActivateGuard } from './guards/can-activate.guard';
 import { AppPreloadingStrategyService } from './services/app-preloading-strategy.service';
 
 const routes: Routes = [
@@ -21,16 +22,16 @@ const routes: Routes = [
   {
     path: ':idHunt/:idWaypoint',
     component: WaypointComponent,
-    canActivate: [CanActivateGuard]
+    canActivate: [CanActivateWaypointGuard]
   },
   {
-    path: 'no-clue',
+    path: 'oops',
     component: NoWaypointComponent,
     canActivate: [CanActivateGuard]
   },
   {
     path: '**',
-    redirectTo: 'no-clue'
+    redirectTo: 'oops'
   }
 ];
 
