@@ -1,16 +1,20 @@
 <scavenger-icon-holder class="animate">
-  <scavenger-qr-find></scavenger-qr-find>
+  <scavenger-qr-find [isValid]="isValid"></scavenger-qr-find>
 </scavenger-icon-holder>
 
 <h1 [@inOutAnimation]
     *ngIf="showTitle">
-  Great find!
+  {{title}}
 </h1>
 
 <div [@inOutAnimation]
      *ngIf="showContent"
      class="content">
-  <h2>You found a waypoint</h2>
+  <h2>{{subtitle}}</h2>
+
+  <p *ngIf="!isValid">
+    You found the wrong waypoint, double check any previous clues you've discovered!
+  </p>
 
   <p>
     Some interactive content will be available here.

@@ -9,12 +9,16 @@
     color: $map-icon-color;
   }
 
-  .check {
+  .status {
     position: absolute;
     top: .5em;
     left: 1em;
     display: block;
     font-size: 3.5em;
-    color: $green;
+    color: $red;
+
+    &.valid {
+      color: $green;
+    }
   }
 }

@@ -1,6 +1,17 @@
-<fa-icon [icon]="['fas', 'check']"
-         class="check">
+<!-- Valid Check Mark -->
+<fa-icon *ngIf="isValid; else invalid"
+         [icon]="['fas', 'check']"
+         class="status valid">
 </fa-icon>
+
+<!-- Invalid Failed Icon -->
+<ng-template #invalid>
+  <fa-icon [icon]="['fas', 'times']"
+           class="status">
+  </fa-icon>
+</ng-template>
+
+<!-- Center Map Icon -->
 <fa-icon [icon]="['fas', 'map']"
          class="map">
 </fa-icon>

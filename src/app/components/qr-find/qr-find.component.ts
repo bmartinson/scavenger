@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
 
 @Component({
   selector: 'scavenger-qr-find',
@@ -6,4 +6,8 @@ import { Component } from '@angular/core';
   styleUrls: ['../../styles/component-base.scss', './qr-find.component.scss']
 })
 export class QRFindComponent {
+
+  /* * * * * Template Bindings * * * * */
+  @Input() public isValid: boolean;
+
 }
