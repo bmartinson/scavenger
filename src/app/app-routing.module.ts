@@ -19,7 +19,7 @@ const routes: Routes = [
     canActivate: [CanActivateGuard]
   },
   {
-    path: ':hunt/:waypoint',
+    path: ':idHunt/:idWaypoint',
     component: WaypointComponent,
     canActivate: [CanActivateGuard]
   },

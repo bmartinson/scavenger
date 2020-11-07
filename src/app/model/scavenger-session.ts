@@ -26,9 +26,9 @@ export class ScavengerSession extends ScavengerModel implements IScavengerSessio
   constructor(data?: IScavengerSession) {
     super(data);
 
-    this._user = data?.user;
-    this._idHunt = data?.idHunt;
-    this._active = data?.active;
+    this._user = !!data?.user ? data.user : `Explorer`;
+    this._idHunt = String(data?.idHunt);
+    this._active = !!data?.active;
   }
 
   public toObject(): IScavengerSession {

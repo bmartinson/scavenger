@@ -1,6 +1,8 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable, Subject } from 'rxjs';
+import { ScavengerWaypointStatus } from '../enum/scavenger-waypoint.enum';
 import { IScavengerSession } from '../interface/scavenger-session.interface';
+import { ScavengerSession } from '../model/scavenger-session';
 
 @Injectable({
   providedIn: 'root',
@@ -39,7 +41,7 @@ export class AppService {
   }
 
   /* * * * * Application State * * * * */
-  private session: IScavengerSession;
+  private session: ScavengerSession;
 
   constructor() {
     const rawSession: string = localStorage.getItem(AppService.SESSION_STORAGE_KEY);
@@ -47,7 +49,7 @@ export class AppService {
     if (!!rawSession) {
       try {
         // load the current scavenger hunt in use by the user that is in storage
-        this.session = JSON.parse(rawSession);
+        this.session = new ScavengerSession(JSON.parse(rawSession));
       } catch (e: any) {
         // clear storage if we couldn't load an existing game - the data was corrupted
         localStorage.clear();
@@ -57,16 +59,12 @@ export class AppService {
     if (!this.session) {
       console.warn('creating session');
 
-      // the session was no loaded successfully from local storage, so create a new session for the user
-      const now: Date = new Date();
-      const seed: number = Math.floor(Math.random() * 101);
-
-      this.session = {
-        id: `${seed}-${now.getUTCHours()}-${now.getUTCMinutes()}-${now.getUTCSeconds()}-${now.getUTCMilliseconds()}`,
-        user: `Brian Martinson`,
+      this.session = new ScavengerSession({
+        id: undefined,
+        user: undefined,
         active: false,
-        idHunt: '',
-      };
+        idHunt: undefined,
+      });
     }
 
     this.saveSession();
@@ -85,6 +83,10 @@ export class AppService {
     }
 
     localStorage.setItem(AppService.SESSION_STORAGE_KEY, JSON.stringify(this.session));
+  }
+
+  public scanWaypoint(idHunt: string, idWaypoint: string): ScavengerWaypointStatus {
+    return ScavengerWaypointStatus.VALID;
   }
 
   /* * * * * Setters * * * * */

@@ -1,5 +1,7 @@
 import { Component } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
 import { inOutAnimation } from '../../animations/core-animations';
+import { ScavengerWaypointStatus } from '../../enum/scavenger-waypoint.enum';
 import { AppService } from '../../services/app.service';
 import { ScavengerRouteComponent } from '../scavenger-route/scavenger-route.component';
 
@@ -40,8 +42,16 @@ export class WaypointComponent extends ScavengerRouteComponent {
     }
   }
 
-  constructor(public appService: AppService) {
+  constructor(public appService: AppService, private activatedRoute: ActivatedRoute) {
     super(appService);
+
+    const waypointStatus: ScavengerWaypointStatus = this.appService.scanWaypoint(
+      this.activatedRoute.snapshot.paramMap.get('idHunt'),
+      this.activatedRoute.snapshot.paramMap.get('idWaypoint'),
+    );
+
+    console.warn('Waypoint Status', waypointStatus);
+
     this.isValid = false;
 
     setTimeout(() => {
