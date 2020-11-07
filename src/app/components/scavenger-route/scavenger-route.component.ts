@@ -1,4 +1,5 @@
 import { Component, HostBinding, OnDestroy, OnInit } from '@angular/core';
+import { Title } from '@angular/platform-browser';
 import { Subscription } from 'rxjs';
 import { AppService } from '../../services/app.service';
 
@@ -7,10 +8,12 @@ import { AppService } from '../../services/app.service';
 })
 export abstract class ScavengerRouteComponent implements OnDestroy, OnInit {
 
+  public static BASE_PAGE_TITLE = 'Scavenger Games';
   @HostBinding('style.margin-top.rem') protected marginTop: number;
   private navigationDisplaySubscription: Subscription;
 
-  constructor(public appService: AppService) {
+  constructor(public appService: AppService, protected titleService: Title) {
+    this.titleService.setTitle(`${ScavengerRouteComponent.BASE_PAGE_TITLE}`);
   }
 
   public ngOnInit(): void {

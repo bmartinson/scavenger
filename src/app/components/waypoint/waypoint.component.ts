@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { Title } from '@angular/platform-browser';
 import { ActivatedRoute } from '@angular/router';
 import { inOutAnimation } from '../../animations/core-animations';
 import { ScavengerWaypointStatus } from '../../enum/scavenger-waypoint.enum';
@@ -42,8 +43,10 @@ export class WaypointComponent extends ScavengerRouteComponent {
     }
   }
 
-  constructor(public appService: AppService, private activatedRoute: ActivatedRoute) {
-    super(appService);
+  constructor(public appService: AppService, private activatedRoute: ActivatedRoute, protected titleService: Title) {
+    super(appService, titleService);
+
+    this.titleService.setTitle(`${ScavengerRouteComponent.BASE_PAGE_TITLE} - Waypoint`);
 
     const waypointStatus: ScavengerWaypointStatus = this.appService.scanWaypoint(
       this.activatedRoute.snapshot.paramMap.get('idHunt'),

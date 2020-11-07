@@ -30,4 +30,10 @@ export interface IScavengerWaypoint extends IScavengerModel {
    * displayed for visiting this waypoint too soon.
    */
   outOfOrderDialog: string[];
+
+  /**
+   * Waypoints lead to other waypoints in certain types of scavenger
+   * hunts.
+   */
+  waypoints: IScavengerWaypoint[];
 }

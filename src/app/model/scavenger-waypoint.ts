@@ -8,6 +8,7 @@ export class ScavengerWaypoint extends ScavengerModel implements IScavengerWaypo
   private _valid: boolean;
   private _dialog: string[];
   private _outOfOrderDialog: string[];
+  private _waypoints: ScavengerWaypoint[];
 
   /* * * * * Property Access * * * * */
 
@@ -21,6 +22,10 @@ export class ScavengerWaypoint extends ScavengerModel implements IScavengerWaypo
 
   public get valid(): boolean {
     return this._valid;
+  }
+
+  public get waypoints(): ScavengerWaypoint[] {
+    return this._waypoints;
   }
 
   public get dialog(): string[] {
@@ -52,12 +57,22 @@ export class ScavengerWaypoint extends ScavengerModel implements IScavengerWaypo
   }
 
   public toObject(): IScavengerWaypoint {
+    const serializedWaypoints: IScavengerWaypoint[] = [];
+
+    // if we have a valid list of waypoints, serialize each one
+    if (this.waypoints.length > 0) {
+      for (const waypoint of this.waypoints) {
+        serializedWaypoints.push(waypoint.toObject());
+      }
+    }
+
     return Object.assign(super.toObject(), {
       name: this.name,
       value: this.value,
       valid: this.valid,
       dialog: this.dialog,
       outOfOrderDialog: this.outOfOrderDialog,
+      waypoints: serializedWaypoints,
     });
   }
 
