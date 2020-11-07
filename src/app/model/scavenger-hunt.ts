@@ -8,7 +8,8 @@ export class ScavengerHunt extends ScavengerModel implements IScavengerHunt {
 
   private _name: string;
   private _type: ScavengerHuntType;
-  private _waypoints: ScavengerWaypoint[];
+  private _startingWaypoint: ScavengerWaypoint;
+  private _idCurrentWaypoint: string;
 
   /* * * * * Property Access * * * * */
 
@@ -20,8 +21,16 @@ export class ScavengerHunt extends ScavengerModel implements IScavengerHunt {
     return this._type;
   }
 
-  public get waypoints(): Array<ScavengerWaypoint> {
-    return this._waypoints;
+  public get startingWaypoint(): ScavengerWaypoint {
+    return this._startingWaypoint;
+  }
+
+  public get idCurrentWaypoint(): string {
+    return this._idCurrentWaypoint;
+  }
+
+  public get currentWaypoint(): ScavengerWaypoint | undefined {
+    return undefined;
   }
 
   /* * * * * Core Class Implementation * * * * */
@@ -31,30 +40,15 @@ export class ScavengerHunt extends ScavengerModel implements IScavengerHunt {
 
     this._name = data?.name;
     this._type = data?.type;
-    this._waypoints = [];
-
-    // initialize all of the waypoints
-    if (data?.waypoints?.length > 0) {
-      for (const waypoint of data.waypoints) {
-        this._waypoints.push(new ScavengerWaypoint(waypoint));
-      }
-    }
+    this._startingWaypoint = !!data?.startingWaypoint ? new ScavengerWaypoint(data.startingWaypoint) : undefined;
   }
 
   public toObject(): IScavengerHunt {
-    const serializedWaypoints: IScavengerWaypoint[] = [];
-
-    // if we have a valid list of waypoints, serialize each one
-    if (this.waypoints.length > 0) {
-      for (const waypoint of this.waypoints) {
-        serializedWaypoints.push(waypoint.toObject());
-      }
-    }
-
     return Object.assign(super.toObject(), {
       name: this.name,
       type: this.type,
-      waypoints: serializedWaypoints,
+      startingWaypoint: this.startingWaypoint?.toObject(),
+      idCurrentWaypoint: this.idCurrentWaypoint,
     });
   }
 

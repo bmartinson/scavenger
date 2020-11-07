@@ -44,6 +44,10 @@ export class AppService {
   private session: ScavengerSession;
 
   constructor() {
+    // TESTING ONLY
+    localStorage.clear();
+    console.warn('cleared storage');
+
     const rawSession: string = localStorage.getItem(AppService.SESSION_STORAGE_KEY);
 
     if (!!rawSession) {
@@ -63,18 +67,13 @@ export class AppService {
         id: undefined,
         user: undefined,
         active: false,
-        idHunt: undefined,
+        hunt: undefined,
       });
     }
 
     this.saveSession();
 
     console.warn(this.session);
-
-    // setTimeout(() => {
-    //   localStorage.clear();
-    //   console.warn('cleared storage');
-    // }, 5000);
   }
 
   public saveSession(): void {

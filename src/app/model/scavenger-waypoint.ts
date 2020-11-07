@@ -9,6 +9,7 @@ export class ScavengerWaypoint extends ScavengerModel implements IScavengerWaypo
   private _dialog: string[];
   private _outOfOrderDialog: string[];
   private _waypoints: ScavengerWaypoint[];
+  private _parent: ScavengerWaypoint;
 
   /* * * * * Property Access * * * * */
 
@@ -46,7 +47,7 @@ export class ScavengerWaypoint extends ScavengerModel implements IScavengerWaypo
 
   /* * * * * Core Class Implementation * * * * */
 
-  constructor(data?: IScavengerWaypoint) {
+  constructor(data?: IScavengerWaypoint, parent?: ScavengerWaypoint) {
     super(data);
 
     this._name = data?.name;
@@ -54,6 +55,15 @@ export class ScavengerWaypoint extends ScavengerModel implements IScavengerWaypo
     this._valid = data?.valid;
     this._dialog = data?.dialog;
     this._outOfOrderDialog = data?.outOfOrderDialog;
+    this._parent = parent;
+
+    if (data?.waypoints?.length > 0) {
+      this._waypoints = [];
+
+      for (const waypoint of data.waypoints) {
+        this._waypoints.push(new ScavengerWaypoint(waypoint, this));
+      }
+    }
   }
 
   public toObject(): IScavengerWaypoint {

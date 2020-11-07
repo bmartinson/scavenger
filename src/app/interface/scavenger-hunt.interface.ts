@@ -5,5 +5,6 @@ import { IScavengerWaypoint } from './scavenger-waypoint.interface';
 export interface IScavengerHunt extends IScavengerModel {
   name: string;
   type: ScavengerHuntType;
-  waypoints: Array<IScavengerWaypoint>; // waypoints[stage][waypoint]
+  startingWaypoint: IScavengerWaypoint;
+  idCurrentWaypoint: string;
 }
