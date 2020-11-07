@@ -34,3 +34,5 @@ export abstract class ScavengerModel implements IScavengerModel {
       id: this.id,
     };
   }
+
+}
