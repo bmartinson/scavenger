@@ -12,6 +12,10 @@ export class NavigationComponent {
   constructor(private appService: AppService) {
   }
 
+  /**
+   * Used as an event handler when clicking on links that will be navigating away from
+   * our website to an external website.
+   */
   public onLeaving(): void {
     this.appService.showNavigation = false;
   }

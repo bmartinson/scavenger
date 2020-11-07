@@ -55,6 +55,8 @@ export class AppService {
     }
 
     if (!this.session) {
+      console.warn('creating session');
+
       // the session was no loaded successfully from local storage, so create a new session for the user
       const now: Date = new Date();
       const seed: number = Math.floor(Math.random() * 101);
@@ -69,12 +71,12 @@ export class AppService {
 
     this.saveSession();
 
-    console.warn(localStorage.getItem(AppService.SESSION_STORAGE_KEY));
+    console.warn(this.session);
 
-    setTimeout(() => {
-      localStorage.clear();
-      console.warn('cleared storage');
-    }, 5000);
+    // setTimeout(() => {
+    //   localStorage.clear();
+    //   console.warn('cleared storage');
+    // }, 5000);
   }
 
   public saveSession(): void {
