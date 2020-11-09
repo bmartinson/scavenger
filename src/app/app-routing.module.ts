@@ -22,7 +22,10 @@ const routes: Routes = [
   {
     path: ':idHunt/:idWaypoint',
     component: WaypointComponent,
-    canActivate: [CanActivateWaypointGuard]
+    canActivate: [CanActivateWaypointGuard],
+    resolve: {
+      waypointStatus: CanActivateWaypointGuard,
+    }
   },
   {
     path: 'oops',

@@ -23,9 +23,13 @@ export class WaypointComponent extends ScavengerRouteComponent {
   public showTitle: boolean;
   public showContent: boolean;
 
-  /* * * * * Template Display Properties * * * * */
+  /* * * * * Internal Data * * * * */
+  private waypointStatus: ScavengerWaypointStatus;
 
-  public isValid: boolean;
+  /* * * * * Template Display Properties * * * * */
+  public get isValid(): boolean {
+    return this.waypointStatus !== ScavengerWaypointStatus.INVALID;
+  }
 
   public get title(): string {
     if (this.isValid) {
@@ -47,6 +51,8 @@ export class WaypointComponent extends ScavengerRouteComponent {
     super(appService, titleService);
 
     this.titleService.setTitle(`${ScavengerRouteComponent.BASE_PAGE_TITLE} - Waypoint`);
+
+    this.waypointStatus = this.activatedRoute.snapshot?.data?.waypointStatus;
 
     setTimeout(() => {
       this.showTitle = true;

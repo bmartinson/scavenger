@@ -59,8 +59,8 @@ export class AppService {
 
   constructor() {
     // TESTING ONLY
-    localStorage.clear();
-    console.warn('cleared storage');
+    // localStorage.clear();
+    // console.warn('cleared storage');
 
     const rawSession: string = localStorage.getItem(AppService.SESSION_STORAGE_KEY);
 
@@ -109,6 +109,7 @@ export class AppService {
 
         return this.waypointCheck(idWaypoint);
       } catch (e) {
+        console.error('error:', e);
         return ScavengerWaypointStatus.INVALID;
       }
     }
@@ -119,13 +120,16 @@ export class AppService {
   private waypointCheck(idWaypoint: string): ScavengerWaypointStatus {
     const waypoint: ScavengerWaypoint = this.session.hunt.getWaypoint(idWaypoint);
 
-    console.warn('waypoint?', waypoint);
+    console.warn('waypoint?', !!waypoint);
 
     if (!waypoint) {
       // the way point requested does not exist but the hunt that was provided does
       return ScavengerWaypointStatus.INVALID;
     } else if (waypoint.isStart) {
       this.session.active = true;
+
+      // save the session activation change
+      // this.saveSession();
 
       return ScavengerWaypointStatus.START;
     } else if (this.session.hunt.type === ScavengerHuntType.ORDERED && waypoint.waypoints.length === 0 && waypoint.valid) {
