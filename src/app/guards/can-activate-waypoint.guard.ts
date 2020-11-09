@@ -40,7 +40,7 @@ export class CanActivateWaypointGuard extends CanActivateGuard implements
       case ScavengerWaypointStatus.START:
       case ScavengerWaypointStatus.FINISH:
       case ScavengerWaypointStatus.OUT_OF_ORDER:
-      case ScavengerWaypointStatus.OUT_OF_ORDER:
+      case ScavengerWaypointStatus.VALID:
         return true;
 
       default:
