@@ -29,7 +29,6 @@ export class CanActivateWaypointGuard extends CanActivateGuard implements CanAct
       next.paramMap.get('idWaypoint')
     );
 
-    console.warn('waypoint check', waypointStatus);
     switch (waypointStatus) {
       case ScavengerWaypointStatus.START:
       case ScavengerWaypointStatus.FINISH:

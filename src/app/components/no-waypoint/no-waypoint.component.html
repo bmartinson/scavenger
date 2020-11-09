@@ -2,7 +2,7 @@
   <scavenger-qr-search></scavenger-qr-search>
 </scavenger-icon-holder>
 
-<ng-container *ngIf="!isHuntInactive; else standard">
+<ng-container *ngIf="isHuntInactive; else standard">
   <h1 [@inOutAnimation]
       *ngIf="showTitle">
     Get To The Start!

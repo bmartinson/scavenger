@@ -45,8 +45,12 @@ export class AppService {
   /* * * * * Application State * * * * */
   private session: ScavengerSession;
 
+  public get hasHunt(): boolean {
+    return !!this.session.hunt;
+  }
+
   public get isHuntActive(): boolean {
-    return this.session.hunt && !!this.session?.active;
+    return !!this.session.hunt && !!this.session?.active;
   }
 
   public get isHuntInactive(): boolean {
