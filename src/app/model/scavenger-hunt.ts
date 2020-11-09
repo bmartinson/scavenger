@@ -10,6 +10,9 @@ export class ScavengerHunt extends ScavengerModel implements IScavengerHunt {
   private _type: ScavengerHuntType;
   private _startingWaypoint: ScavengerWaypoint;
   private _idCurrentWaypoint: string;
+  private _waypointCount: number;
+  private _validWaypointCount: number;
+  public capturedWaypointCount: number;
 
   /* * * * * Property Access * * * * */
 
@@ -33,6 +36,14 @@ export class ScavengerHunt extends ScavengerModel implements IScavengerHunt {
     return undefined;
   }
 
+  public get waypointCount(): number {
+    return this._waypointCount;
+  }
+
+  public get validWaypointCount(): number {
+    return this._validWaypointCount;
+  }
+
   /* * * * * Core Class Implementation * * * * */
 
   constructor(data?: IScavengerHunt) {
@@ -41,6 +52,10 @@ export class ScavengerHunt extends ScavengerModel implements IScavengerHunt {
     this._name = data?.name;
     this._type = data?.type;
     this._startingWaypoint = !!data?.startingWaypoint ? new ScavengerWaypoint(data.startingWaypoint) : undefined;
+
+    this.capturedWaypointCount = 0;
+    this._waypointCount = this.startingWaypoint ? this.startingWaypoint.countWaypoints() : 0;
+    this._waypointCount = this.startingWaypoint ? this.startingWaypoint.countWaypoints(true) : 0;
   }
 
   public toObject(): IScavengerHunt {
@@ -50,6 +65,14 @@ export class ScavengerHunt extends ScavengerModel implements IScavengerHunt {
       startingWaypoint: this.startingWaypoint?.toObject(),
       idCurrentWaypoint: this.idCurrentWaypoint,
     });
+  }
+
+  public getWaypoint(idWaypoint: string): ScavengerWaypoint | undefined {
+    if (!this.startingWaypoint) {
+      return undefined;
+    }
+
+    return this.startingWaypoint.getWaypoint(idWaypoint);
   }
 
 }

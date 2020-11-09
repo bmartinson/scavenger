@@ -7,16 +7,12 @@ export class ScavengerSession extends ScavengerModel implements IScavengerSessio
 
   public user: string;
   private _hunt: ScavengerHunt;
-  private _active: boolean;
+  public active: boolean;
 
   /* * * * * Property Access * * * * */
 
   public get hunt(): ScavengerHunt {
     return this._hunt;
-  }
-
-  public get active(): boolean {
-    return this._active;
   }
 
   /* * * * * Core Class Implementation * * * * */
@@ -26,7 +22,7 @@ export class ScavengerSession extends ScavengerModel implements IScavengerSessio
 
     this.user = !!data?.user ? data.user : `Explorer`;
     this._hunt = !!data?.hunt ? new ScavengerHunt(data?.hunt) : undefined;
-    this._active = !!data?.active;
+    this.active = !!data?.active;
   }
 
   public toObject(): IScavengerSession {

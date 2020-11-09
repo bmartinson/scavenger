@@ -45,6 +45,14 @@ export class ScavengerWaypoint extends ScavengerModel implements IScavengerWaypo
     return this._outOfOrderDialog;
   }
 
+  public get parent(): ScavengerWaypoint {
+    return this._parent;
+  }
+
+  public get isStart(): boolean {
+    return !this.parent;
+  }
+
   /* * * * * Core Class Implementation * * * * */
 
   constructor(data?: IScavengerWaypoint, parent?: ScavengerWaypoint) {
@@ -84,6 +92,48 @@ export class ScavengerWaypoint extends ScavengerModel implements IScavengerWaypo
       outOfOrderDialog: this.outOfOrderDialog,
       waypoints: serializedWaypoints,
     });
+  }
+
+  public getWaypoint(idWaypoint: string): ScavengerWaypoint | undefined {
+    if (this.id === idWaypoint) {
+      return this;
+    }
+
+    if (this.waypoints?.length === 0) {
+      return undefined;
+    }
+
+    let foundWaypoint: ScavengerWaypoint;
+    for (const waypoint of this.waypoints) {
+      foundWaypoint = waypoint.getWaypoint(idWaypoint);
+
+      if (!!foundWaypoint) {
+        break;
+      }
+    }
+
+    return foundWaypoint;
+  }
+
+  /**
+   * Counts the number of waypoints that can be captured from and including this waypoint.
+   *
+   * @param countValidOnly If true, only valid waypoints are counted
+   */
+  public countWaypoints(countValidOnly?: boolean): number {
+    let count = 0;
+
+    if (!countValidOnly || this.valid) {
+      count++;
+    }
+
+    if (this.waypoints?.length > 0) {
+      for (const waypoint of this.waypoints) {
+        count += waypoint.countWaypoints();
+      }
+    }
+
+    return count;
   }
 
 }

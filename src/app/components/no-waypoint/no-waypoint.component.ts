@@ -12,11 +12,14 @@ import { ScavengerRouteComponent } from '../scavenger-route/scavenger-route.comp
 })
 export class NoWaypointComponent extends ScavengerRouteComponent {
 
+  public isHuntInactive: boolean;
   public showTitle: boolean;
   public showContent: boolean;
 
   constructor(public appService: AppService, protected titleService: Title) {
     super(appService, titleService);
+
+    this.isHuntInactive = this.appService.isHuntInactive;
 
     setTimeout(() => {
       this.showTitle = true;

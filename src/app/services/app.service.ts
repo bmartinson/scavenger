@@ -45,6 +45,14 @@ export class AppService {
   /* * * * * Application State * * * * */
   private session: ScavengerSession;
 
+  public get isHuntActive(): boolean {
+    return this.session.hunt && !!this.session?.active;
+  }
+
+  public get isHuntInactive(): boolean {
+    return !this.session?.hunt || !this.session?.active;
+  }
+
   constructor() {
     // TESTING ONLY
     localStorage.clear();
@@ -95,13 +103,40 @@ export class AppService {
         // assign the hunt
         this.session.setHunt(hunt);
 
-        return ScavengerWaypointStatus.START;
+        return this.waypointCheck(idWaypoint);
       } catch (e) {
         return ScavengerWaypointStatus.INVALID;
       }
     }
 
-    return Promise.resolve(ScavengerWaypointStatus.VALID);
+    return this.waypointCheck(idWaypoint);
+  }
+
+  private waypointCheck(idWaypoint: string): ScavengerWaypointStatus {
+    const waypoint: ScavengerWaypoint = this.session.hunt.getWaypoint(idWaypoint);
+
+    console.warn('waypoint?', waypoint);
+
+    if (!waypoint) {
+      // the way point requested does not exist but the hunt that was provided does
+      return ScavengerWaypointStatus.INVALID;
+    } else if (waypoint.isStart) {
+      this.session.active = true;
+
+      return ScavengerWaypointStatus.START;
+    } else if (this.session.hunt.type === ScavengerHuntType.ORDERED && waypoint.waypoints.length === 0 && waypoint.valid) {
+      // we are an ordered hunt that is at a valid leaf node, we have therefore finished the hunt
+      return ScavengerWaypointStatus.FINISH;
+    } else if (
+      this.session.hunt.type === ScavengerHuntType.UNORDERED &&
+      this.session.hunt.capturedWaypointCount === this.session.hunt.validWaypointCount
+    ) {
+      // if we are an unordered scavenger hunt and we have gathered the total number of valid waypoints that need to be found
+      // then they are finished
+      return ScavengerWaypointStatus.FINISH;
+    }
+
+    return ScavengerWaypointStatus.VALID;
   }
 
   /* * * * * Setters * * * * */
@@ -127,7 +162,63 @@ export class AppService {
         id: '27f60be732e1004fced13f3a55f7f51f',
         name: 'Testing Hunt',
         type: ScavengerHuntType.ORDERED,
-        startingWaypoint: undefined,
+        startingWaypoint: {
+          id: '0a59e9738bcc4a6550a341c8a2a69413',
+          name: 'Waypoint Tier 1: 1',
+          value: 1,
+          valid: true,
+          dialog: ['Welcome To The Test'],
+          outOfOrderDialog: undefined,
+          waypoints: [
+            {
+              id: '630ae7593f4bfcaec91b2343313577c4',
+              name: 'Waypoint Tier 2: 1',
+              value: 1,
+              valid: true,
+              dialog: ['Tier 2'],
+              outOfOrderDialog: undefined,
+              waypoints: [
+                {
+                  id: '98fc0c4a59077e9769fcdee8ae5c3eaa',
+                  name: 'Waypoint Tier 3: 1',
+                  value: 0,
+                  valid: false,
+                  dialog: ['Tier 3 False Clue 1'],
+                  outOfOrderDialog: undefined,
+                  waypoints: [],
+                },
+                {
+                  id: '654970a65e68dad53e2811ab8dea9ca0',
+                  name: 'Tier 3 Clue',
+                  value: 1,
+                  valid: false,
+                  dialog: ['Welcome To The Test'],
+                  outOfOrderDialog: undefined,
+                  waypoints: [
+                    {
+                      id: '8046c60dc4b00ed0c2351e68cad45e9d',
+                      name: 'Waypoint Tier 4: 1',
+                      value: 1,
+                      valid: true,
+                      dialog: ['Finishing Clue'],
+                      outOfOrderDialog: undefined,
+                      waypoints: [],
+                    }
+                  ],
+                },
+                {
+                  id: 'be7db8674f944cc9c31d67c354683502',
+                  name: 'Tier 3 False Clue 2',
+                  value: 0,
+                  valid: false,
+                  dialog: ['Welcome To The Test'],
+                  outOfOrderDialog: undefined,
+                  waypoints: [],
+                }
+              ],
+            }
+          ],
+        },
         idCurrentWaypoint: '',
       },
     );

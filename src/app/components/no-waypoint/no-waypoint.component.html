@@ -2,27 +2,50 @@
   <scavenger-qr-search></scavenger-qr-search>
 </scavenger-icon-holder>
 
-<h1 [@inOutAnimation]
-    *ngIf="showTitle">
-  Keep Searching!
-</h1>
+<ng-container *ngIf="!isHuntInactive; else standard">
+  <h1 [@inOutAnimation]
+      *ngIf="showTitle">
+    Get To The Start!
+  </h1>
 
-<div [@inOutAnimation]
-     *ngIf="showContent"
-     class="content">
-  <h2>Look For Clues</h2>
+  <div [@inOutAnimation]
+       *ngIf="showContent"
+       class="content">
+    <h2>Look For The Start</h2>
 
-  <p>
-    Your next clue may be just around the corner! Look for posted QR codes to experience the next stop on your hunt!
-  </p>
+    <p>
+      It looks like you haven't started a scavenger hunt, yet! Please scan the starting QR code to begin your adventure.
+      If you need help, please contact your scavenger hunt host!
+    </p>
 
-  <ul>
-    <li>Look for placards with QR codes.</li>
-    <li>Open your phone's camera app.</li>
-    <li>Point your camera at the QR code.</li>
-    <li>Click the link that pop's up.</li>
-  </ul>
+    <p>Happy hunting!</p>
 
-  <p>Enjoy your adventure!</p>
+  </div>
+</ng-container>
 
-</div>
+<ng-template #standard>
+  <h1 [@inOutAnimation]
+      *ngIf="showTitle">
+    Keep Searching!
+  </h1>
+
+  <div [@inOutAnimation]
+       *ngIf="showContent"
+       class="content">
+    <h2>Look For Clues</h2>
+
+    <p>
+      Your next clue may be just around the corner! Look for posted QR codes to experience the next stop on your hunt!
+    </p>
+
+    <ul>
+      <li>Look for placards with QR codes.</li>
+      <li>Open your phone's camera app.</li>
+      <li>Point your camera at the QR code.</li>
+      <li>Click the link that pop's up.</li>
+    </ul>
+
+    <p>Enjoy your adventure!</p>
+
+  </div>
+</ng-template>
