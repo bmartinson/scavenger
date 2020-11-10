@@ -80,7 +80,7 @@ export class ScavengerWaypoint extends ScavengerModel implements IScavengerWaypo
     const serializedWaypoints: IScavengerWaypoint[] = [];
 
     // if we have a valid list of waypoints, serialize each one
-    if (this.waypoints.length > 0) {
+    if (this.waypoints?.length > 0) {
       for (const waypoint of this.waypoints) {
         serializedWaypoints.push(waypoint.toObject());
       }
@@ -101,7 +101,7 @@ export class ScavengerWaypoint extends ScavengerModel implements IScavengerWaypo
       return this;
     }
 
-    if (this.waypoints?.length === 0) {
+    if (!this.waypoints || this.waypoints.length === 0) {
       return undefined;
     }
 

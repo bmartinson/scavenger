@@ -95,7 +95,11 @@ export class AppService {
       localStorage.clear();
     }
 
-    localStorage.setItem(AppService.SESSION_STORAGE_KEY, JSON.stringify(this.session));
+    try {
+      localStorage.setItem(AppService.SESSION_STORAGE_KEY, JSON.stringify(this.session.toObject()));
+    } catch (e) {
+      console.error(`Could not save session`, e);
+    }
   }
 
   /* * * * * Waypoint Interactions * * * * */
@@ -134,10 +138,10 @@ export class AppService {
       this.session.active = true;
 
       // save the session activation change
-      // this.saveSession();
+      this.saveSession();
 
       status = ScavengerWaypointStatus.START;
-    } else if (this.session.hunt.type === ScavengerHuntType.ORDERED && waypoint.waypoints.length === 0 && waypoint.valid) {
+    } else if (this.session.hunt.type === ScavengerHuntType.ORDERED && waypoint.waypoints?.length === 0 && waypoint.valid) {
       // we are an ordered hunt that is at a valid leaf node, we have therefore finished the hunt
       status = ScavengerWaypointStatus.FINISH;
     } else if (

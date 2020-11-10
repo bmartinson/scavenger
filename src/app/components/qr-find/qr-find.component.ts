@@ -14,6 +14,16 @@ export class QRFindComponent {
     return this.waypointStatus !== ScavengerWaypointStatus.INVALID && this.waypointStatus !== ScavengerWaypointStatus.OUT_OF_ORDER;
   }
 
+  public get statusIcon(): string {
+    if (this.waypointStatus !== ScavengerWaypointStatus.INVALID && this.waypointStatus !== ScavengerWaypointStatus.OUT_OF_ORDER) {
+      return 'check';
+    } else if (this.waypointStatus === ScavengerWaypointStatus.OUT_OF_ORDER) {
+      return 'undo';
+    }
+
+    return 'times';
+  }
+
   public get icon(): string {
     switch (this.waypointStatus) {
       case ScavengerWaypointStatus.START:
@@ -25,8 +35,22 @@ export class QRFindComponent {
       case ScavengerWaypointStatus.INVALID:
         return 'map';
 
+      case ScavengerWaypointStatus.OUT_OF_ORDER:
+        return 'hiking';
+
       default:
         return 'street-view';
+    }
+  }
+
+  public get iconRight(): number {
+    switch (this.waypointStatus) {
+      case ScavengerWaypointStatus.START:
+      case ScavengerWaypointStatus.INVALID:
+        return 0.25;
+
+      default:
+        return 0.4;
     }
   }
 

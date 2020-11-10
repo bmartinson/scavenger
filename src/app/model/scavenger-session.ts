@@ -28,7 +28,7 @@ export class ScavengerSession extends ScavengerModel implements IScavengerSessio
   public toObject(): IScavengerSession {
     return Object.assign(super.toObject(), {
       user: this.user,
-      hunt: this.hunt.toObject(),
+      hunt: this.hunt?.toObject(),
       active: this.active,
     });
   }
