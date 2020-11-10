@@ -24,7 +24,7 @@ const routes: Routes = [
     component: WaypointComponent,
     canActivate: [CanActivateWaypointGuard],
     resolve: {
-      waypointStatus: CanActivateWaypointGuard,
+      waypointData: CanActivateWaypointGuard,
     }
   },
   {

@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { FaIconLibrary, FontAwesomeModule } from '@fortawesome/angular-fontawesome';
-import { faCheck, faMap, faMapSigns, faQrcode, faTimes } from '@fortawesome/free-solid-svg-icons';
+import { faCheck, faMap, faMapSigns, faQrcode, faRoute, faStreetView, faTimes } from '@fortawesome/free-solid-svg-icons';
 import { AppRoutingModule } from './app-routing.module';
 import { AboutComponent } from './components/about/about.component';
 import { AppComponent } from './components/app/app.component';
@@ -45,6 +45,8 @@ export class AppModule {
       faMap,
       faMapSigns,
       faQrcode,
+      faRoute,
+      faStreetView,
       faTimes,
     );
   }

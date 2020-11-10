@@ -1,6 +1,5 @@
 import { ScavengerHuntType } from '../enum/scavenger-hunt-type.enum';
 import { IScavengerHunt } from '../interface/scavenger-hunt.interface';
-import { IScavengerWaypoint } from '../interface/scavenger-waypoint.interface';
 import { ScavengerModel } from './scavenger-model';
 import { ScavengerWaypoint } from './scavenger-waypoint';
 
@@ -9,9 +8,9 @@ export class ScavengerHunt extends ScavengerModel implements IScavengerHunt {
   private _name: string;
   private _type: ScavengerHuntType;
   private _startingWaypoint: ScavengerWaypoint;
-  private _idCurrentWaypoint: string;
   private _waypointCount: number;
   private _validWaypointCount: number;
+  public idCurrentWaypoint: string;
   public capturedWaypointCount: number;
 
   /* * * * * Property Access * * * * */
@@ -28,12 +27,12 @@ export class ScavengerHunt extends ScavengerModel implements IScavengerHunt {
     return this._startingWaypoint;
   }
 
-  public get idCurrentWaypoint(): string {
-    return this._idCurrentWaypoint;
-  }
-
   public get currentWaypoint(): ScavengerWaypoint | undefined {
-    return undefined;
+    if (!this.idCurrentWaypoint) {
+      return undefined;
+    }
+
+    return this.getWaypoint(this.idCurrentWaypoint);
   }
 
   public get waypointCount(): number {

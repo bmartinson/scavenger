@@ -1,3 +1,4 @@
+import { ScavengerWaypointStatus } from '../enum/scavenger-waypoint.enum';
 import { IScavengerWaypoint } from '../interface/scavenger-waypoint.interface';
 import { ScavengerModel } from './scavenger-model';
 
@@ -10,6 +11,7 @@ export class ScavengerWaypoint extends ScavengerModel implements IScavengerWaypo
   private _outOfOrderDialog: string[];
   private _waypoints: ScavengerWaypoint[];
   private _parent: ScavengerWaypoint;
+  public status: ScavengerWaypointStatus;
 
   /* * * * * Property Access * * * * */
 

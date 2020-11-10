@@ -1,6 +1,8 @@
 import { Injectable } from '@angular/core';
 import { ActivatedRouteSnapshot, CanActivate, CanActivateChild, CanLoad, Resolve, Router, RouterStateSnapshot, UrlTree } from '@angular/router';
 import { ScavengerWaypointStatus } from '../enum/scavenger-waypoint.enum';
+import { ScavengerHuntRouteData } from '../model/scavenger-hunt-route-data';
+import { ScavengerWaypoint } from '../model/scavenger-waypoint';
 import { AppService } from '../services/app.service';
 import { CanActivateGuard } from './can-activate.guard';
 
@@ -11,10 +13,11 @@ export class CanActivateWaypointGuard extends CanActivateGuard implements
   CanActivate,
   CanActivateChild,
   CanLoad,
-  Resolve<ScavengerWaypointStatus>
+  Resolve<ScavengerHuntRouteData>
 {
 
   private waypointStatus: ScavengerWaypointStatus;
+  private waypoint: ScavengerWaypoint;
 
   constructor(protected router: Router, protected appService: AppService) {
     super(router, appService);
@@ -36,6 +39,8 @@ export class CanActivateWaypointGuard extends CanActivateGuard implements
       next.paramMap.get('idWaypoint')
     );
 
+    this.waypoint = this.appService.getWaypoint(next.paramMap.get('idWaypoint'));
+
     switch (this.waypointStatus) {
       case ScavengerWaypointStatus.START:
       case ScavengerWaypointStatus.FINISH:
@@ -49,8 +54,8 @@ export class CanActivateWaypointGuard extends CanActivateGuard implements
     }
   }
 
-  public resolve(): ScavengerWaypointStatus {
-    return this.waypointStatus;
+  public resolve(): ScavengerHuntRouteData {
+    return new ScavengerHuntRouteData(this.waypoint, this.waypointStatus);
   }
 
 }

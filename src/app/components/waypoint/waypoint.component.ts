@@ -3,6 +3,8 @@ import { Title } from '@angular/platform-browser';
 import { ActivatedRoute } from '@angular/router';
 import { inOutAnimation } from '../../animations/core-animations';
 import { ScavengerWaypointStatus } from '../../enum/scavenger-waypoint.enum';
+import { ScavengerHuntRouteData } from '../../model/scavenger-hunt-route-data';
+import { ScavengerWaypoint } from '../../model/scavenger-waypoint';
 import { AppService } from '../../services/app.service';
 import { ScavengerRouteComponent } from '../scavenger-route/scavenger-route.component';
 
@@ -23,12 +25,17 @@ export class WaypointComponent extends ScavengerRouteComponent {
   public showTitle: boolean;
   public showContent: boolean;
 
-  /* * * * * Internal Data * * * * */
-  private waypointStatus: ScavengerWaypointStatus;
-
   /* * * * * Template Display Properties * * * * */
+  public get waypointStatus(): ScavengerWaypointStatus {
+    return (this.activatedRoute.snapshot?.data?.waypointData as ScavengerHuntRouteData)?.waypointStatus;
+  }
+
+  public get waypoint(): ScavengerWaypoint {
+    return (this.activatedRoute.snapshot?.data?.waypointData as ScavengerHuntRouteData)?.waypoint;
+  }
+
   public get isValid(): boolean {
-    return this.waypointStatus !== ScavengerWaypointStatus.INVALID;
+    return this.waypointStatus !== ScavengerWaypointStatus.INVALID && this.waypointStatus !== ScavengerWaypointStatus.OUT_OF_ORDER;
   }
 
   public get title(): string {
@@ -51,8 +58,6 @@ export class WaypointComponent extends ScavengerRouteComponent {
     super(appService, titleService);
 
     this.titleService.setTitle(`${ScavengerRouteComponent.BASE_PAGE_TITLE} - Waypoint`);
-
-    this.waypointStatus = this.activatedRoute.snapshot?.data?.waypointStatus;
 
     setTimeout(() => {
       this.showTitle = true;

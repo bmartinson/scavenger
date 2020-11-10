@@ -98,6 +98,8 @@ export class AppService {
     localStorage.setItem(AppService.SESSION_STORAGE_KEY, JSON.stringify(this.session));
   }
 
+  /* * * * * Waypoint Interactions * * * * */
+
   public async scanWaypoint(idHunt: string, idWaypoint: string): Promise<ScavengerWaypointStatus> {
     if (!this.session.hunt) {
       // we do not have an active hunt, so we need to load from the server
@@ -118,9 +120,12 @@ export class AppService {
   }
 
   private waypointCheck(idWaypoint: string): ScavengerWaypointStatus {
-    const waypoint: ScavengerWaypoint = this.session.hunt.getWaypoint(idWaypoint);
+    if (!this.session?.hunt) {
+      return ScavengerWaypointStatus.INVALID;
+    }
 
-    console.warn('waypoint?', !!waypoint);
+    const waypoint: ScavengerWaypoint = this.session.hunt.getWaypoint(idWaypoint);
+    let status: ScavengerWaypointStatus = ScavengerWaypointStatus.VALID;
 
     if (!waypoint) {
       // the way point requested does not exist but the hunt that was provided does
@@ -131,20 +136,31 @@ export class AppService {
       // save the session activation change
       // this.saveSession();
 
-      return ScavengerWaypointStatus.START;
+      status = ScavengerWaypointStatus.START;
     } else if (this.session.hunt.type === ScavengerHuntType.ORDERED && waypoint.waypoints.length === 0 && waypoint.valid) {
       // we are an ordered hunt that is at a valid leaf node, we have therefore finished the hunt
-      return ScavengerWaypointStatus.FINISH;
+      status = ScavengerWaypointStatus.FINISH;
     } else if (
       this.session.hunt.type === ScavengerHuntType.UNORDERED &&
       this.session.hunt.capturedWaypointCount === this.session.hunt.validWaypointCount
     ) {
       // if we are an unordered scavenger hunt and we have gathered the total number of valid waypoints that need to be found
       // then they are finished
-      return ScavengerWaypointStatus.FINISH;
+      status = ScavengerWaypointStatus.FINISH;
     }
 
-    return ScavengerWaypointStatus.VALID;
+    // track the current waypoint we are at
+    this.setCurrentWaypoint(idWaypoint);
+
+    return status;
+  }
+
+  public getWaypoint(idWaypoint: string): ScavengerWaypoint | undefined {
+    if (!this.session?.hunt) {
+      return undefined;
+    }
+
+    return this.session.hunt.getWaypoint(idWaypoint);
   }
 
   /* * * * * Setters * * * * */
@@ -156,6 +172,19 @@ export class AppService {
    */
   public setUser(value: string): void {
     this.session.user = value;
+  }
+
+  /**
+   * Updates the current waypoint in play for the current hunt.
+   *
+   * @param idWaypoint The id of the waypoint that is the current hunt waypoint.
+   */
+  private setCurrentWaypoint(idWaypoint: string): void {
+    if (!this.session.hunt) {
+      return;
+    }
+
+    this.session.hunt.idCurrentWaypoint = idWaypoint;
   }
 
   /* * * * * TESTING * * * * */
