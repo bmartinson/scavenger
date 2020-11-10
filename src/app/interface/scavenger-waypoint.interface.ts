@@ -36,4 +36,6 @@ export interface IScavengerWaypoint extends IScavengerModel {
    * hunts.
    */
   waypoints: IScavengerWaypoint[];
+
+  captured: boolean;
 }

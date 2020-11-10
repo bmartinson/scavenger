@@ -52,9 +52,9 @@ export class ScavengerHunt extends ScavengerModel implements IScavengerHunt {
     this._type = data?.type;
     this._startingWaypoint = !!data?.startingWaypoint ? new ScavengerWaypoint(data.startingWaypoint) : undefined;
 
-    this.capturedWaypointCount = 0;
+    this.capturedWaypointCount = this.startingWaypoint ? this.startingWaypoint.countWaypoints(false, true) : 0;
     this._waypointCount = this.startingWaypoint ? this.startingWaypoint.countWaypoints() : 0;
-    this._waypointCount = this.startingWaypoint ? this.startingWaypoint.countWaypoints(true) : 0;
+    this._validWaypointCount = this.startingWaypoint ? this.startingWaypoint.countWaypoints(true) : 0;
   }
 
   public toObject(): IScavengerHunt {

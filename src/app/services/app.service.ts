@@ -59,8 +59,8 @@ export class AppService {
 
   constructor() {
     // TESTING ONLY
-    // localStorage.clear();
-    // console.warn('cleared storage');
+    localStorage.clear();
+    console.warn('cleared storage');
 
     const rawSession: string = localStorage.getItem(AppService.SESSION_STORAGE_KEY);
 
@@ -210,6 +210,7 @@ export class AppService {
           valid: true,
           dialog: ['Welcome To The Test'],
           outOfOrderDialog: undefined,
+          captured: false,
           waypoints: [
             {
               id: '630ae7593f4bfcaec91b2343313577c4',
@@ -218,6 +219,7 @@ export class AppService {
               valid: true,
               dialog: ['Tier 2'],
               outOfOrderDialog: undefined,
+              captured: false,
               waypoints: [
                 {
                   id: '98fc0c4a59077e9769fcdee8ae5c3eaa',
@@ -226,15 +228,17 @@ export class AppService {
                   valid: false,
                   dialog: ['Tier 3 False Clue 1'],
                   outOfOrderDialog: undefined,
+                  captured: false,
                   waypoints: [],
                 },
                 {
                   id: '654970a65e68dad53e2811ab8dea9ca0',
                   name: 'Tier 3 Clue',
                   value: 1,
-                  valid: false,
+                  valid: true,
                   dialog: ['Welcome To The Test'],
                   outOfOrderDialog: undefined,
+                  captured: false,
                   waypoints: [
                     {
                       id: '8046c60dc4b00ed0c2351e68cad45e9d',
@@ -243,6 +247,7 @@ export class AppService {
                       valid: true,
                       dialog: ['Finishing Clue'],
                       outOfOrderDialog: undefined,
+                      captured: false,
                       waypoints: [],
                     }
                   ],
@@ -254,6 +259,7 @@ export class AppService {
                   valid: false,
                   dialog: ['Welcome To The Test'],
                   outOfOrderDialog: undefined,
+                  captured: false,
                   waypoints: [],
                 }
               ],

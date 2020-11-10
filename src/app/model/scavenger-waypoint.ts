@@ -12,6 +12,7 @@ export class ScavengerWaypoint extends ScavengerModel implements IScavengerWaypo
   private _waypoints: ScavengerWaypoint[];
   private _parent: ScavengerWaypoint;
   public status: ScavengerWaypointStatus;
+  public captured: boolean;
 
   /* * * * * Property Access * * * * */
 
@@ -66,6 +67,7 @@ export class ScavengerWaypoint extends ScavengerModel implements IScavengerWaypo
     this._dialog = data?.dialog;
     this._outOfOrderDialog = data?.outOfOrderDialog;
     this._parent = parent;
+    this.captured = !!data?.captured;
 
     if (data?.waypoints?.length > 0) {
       this._waypoints = [];
@@ -93,6 +95,7 @@ export class ScavengerWaypoint extends ScavengerModel implements IScavengerWaypo
       dialog: this.dialog,
       outOfOrderDialog: this.outOfOrderDialog,
       waypoints: serializedWaypoints,
+      captured: this.captured,
     });
   }
 
@@ -122,16 +125,16 @@ export class ScavengerWaypoint extends ScavengerModel implements IScavengerWaypo
    *
    * @param countValidOnly If true, only valid waypoints are counted
    */
-  public countWaypoints(countValidOnly?: boolean): number {
+  public countWaypoints(countValidOnly?: boolean, countCapturedOnly?: boolean): number {
     let count = 0;
 
-    if (!countValidOnly || this.valid) {
+    if ((!countValidOnly || countValidOnly && this.valid) && (!countCapturedOnly || this.captured)) {
       count++;
     }
 
     if (this.waypoints?.length > 0) {
       for (const waypoint of this.waypoints) {
-        count += waypoint.countWaypoints();
+        count += waypoint.countWaypoints(countValidOnly, countCapturedOnly);
       }
     }
 
