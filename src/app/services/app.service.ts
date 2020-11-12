@@ -137,9 +137,6 @@ export class AppService {
     } else if (waypoint.isStart) {
       this.session.active = true;
 
-      // save the session activation change
-      this.saveSession();
-
       status = ScavengerWaypointStatus.START;
     } else if (this.session.hunt.type === ScavengerHuntType.ORDERED && waypoint.waypoints?.length === 0 && waypoint.valid) {
       // we are an ordered hunt that is at a valid leaf node, we have therefore finished the hunt
@@ -153,8 +150,24 @@ export class AppService {
       status = ScavengerWaypointStatus.FINISH;
     }
 
+    // TODO
+    // check to see if we are out of order right now base don the current waypoint, otherwise consider ourselves captured
+
     // track the current waypoint we are at
     this.setCurrentWaypoint(idWaypoint);
+
+    if (status === ScavengerWaypointStatus.VALID ||
+      status === ScavengerWaypointStatus.START ||
+      status === ScavengerWaypointStatus.FINISH
+    ) {
+      // mark the waypoint as captured
+      waypoint.captured = true;
+    }
+
+    console.warn('status!!', status);
+
+    // save the session activation change
+    this.saveSession();
 
     return status;
   }
