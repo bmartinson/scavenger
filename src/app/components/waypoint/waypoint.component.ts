@@ -16,16 +16,13 @@ import { ScavengerRouteComponent } from '../scavenger-route/scavenger-route.comp
 })
 export class WaypointComponent extends ScavengerRouteComponent {
 
-  private static TITLE_SUCCESS = 'Great find!';
-  private static TITLE_FAILURE = 'Not quite!';
-  private static SUBTITLE_SUCCESS = 'You found a waypoint';
-  private static SUBTITLE_FAILURE = 'Check your clues';
-
   /* * * * * Animated Control * * * * */
   public showTitle: boolean;
   public showContent: boolean;
 
   /* * * * * Template Display Properties * * * * */
+  public title: string;
+
   public get waypointStatus(): ScavengerWaypointStatus {
     return (this.activatedRoute.snapshot?.data?.waypointData as ScavengerHuntRouteData)?.waypointStatus;
   }
@@ -34,23 +31,51 @@ export class WaypointComponent extends ScavengerRouteComponent {
     return (this.activatedRoute.snapshot?.data?.waypointData as ScavengerHuntRouteData)?.waypoint;
   }
 
-  public get isValid(): boolean {
-    return this.waypointStatus !== ScavengerWaypointStatus.INVALID && this.waypointStatus !== ScavengerWaypointStatus.OUT_OF_ORDER;
+  public get isOutOfOrder(): boolean {
+    return this.waypointStatus === ScavengerWaypointStatus.OUT_OF_ORDER;
   }
 
-  public get title(): string {
-    if (this.isValid) {
-      return WaypointComponent.TITLE_SUCCESS;
-    } else {
-      return WaypointComponent.TITLE_FAILURE;
+  private get defaultTitle(): string {
+    switch (this.waypointStatus) {
+      case ScavengerWaypointStatus.START:
+        return 'Welcome!';
+
+      case ScavengerWaypointStatus.FINISH:
+        return 'You did it!';
+
+      case ScavengerWaypointStatus.DUPLICATE:
+        return 'You\'re back!';
+
+      case ScavengerWaypointStatus.INVALID:
+        return 'Oops, wrong one!';
+
+      case ScavengerWaypointStatus.OUT_OF_ORDER:
+        return 'Not quite!';
+
+      default:
+        return 'Great find!';
     }
   }
 
   public get subtitle(): string {
-    if (this.isValid) {
-      return WaypointComponent.SUBTITLE_SUCCESS;
-    } else {
-      return WaypointComponent.SUBTITLE_FAILURE;
+    switch (this.waypointStatus) {
+      case ScavengerWaypointStatus.START:
+        return 'You found the start of the trail';
+
+      case ScavengerWaypointStatus.FINISH:
+        return 'You completed the trail';
+
+      case ScavengerWaypointStatus.DUPLICATE:
+        return 'You found this waypoint earlier';
+
+      case ScavengerWaypointStatus.INVALID:
+        return 'Check your clues';
+
+      case ScavengerWaypointStatus.OUT_OF_ORDER:
+        return 'You\'re getting ahead of yourself';
+
+      default:
+        return 'You found a waypoint';
     }
   }
 
@@ -59,17 +84,48 @@ export class WaypointComponent extends ScavengerRouteComponent {
 
     this.titleService.setTitle(`${ScavengerRouteComponent.BASE_PAGE_TITLE} - Waypoint`);
 
+    let dialog: string[] = [];
+    dialog.push(this.defaultTitle);
+
+    console.warn('waypoint status', this.waypointStatus);
+
+    if (this.waypointStatus === ScavengerWaypointStatus.OUT_OF_ORDER) {
+      if (this.waypoint?.outOfOrderDialog && this.waypoint.outOfOrderDialog.length > 0) {
+        dialog = dialog.concat(this.waypoint.outOfOrderDialog);
+      }
+    } else {
+      if (this.waypoint?.dialog && this.waypoint.dialog.length > 0) {
+        dialog = dialog.concat(this.waypoint.dialog);
+      }
+    }
+
     setTimeout(() => {
       this.showTitle = true;
 
-      setTimeout(() => {
-        this.showTitle = false;
-
-        setTimeout(() => {
-          this.showContent = true;
-        }, 750);
-      }, 1500);
+      this.renderDialog(dialog, 0);
     }, 3000);
+  }
+
+  private renderDialog(dialog: string[], index: number): void {
+    if (index === dialog.length) {
+      // we have reached the end of our dialog, render the content of the page
+      this.showContent = true;
+      return;
+    }
+
+    // set the dialog to display and render it
+    this.title = dialog[index];
+    this.showTitle = true;
+
+    setTimeout(() => {
+      // after some time, hide the title
+      this.showTitle = false;
+
+      setTimeout(() => {
+        // after the title is hidden, render the next piece of dialog
+        this.renderDialog(dialog, index + 1);
+      }, 750);
+    }, Math.max(1500 + (100 * (dialog[index].length / dialog[0].length)), 1500));
   }
 
 }

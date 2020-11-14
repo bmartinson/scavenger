@@ -43,6 +43,26 @@ export class QRFindComponent {
     }
   }
 
+  public get statusIconTop(): number {
+    switch (this.waypointStatus) {
+      case ScavengerWaypointStatus.OUT_OF_ORDER:
+        return 0.5;
+
+      default:
+        return undefined;
+    }
+  }
+
+  public get statusIconLeft(): number {
+    switch (this.waypointStatus) {
+      case ScavengerWaypointStatus.OUT_OF_ORDER:
+        return 1.25;
+
+      default:
+        return undefined;
+    }
+  }
+
   public get iconRight(): number {
     switch (this.waypointStatus) {
       case ScavengerWaypointStatus.START:

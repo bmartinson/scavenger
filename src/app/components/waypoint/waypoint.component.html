@@ -3,20 +3,21 @@
 </scavenger-icon-holder>
 
 <h1 [@inOutAnimation]
-    *ngIf="showTitle">
-  {{title}}
+    *ngIf="showTitle"
+    [innerHTML]="title">
 </h1>
 
 <div [@inOutAnimation]
      *ngIf="showContent"
      class="content">
-  <h2>{{subtitle}}</h2>
+  <h2 [innerHTML]="subtitle"></h2>
 
-  <p *ngIf="!isValid">
-    You found the wrong waypoint, double check any previous clues you've discovered!
+  <p *ngIf="isOutOfOrder">
+    You found the wrong waypoint! Double check any previous clues you've discovered and use them to visit all of the
+    waypoints leading to this one! Only then can you unlock this waypoint!
   </p>
 
-  <p>
+  <p *ngIf="!isOutOfOrder">
     Some interactive content will be available here.
   </p>
 

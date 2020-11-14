@@ -58,10 +58,6 @@ export class AppService {
   }
 
   constructor() {
-    // TESTING ONLY
-    localStorage.clear();
-    console.warn('cleared storage');
-
     const rawSession: string = localStorage.getItem(AppService.SESSION_STORAGE_KEY);
 
     if (!!rawSession) {
@@ -133,7 +129,12 @@ export class AppService {
 
     if (!waypoint) {
       // the way point requested does not exist but the hunt that was provided does
-      return ScavengerWaypointStatus.INVALID;
+      return ScavengerWaypointStatus.NO_WAYPOINT;
+    } else if (!waypoint.valid) {
+      // the user scanned a waypoint that is an invalid clue
+      status = ScavengerWaypointStatus.INVALID;
+    } else if (waypoint.captured) {
+      status = ScavengerWaypointStatus.DUPLICATE;
     } else if (waypoint.isStart) {
       this.session.active = true;
 
@@ -150,21 +151,39 @@ export class AppService {
       status = ScavengerWaypointStatus.FINISH;
     }
 
-    // TODO
-    // check to see if we are out of order right now base don the current waypoint, otherwise consider ourselves captured
+    // check to see if we are out of order right now based on the current waypoint, otherwise consider ourselves captured
+    const isChildOfCurrent: boolean = (
+      waypoint.parent &&
+      this.session.hunt.currentWaypoint &&
+      this.session.hunt.currentWaypoint.id !== waypoint.parent.id
+    );
+
+    console.warn('checks', !!waypoint.parent, this.session?.hunt?.currentWaypoint?.id, waypoint?.parent?.id);
+
+    if (
+      this.session.hunt.type === ScavengerHuntType.ORDERED &&
+      this.session.active && isChildOfCurrent
+    ) {
+      status = ScavengerWaypointStatus.OUT_OF_ORDER;
+    }
 
     // track the current waypoint we are at
     this.setCurrentWaypoint(idWaypoint);
 
-    if (status === ScavengerWaypointStatus.VALID ||
+    if (
+      status === ScavengerWaypointStatus.INVALID ||
+      status === ScavengerWaypointStatus.VALID ||
       status === ScavengerWaypointStatus.START ||
       status === ScavengerWaypointStatus.FINISH
     ) {
+      if (this.session.hunt.type === ScavengerHuntType.UNORDERED) {
+        // unordered hunts are active if we are capturing a waypoint
+        this.session.active = true;
+      }
+
       // mark the waypoint as captured
       waypoint.captured = true;
     }
-
-    console.warn('status!!', status);
 
     // save the session activation change
     this.saveSession();
@@ -239,17 +258,17 @@ export class AppService {
                   name: 'Waypoint Tier 3: 1',
                   value: 0,
                   valid: false,
-                  dialog: ['Tier 3 False Clue 1'],
+                  dialog: ['Tier 3', 'False Clue 1'],
                   outOfOrderDialog: undefined,
                   captured: false,
                   waypoints: [],
                 },
                 {
                   id: '654970a65e68dad53e2811ab8dea9ca0',
-                  name: 'Tier 3 Clue',
+                  name: 'Waypoint Tier 3: 2',
                   value: 1,
                   valid: true,
-                  dialog: ['Welcome To The Test'],
+                  dialog: ['Tier 3', 'Clue'],
                   outOfOrderDialog: undefined,
                   captured: false,
                   waypoints: [
@@ -267,10 +286,10 @@ export class AppService {
                 },
                 {
                   id: 'be7db8674f944cc9c31d67c354683502',
-                  name: 'Tier 3 False Clue 2',
+                  name: 'Waypoint Tier 3: 3',
                   value: 0,
                   valid: false,
-                  dialog: ['Welcome To The Test'],
+                  dialog: ['Tier 3', 'False Clue 2'],
                   outOfOrderDialog: undefined,
                   captured: false,
                   waypoints: [],

@@ -42,9 +42,11 @@ export class CanActivateWaypointGuard extends CanActivateGuard implements
     this.waypoint = this.appService.getWaypoint(next.paramMap.get('idWaypoint'));
 
     switch (this.waypointStatus) {
+      case ScavengerWaypointStatus.INVALID:
       case ScavengerWaypointStatus.START:
       case ScavengerWaypointStatus.FINISH:
       case ScavengerWaypointStatus.OUT_OF_ORDER:
+      case ScavengerWaypointStatus.DUPLICATE:
       case ScavengerWaypointStatus.VALID:
         return true;
 

@@ -42,7 +42,7 @@ export class ScavengerWaypoint extends ScavengerModel implements IScavengerWaypo
 
   public get outOfOrderDialog(): string[] {
     if (!this._outOfOrderDialog) {
-      this._outOfOrderDialog = ['Better back track! You missed a waypoint!'];
+      this._outOfOrderDialog = ['Better back track!<br>You missed a waypoint!'];
     }
 
     return this._outOfOrderDialog;
