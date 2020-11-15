@@ -16,6 +16,11 @@ import { ScavengerRouteComponent } from '../scavenger-route/scavenger-route.comp
 })
 export class WaypointComponent extends ScavengerRouteComponent {
 
+  /* * * * * Internal Data * * * * */
+  private get waypointStatus(): ScavengerWaypointStatus {
+    return (this.activatedRoute.snapshot?.data?.waypointData as ScavengerHuntRouteData)?.waypointStatus;
+  }
+
   /* * * * * Animated Control * * * * */
   public showTitle: boolean;
   public showContent: boolean;
@@ -23,8 +28,15 @@ export class WaypointComponent extends ScavengerRouteComponent {
   /* * * * * Template Display Properties * * * * */
   public title: string;
 
-  public get waypointStatus(): ScavengerWaypointStatus {
-    return (this.activatedRoute.snapshot?.data?.waypointData as ScavengerHuntRouteData)?.waypointStatus;
+  public get waypointStatusIcon(): ScavengerWaypointStatus {
+    if (
+      this.waypointStatus === ScavengerWaypointStatus.DUPLICATE &&
+      this.waypoint && (!this.waypoint.waypoints || this.waypoint.waypoints.length === 0)
+    ) {
+      return ScavengerWaypointStatus.FINISH;
+    }
+
+    return this.waypointStatus;
   }
 
   public get waypoint(): ScavengerWaypoint {
@@ -86,8 +98,6 @@ export class WaypointComponent extends ScavengerRouteComponent {
 
     let dialog: string[] = [];
     dialog.push(this.defaultTitle);
-
-    console.warn('waypoint status', this.waypointStatus);
 
     if (this.waypointStatus === ScavengerWaypointStatus.OUT_OF_ORDER) {
       if (this.waypoint?.outOfOrderDialog && this.waypoint.outOfOrderDialog.length > 0) {

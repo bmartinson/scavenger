@@ -106,13 +106,17 @@ export class AppService {
       try {
         const hunt: IScavengerHunt = await this.loadTestingHunt(idHunt);
 
+        // handle invalid hunts
+        if (!hunt) {
+          throw new Error('No valid hunt discovered');
+        }
+
         // assign the hunt
         this.session.setHunt(hunt);
 
         return this.waypointCheck(idWaypoint);
       } catch (e) {
-        console.error('error:', e);
-        return ScavengerWaypointStatus.INVALID;
+        return ScavengerWaypointStatus.NO_WAYPOINT;
       }
     }
 
@@ -121,25 +125,29 @@ export class AppService {
 
   private waypointCheck(idWaypoint: string): ScavengerWaypointStatus {
     if (!this.session?.hunt) {
-      return ScavengerWaypointStatus.INVALID;
+      return ScavengerWaypointStatus.NO_WAYPOINT;
     }
 
     const waypoint: ScavengerWaypoint = this.session.hunt.getWaypoint(idWaypoint);
     let status: ScavengerWaypointStatus = ScavengerWaypointStatus.VALID;
+    const isLeaf: boolean = !waypoint.waypoints || waypoint.waypoints?.length === 0;
 
     if (!waypoint) {
       // the way point requested does not exist but the hunt that was provided does
+      return ScavengerWaypointStatus.NO_WAYPOINT;
+    } else if (waypoint.isStart) {
+      this.session.active = true;
+
+      status = ScavengerWaypointStatus.START;
+    } else if (!this.session.active && this.session.hunt.type === ScavengerHuntType.ORDERED) {
+      // if we are hitting a waypoint before activating the hunt in ordered hunts, send them back
       return ScavengerWaypointStatus.NO_WAYPOINT;
     } else if (!waypoint.valid) {
       // the user scanned a waypoint that is an invalid clue
       status = ScavengerWaypointStatus.INVALID;
     } else if (waypoint.captured) {
       status = ScavengerWaypointStatus.DUPLICATE;
-    } else if (waypoint.isStart) {
-      this.session.active = true;
-
-      status = ScavengerWaypointStatus.START;
-    } else if (this.session.hunt.type === ScavengerHuntType.ORDERED && waypoint.waypoints?.length === 0 && waypoint.valid) {
+    } else if (this.session.hunt.type === ScavengerHuntType.ORDERED && isLeaf && waypoint.valid) {
       // we are an ordered hunt that is at a valid leaf node, we have therefore finished the hunt
       status = ScavengerWaypointStatus.FINISH;
     } else if (
@@ -155,34 +163,51 @@ export class AppService {
     const isChildOfCurrent: boolean = (
       waypoint.parent &&
       this.session.hunt.currentWaypoint &&
-      this.session.hunt.currentWaypoint.id !== waypoint.parent.id
+      this.session.hunt.currentWaypoint.id === waypoint.parent.id
     );
-
-    console.warn('checks', !!waypoint.parent, this.session?.hunt?.currentWaypoint?.id, waypoint?.parent?.id);
 
     if (
       this.session.hunt.type === ScavengerHuntType.ORDERED &&
-      this.session.active && isChildOfCurrent
+      !waypoint.captured && this.session.active && !isChildOfCurrent && !waypoint.isStart
     ) {
       status = ScavengerWaypointStatus.OUT_OF_ORDER;
     }
 
-    // track the current waypoint we are at
-    this.setCurrentWaypoint(idWaypoint);
+    if (this.session.hunt.type === ScavengerHuntType.ORDERED) {
+      if (
+        status === ScavengerWaypointStatus.INVALID ||
+        status === ScavengerWaypointStatus.VALID ||
+        status === ScavengerWaypointStatus.START ||
+        status === ScavengerWaypointStatus.FINISH
+      ) {
+        if (
+          status === ScavengerWaypointStatus.VALID ||
+          status === ScavengerWaypointStatus.START ||
+          status === ScavengerWaypointStatus.FINISH
+        ) {
+          // track the current waypoint we are at
+          this.setCurrentWaypoint(idWaypoint);
+        }
 
-    if (
-      status === ScavengerWaypointStatus.INVALID ||
-      status === ScavengerWaypointStatus.VALID ||
-      status === ScavengerWaypointStatus.START ||
-      status === ScavengerWaypointStatus.FINISH
-    ) {
-      if (this.session.hunt.type === ScavengerHuntType.UNORDERED) {
+        // mark the waypoint as captured
+        waypoint.captured = true;
+      }
+    } else {
+      if (
+        status === ScavengerWaypointStatus.VALID ||
+        status === ScavengerWaypointStatus.START ||
+        status === ScavengerWaypointStatus.DUPLICATE ||
+        status === ScavengerWaypointStatus.FINISH
+      ) {
+        // track the current waypoint we are at
+        this.setCurrentWaypoint(idWaypoint);
+
         // unordered hunts are active if we are capturing a waypoint
         this.session.active = true;
-      }
 
-      // mark the waypoint as captured
-      waypoint.captured = true;
+        // mark the waypoint as captured
+        waypoint.captured = true;
+      }
     }
 
     // save the session activation change
@@ -216,6 +241,7 @@ export class AppService {
    * @param idWaypoint The id of the waypoint that is the current hunt waypoint.
    */
   private setCurrentWaypoint(idWaypoint: string): void {
+    console.warn('setting current waypoint', idWaypoint, !!this.session.hunt);
     if (!this.session.hunt) {
       return;
     }
@@ -226,17 +252,17 @@ export class AppService {
   /* * * * * TESTING * * * * */
 
   private async loadTestingHunt(idHunt: string): Promise<IScavengerHunt> {
-    if (idHunt !== '27f60be732e1004fced13f3a55f7f51f') {
+    if (idHunt !== '1') {
       return Promise.reject();
     }
 
     return Promise.resolve(
       {
-        id: '27f60be732e1004fced13f3a55f7f51f',
+        id: '1',
         name: 'Testing Hunt',
         type: ScavengerHuntType.ORDERED,
         startingWaypoint: {
-          id: '0a59e9738bcc4a6550a341c8a2a69413',
+          id: '1',
           name: 'Waypoint Tier 1: 1',
           value: 1,
           valid: true,
@@ -245,7 +271,7 @@ export class AppService {
           captured: false,
           waypoints: [
             {
-              id: '630ae7593f4bfcaec91b2343313577c4',
+              id: '2',
               name: 'Waypoint Tier 2: 1',
               value: 1,
               valid: true,
@@ -254,7 +280,7 @@ export class AppService {
               captured: false,
               waypoints: [
                 {
-                  id: '98fc0c4a59077e9769fcdee8ae5c3eaa',
+                  id: '31',
                   name: 'Waypoint Tier 3: 1',
                   value: 0,
                   valid: false,
@@ -264,7 +290,7 @@ export class AppService {
                   waypoints: [],
                 },
                 {
-                  id: '654970a65e68dad53e2811ab8dea9ca0',
+                  id: '32',
                   name: 'Waypoint Tier 3: 2',
                   value: 1,
                   valid: true,
@@ -273,7 +299,7 @@ export class AppService {
                   captured: false,
                   waypoints: [
                     {
-                      id: '8046c60dc4b00ed0c2351e68cad45e9d',
+                      id: '4',
                       name: 'Waypoint Tier 4: 1',
                       value: 1,
                       valid: true,
@@ -285,7 +311,7 @@ export class AppService {
                   ],
                 },
                 {
-                  id: 'be7db8674f944cc9c31d67c354683502',
+                  id: '33',
                   name: 'Waypoint Tier 3: 3',
                   value: 0,
                   valid: false,

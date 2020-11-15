@@ -30,7 +30,7 @@ export class QRFindComponent {
         return 'map-signs';
 
       case ScavengerWaypointStatus.FINISH:
-        return 'route';
+        return 'flag-checkered';
 
       case ScavengerWaypointStatus.INVALID:
         return 'map';
@@ -67,6 +67,7 @@ export class QRFindComponent {
     switch (this.waypointStatus) {
       case ScavengerWaypointStatus.START:
       case ScavengerWaypointStatus.INVALID:
+      case ScavengerWaypointStatus.FINISH:
         return 0.25;
 
       default:
