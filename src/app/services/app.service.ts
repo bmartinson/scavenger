@@ -241,7 +241,6 @@ export class AppService {
    * @param idWaypoint The id of the waypoint that is the current hunt waypoint.
    */
   private setCurrentWaypoint(idWaypoint: string): void {
-    console.warn('setting current waypoint', idWaypoint, !!this.session.hunt);
     if (!this.session.hunt) {
       return;
     }
