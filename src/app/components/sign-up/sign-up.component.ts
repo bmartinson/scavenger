@@ -4,11 +4,11 @@ import { AppService } from '../../services/app.service';
 import { ScavengerRouteComponent } from '../scavenger-route/scavenger-route.component';
 
 @Component({
-  selector: 'scavenger-about',
-  templateUrl: './about.component.html',
+  selector: 'scavenger-sign-up',
+  templateUrl: './sign-up.component.html',
   styleUrls: ['../../styles/route-component-base.scss', '../../styles/route-component-centered.scss']
 })
-export class AboutComponent extends ScavengerRouteComponent {
+export class SignUpComponent extends ScavengerRouteComponent {
 
   constructor(public appService: AppService, protected titleService: Title) {
     super(appService, titleService);

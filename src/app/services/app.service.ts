@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { NavigationEnd, Router } from '@angular/router';
 import { BehaviorSubject, Observable, Subject } from 'rxjs';
 import { ScavengerHuntType } from '../enum/scavenger-hunt-type.enum';
 import { ScavengerWaypointStatus } from '../enum/scavenger-waypoint.enum';
@@ -44,6 +45,11 @@ export class AppService {
 
   /* * * * * Application State * * * * */
   private session: ScavengerSession;
+  private _url: string;
+
+  public get url(): string {
+    return this._url;
+  }
 
   public get hasHunt(): boolean {
     return !!this.session.hunt;
@@ -57,7 +63,30 @@ export class AppService {
     return !this.session?.hunt || !this.session?.active;
   }
 
-  constructor() {
+  constructor(private router: Router) {
+    this.router.events.subscribe((event: any) => {
+      if (event instanceof NavigationEnd) {
+        this._url = (event as NavigationEnd).urlAfterRedirects;
+
+        // remove the first character '/'
+        if (this._url?.length > 0) {
+          this._url = this._url.substring(1, this._url.length);
+        }
+
+        // cut off query parameters
+        const idxQuery: number = this._url?.indexOf('?');
+        if (idxQuery >= 0 && this._url?.length > 0) {
+          this._url = this._url.substring(0, idxQuery);
+        }
+
+        // cut off any remaining sub routes
+        const idxSubRoute: number = this._url?.indexOf('/');
+        if (idxSubRoute >= 0 && this._url?.length > 0) {
+          this._url = this._url.substring(0, idxSubRoute);
+        }
+      }
+    });
+
     const rawSession: string = localStorage.getItem(AppService.SESSION_STORAGE_KEY);
 
     if (!!rawSession) {

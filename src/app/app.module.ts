@@ -4,7 +4,6 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { FaIconLibrary, FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { faCheck, faFlagCheckered, faHiking, faMap, faMapSigns, faQrcode, faRoute, faStreetView, faTimes, faUndo } from '@fortawesome/free-solid-svg-icons';
 import { AppRoutingModule } from './app-routing.module';
-import { AboutComponent } from './components/about/about.component';
 import { AppComponent } from './components/app/app.component';
 import { HomeComponent } from './components/home/home.component';
 import { IconHolderComponent } from './components/icon-holder/icon-holder.component';
@@ -13,11 +12,11 @@ import { NavigationComponent } from './components/navigation/navigation.componen
 import { NoWaypointComponent } from './components/no-waypoint/no-waypoint.component';
 import { QRFindComponent } from './components/qr-find/qr-find.component';
 import { QRSearchComponent } from './components/qr-search/qr-search.component';
+import { SignUpComponent } from './components/sign-up/sign-up.component';
 import { WaypointComponent } from './components/waypoint/waypoint.component';
 
 @NgModule({
   declarations: [
-    AboutComponent,
     AppComponent,
     HomeComponent,
     IconHolderComponent,
@@ -26,6 +25,7 @@ import { WaypointComponent } from './components/waypoint/waypoint.component';
     NoWaypointComponent,
     QRFindComponent,
     QRSearchComponent,
+    SignUpComponent,
     WaypointComponent
   ],
   imports: [

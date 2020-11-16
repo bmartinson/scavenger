@@ -5,7 +5,17 @@
   </a>
 
   <li>
-    <ul><a routerLink="/about">About</a></ul>
-    <ul><a routerLink="/about">My Games</a></ul>
+    <ul>
+      <a routerLink="/"
+         [class.viewing]="appService.url === ''">
+        About
+      </a>
+    </ul>
+    <ul>
+      <a routerLink="/sign-up"
+         [class.viewing]="appService.url === 'sign-up'">
+        Sign Up
+      </a>
+    </ul>
   </li>
 </div>

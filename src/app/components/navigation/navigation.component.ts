@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { NavigationEnd, Router } from '@angular/router';
 import { AppService } from '../../services/app.service';
 
 @Component({
@@ -8,7 +9,7 @@ import { AppService } from '../../services/app.service';
 })
 export class NavigationComponent {
 
-  constructor(private appService: AppService) {
+  constructor(public appService: AppService) {
   }
 
   /**

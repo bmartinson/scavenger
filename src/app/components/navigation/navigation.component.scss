@@ -80,6 +80,11 @@ $ribbon-stroke-color: $grey;
         transition: color 0.5s, background-color 0.5s, box-shadow 0.5s, border-color 0.5s;
         padding: 0 .5em;
         min-width: 6em;
+        border-bottom: 5px solid transparent;
+
+        &.viewing {
+          border-bottom: 5px solid $red;
+        }
       }
 
       a:link {
@@ -126,7 +131,7 @@ $ribbon-stroke-color: $grey;
     top: 0;
 
     &:hover {
-      top: -10px;
+      top: -20px;
       transition: top .5s;
     }
 
