@@ -45,20 +45,35 @@ p {
 
 a {
   font-family: Roboto, Open Sans, sans-serif;
+  text-decoration: none;
+  font-weight: bold;
+  color: $darkest-grey;
 }
 
 a:link {
   font-family: Roboto, Open Sans, sans-serif;
+  text-decoration: none;
+  font-weight: bold;
+  color: $darkest-grey;
 }
 
 a:visited {
   font-family: Roboto, Open Sans, sans-serif;
+  text-decoration: none;
+  font-weight: bold;
+  color: $darkest-grey;
 }
 
 a:hover {
   font-family: Roboto, Open Sans, sans-serif;
+  text-decoration: underline;
+  font-weight: bold;
+  color: $darkest-grey;
 }
 
 a:active {
   font-family: Roboto, Open Sans, sans-serif;
+  text-decoration: none;
+  font-weight: bold;
+  color: $darkest-grey;
 }

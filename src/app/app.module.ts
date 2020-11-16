@@ -11,9 +11,12 @@ import { IconHolderComponent } from './components/icon-holder/icon-holder.compon
 import { LoaderComponent } from './components/loader/loader.component';
 import { NavigationComponent } from './components/navigation/navigation.component';
 import { NoWaypointComponent } from './components/no-waypoint/no-waypoint.component';
+import { PrivacyComponent } from './components/privacy/privacy.component';
 import { QRFindComponent } from './components/qr-find/qr-find.component';
 import { QRSearchComponent } from './components/qr-search/qr-search.component';
 import { SignUpComponent } from './components/sign-up/sign-up.component';
+import { SupportComponent } from './components/support/support.component';
+import { TermsComponent } from './components/terms/terms.component';
 import { WaypointComponent } from './components/waypoint/waypoint.component';
 
 @NgModule({
@@ -25,9 +28,12 @@ import { WaypointComponent } from './components/waypoint/waypoint.component';
     LoaderComponent,
     NavigationComponent,
     NoWaypointComponent,
+    PrivacyComponent,
     QRFindComponent,
     QRSearchComponent,
     SignUpComponent,
+    SupportComponent,
+    TermsComponent,
     WaypointComponent
   ],
   imports: [
