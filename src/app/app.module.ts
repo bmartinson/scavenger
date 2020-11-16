@@ -5,6 +5,7 @@ import { FaIconLibrary, FontAwesomeModule } from '@fortawesome/angular-fontaweso
 import { faCheck, faFlagCheckered, faHiking, faMap, faMapSigns, faQrcode, faRoute, faStreetView, faTimes, faUndo } from '@fortawesome/free-solid-svg-icons';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './components/app/app.component';
+import { FooterComponent } from './components/footer/footer.component';
 import { HomeComponent } from './components/home/home.component';
 import { IconHolderComponent } from './components/icon-holder/icon-holder.component';
 import { LoaderComponent } from './components/loader/loader.component';
@@ -18,6 +19,7 @@ import { WaypointComponent } from './components/waypoint/waypoint.component';
 @NgModule({
   declarations: [
     AppComponent,
+    FooterComponent,
     HomeComponent,
     IconHolderComponent,
     LoaderComponent,

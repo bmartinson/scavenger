@@ -1,0 +1,83 @@
+@import "../../styles/common";
+
+:host {
+  position: relative;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  background-color: $lighter-grey;
+
+  .footer-content {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: flex-start;
+    max-width: 800px;
+    height: auto;
+    padding: 1.5em 0 2em 0;
+  }
+
+  .footer-links {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: flex-start;
+    height: auto;
+
+    li {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      height: 100%;
+      margin: 0 1em;
+
+      ul {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        justify-content: flex-start;
+        height: 100%;
+        outline: none;
+        transition: text-decoration 0.5s;
+        padding: 0 .5em;
+        min-width: 6em;
+        border-bottom: 5px solid transparent;
+        text-align: center;
+        margin: 0;
+
+        &.header {
+          column-rule: $darker-grey;
+          font-weight: bold;
+          margin-bottom: .5em;
+        }
+
+        a {
+          transition: color 0.5s, background-color 0.5s, box-shadow 0.5s, border-color 0.5s;
+        }
+
+        a:link {
+          text-decoration: none;
+          color: $dark-grey;
+        }
+
+        a:visited {
+          text-decoration: none;
+          color: $dark-grey;
+        }
+
+        a:hover {
+          cursor: pointer;
+          text-decoration: underline;
+          color: $dark-grey;
+        }
+
+        a:active {
+          text-decoration: none;
+          color: $dark-grey;
+        }
+      }
+    }
+  }
+}
