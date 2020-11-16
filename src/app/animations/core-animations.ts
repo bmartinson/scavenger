@@ -20,6 +20,26 @@ export const dropDownAnimation = trigger(
   ],
 );
 
+export const delayedDropDownAnimation = trigger(
+  'dropDownAnimation',
+  [
+    transition(
+      ':enter',
+      [
+        style({ top: -100, position: 'absolute' }),
+        animate('.5s .25s ease-out', style({ top: 0, position: 'absolute' })),
+      ],
+    ),
+    transition(
+      ':leave',
+      [
+        style({ top: '0' }),
+        animate('.5s .25s ease-in', style({ top: -100 })),
+      ],
+    ),
+  ],
+);
+
 export const fadeInOutQuickAnimation = trigger(
   'fadeInOutQuickAnimation',
   [

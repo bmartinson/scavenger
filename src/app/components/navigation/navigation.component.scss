@@ -1,5 +1,33 @@
 @import "../../styles/common";
 
+$ribbon-tri-width: 120px;
+$ribbon-tri-height: 30px;
+$ribbon-tri-padding: 4px;
+$ribbon-background-color: $red;
+$ribbon-stroke-color: $grey;
+
+@keyframes ribbonDown {
+
+  0% {
+    top: calc(-300%);
+  }
+
+  100% {
+    top: 0;
+  }
+}
+
+@keyframes ribbonHover {
+
+  0% {
+    top: 0;
+  }
+
+  100% {
+    top: -20px;
+  }
+}
+
 :host {
   position: absolute;
   display: flex;
@@ -8,9 +36,22 @@
   align-items: center;
   width: 100%;
 
+  .banner-bg {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    background-color: $darker-grey;
+    margin-bottom: .5em;
+    width: 100%;
+    height: 5em;
+    box-shadow: 0px 0px 4px rgba($color: ($darker-grey), $alpha: 0.25);
+  }
+
   li {
     list-style: none;
     display: flex;
+    height: 100%;
 
     ul {
       display: flex;
@@ -19,44 +60,130 @@
       align-items: center;
       text-align: center;
       padding: 0;
-      margin: 1rem;
+      margin: 0;
+      height: 100%;
+
+      &:first-child {
+        margin: 0 0 0 1em;
+      }
+
+      &:last-child {
+        margin: 0 1em 0 0;
+      }
+
+      a {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        height: 100%;
+        outline: none;
+        transition: color 0.5s, background-color 0.5s, box-shadow 0.5s, border-color 0.5s;
+        padding: 0 .5em;
+        min-width: 6em;
+      }
+
+      a:link {
+        text-decoration: none;
+        font-weight: bold;
+        color: $dark-grey;
+      }
+
+      a:visited {
+        text-decoration: none;
+        font-weight: bold;
+        color: $dark-grey;
+      }
+
+      a:hover {
+        cursor: pointer;
+        text-decoration: none;
+        font-weight: bold;
+        color: $white;
+        box-shadow: inset 0px 0px 2em rgba($color: ($darkest-grey), $alpha: 1);
+      }
+
+      a:active {
+        text-decoration: none;
+        font-weight: bold;
+        color: $dark-grey;
+      }
     }
   }
 
-  a {
-    outline: none;
-    transition: color 0.5s, background-color 0.5s, box-shadow 0.5s, border-color 0.5s;
-    padding: 4px;
-    border: 1px solid transparent;
-    border-radius: 12px;
-    min-width: 5em;
+  .ribbon {
+    background-color: $ribbon-background-color;
+    color: $ribbon-stroke-color;
+    display: inline-block;
+    width: $ribbon-tri-width;
+    position: relative;
+    text-decoration: none;
+    padding: 0 #{$ribbon-tri-padding} #{$ribbon-tri-padding / 2};
+    text-align: center;
+    box-shadow: 0px 0px 8px rgba($color: ($black), $alpha: 0.5);
+    z-index: 1;
+    animation: ribbonDown ease .5s;
+    transition: top .5s;
+    top: 0;
+
+    &:hover {
+      top: -10px;
+      transition: top .5s;
+    }
+
+    &:after {
+      content: '';
+      display: block;
+      width: 0;
+      height: 0;
+      border-style: solid;
+      border-color: $ribbon-background-color transparent transparent transparent;
+      border-width: #{$ribbon-tri-height - ($ribbon-tri-padding / 2) } #{$ribbon-tri-width / 2} 0 #{$ribbon-tri-width / 2};
+
+      position: absolute;
+      top: 100%;
+      left: 0;
+
+    }
   }
 
-  a:link {
-    text-decoration: none;
-    font-weight: bold;
-    color: $dark-grey;
+  .ribbon-inner {
+    display: block;
+    border-left: 1px solid $ribbon-stroke-color;
+    border-right: 1px solid $ribbon-stroke-color;
+    position: relative;
+    height: 100%;
+    padding: 75px 35px 20px;
+    font-family: 'Anton', sans-serif;
+    color: $white;
+    font-size: 40px;
+
+    &:before,
+    &:after {
+      content: '';
+      display: block;
+
+      width: 0;
+      height: 0;
+      border-style: solid;
+      border-color: $ribbon-background-color transparent transparent transparent;
+      border-width: #{$ribbon-tri-height -$ribbon-tri-padding} #{($ribbon-tri-width / 2) - $ribbon-tri-padding} 0 #{($ribbon-tri-width / 2) - $ribbon-tri-padding};
+      margin-top: -1px;
+
+      position: absolute;
+      top: 100%;
+      left: -1px;
+      z-index: 5;
+    }
+
+
+    &:before {
+      border-color: $ribbon-stroke-color transparent transparent transparent;
+      border-width: #{$ribbon-tri-height -$ribbon-tri-padding} #{($ribbon-tri-width / 2) - $ribbon-tri-padding} 0 #{($ribbon-tri-width / 2) - $ribbon-tri-padding};
+      margin-top: 0;
+    }
   }
 
-  a:visited {
-    text-decoration: none;
-    font-weight: bold;
-    color: $dark-grey;
-  }
-
-  a:hover {
-    cursor: pointer;
-    text-decoration: none;
-    font-weight: bold;
-    color: $black;
-    background-color: $light-grey;
-    border-color: rgba($color: (#ffffff), $alpha: 0.25);
-    box-shadow: 0px 0px 5px rgba($color: (#333333), $alpha: 0.25);
-  }
-
-  a:active {
-    text-decoration: none;
-    font-weight: bold;
-    color: $dark-grey;
+  * {
+    box-sizing: border-box;
   }
 }
