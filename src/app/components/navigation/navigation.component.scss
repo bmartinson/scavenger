@@ -35,6 +35,7 @@ $ribbon-stroke-color: $grey;
   justify-content: center;
   align-items: center;
   width: 100%;
+  z-index: 1;
 
   .banner-bg {
     display: flex;
@@ -125,7 +126,7 @@ $ribbon-stroke-color: $grey;
     padding: 0 #{$ribbon-tri-padding} #{$ribbon-tri-padding / 2};
     text-align: center;
     box-shadow: 0px 0px 8px rgba($color: ($black), $alpha: 0.5);
-    z-index: 1;
+    z-index: 2;
     animation: ribbonDown ease .5s;
     transition: top .5s;
     top: 0;
