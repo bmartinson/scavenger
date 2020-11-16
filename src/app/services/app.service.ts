@@ -191,6 +191,13 @@ export class AppService {
 
         // mark the waypoint as captured
         waypoint.captured = true;
+
+        // if we are marked to be a single path only while capturing, then we need to invalidate siblings
+        if (waypoint.parent?.waypoints && waypoint.parent.waypoints.length > 0) {
+          for (const sibling of waypoint.parent.waypoints) {
+            sibling.valid = false;
+          }
+        }
       }
     } else {
       if (
@@ -260,6 +267,7 @@ export class AppService {
         id: '1',
         name: 'Testing Hunt',
         type: ScavengerHuntType.ORDERED,
+        singlePathOnly: false,
         startingWaypoint: {
           id: '1',
           name: 'Waypoint Tier 1: 1',

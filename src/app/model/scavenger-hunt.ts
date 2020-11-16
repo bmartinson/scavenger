@@ -10,6 +10,7 @@ export class ScavengerHunt extends ScavengerModel implements IScavengerHunt {
   private _startingWaypoint: ScavengerWaypoint;
   private _waypointCount: number;
   private _validWaypointCount: number;
+  private _singlePathOnly: boolean;
   public idCurrentWaypoint: string;
 
   /* * * * * Property Access * * * * */
@@ -20,6 +21,10 @@ export class ScavengerHunt extends ScavengerModel implements IScavengerHunt {
 
   public get type(): ScavengerHuntType {
     return this._type;
+  }
+
+  public get singlePathOnly(): boolean {
+    return this._singlePathOnly;
   }
 
   public get startingWaypoint(): ScavengerWaypoint {
@@ -58,6 +63,7 @@ export class ScavengerHunt extends ScavengerModel implements IScavengerHunt {
     this._waypointCount = this.startingWaypoint ? this.startingWaypoint.countWaypoints() : 0;
     this._validWaypointCount = this.startingWaypoint ? this.startingWaypoint.countWaypoints(true) : 0;
     this.idCurrentWaypoint = data?.idCurrentWaypoint;
+    this._singlePathOnly = !!data?.singlePathOnly;
   }
 
   public toObject(): IScavengerHunt {
@@ -66,6 +72,7 @@ export class ScavengerHunt extends ScavengerModel implements IScavengerHunt {
       type: this.type,
       startingWaypoint: this.startingWaypoint?.toObject(),
       idCurrentWaypoint: this.idCurrentWaypoint,
+      singlePathOnly: this.singlePathOnly,
     });
   }
 

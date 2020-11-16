@@ -7,4 +7,5 @@ export interface IScavengerHunt extends IScavengerModel {
   type: ScavengerHuntType;
   startingWaypoint: IScavengerWaypoint;
   idCurrentWaypoint: string;
+  singlePathOnly: boolean;
 }

@@ -6,7 +6,7 @@ export class ScavengerWaypoint extends ScavengerModel implements IScavengerWaypo
 
   private _name: string;
   private _value: number;
-  private _valid: boolean;
+  public valid: boolean;
   private _dialog: string[];
   private _outOfOrderDialog: string[];
   private _waypoints: ScavengerWaypoint[];
@@ -22,10 +22,6 @@ export class ScavengerWaypoint extends ScavengerModel implements IScavengerWaypo
 
   public get value(): number {
     return this._value;
-  }
-
-  public get valid(): boolean {
-    return this._valid;
   }
 
   public get waypoints(): ScavengerWaypoint[] {
@@ -63,7 +59,7 @@ export class ScavengerWaypoint extends ScavengerModel implements IScavengerWaypo
 
     this._name = data?.name;
     this._value = data?.value;
-    this._valid = data?.valid;
+    this.valid = data?.valid;
     this._dialog = data?.dialog;
     this._outOfOrderDialog = data?.outOfOrderDialog;
     this._parent = parent;
