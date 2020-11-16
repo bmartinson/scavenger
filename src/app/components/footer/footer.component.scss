@@ -8,6 +8,16 @@
   width: 100%;
   background-color: $lighter-grey;
 
+  font-size: $root-xs;
+
+  @include xs {
+    font-size: $root-s;
+  }
+
+  @include sm {
+    font-size: $root-normal;
+  }
+
   .footer-content {
     display: flex;
     justify-content: space-between;
@@ -21,6 +31,7 @@
       display: flex;
       justify-content: center;
       align-items: center;
+      padding-left: .25em;
 
       img {
         width: 4em;
