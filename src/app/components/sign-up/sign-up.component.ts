@@ -13,7 +13,7 @@ export class SignUpComponent extends ScavengerRouteComponent {
   constructor(public appService: AppService, protected titleService: Title) {
     super(appService, titleService);
 
-    this.titleService.setTitle(`${ScavengerRouteComponent.BASE_PAGE_TITLE} - About`);
+    this.titleService.setTitle(`${ScavengerRouteComponent.BASE_PAGE_TITLE} - Sign Up!`);
   }
 
 }
