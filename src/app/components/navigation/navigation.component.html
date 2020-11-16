@@ -4,18 +4,18 @@
     <span class="ribbon-inner">SG</span>
   </a>
 
-  <li>
-    <ul>
+  <ul>
+    <li>
       <a routerLink="/"
          [class.viewing]="appService.url === ''">
         About
       </a>
-    </ul>
-    <ul>
+    </li>
+    <li>
       <a routerLink="/sign-up"
          [class.viewing]="appService.url === 'sign-up'">
         Sign Up
       </a>
-    </ul>
-  </li>
+    </li>
+  </ul>
 </div>

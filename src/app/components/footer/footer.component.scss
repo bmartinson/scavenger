@@ -55,14 +55,15 @@
       align-items: flex-start;
       height: auto;
 
-      li {
+      ul {
         list-style: none;
         display: flex;
         flex-direction: column;
         height: 100%;
         margin: 0 1em;
+        padding: 0;
 
-        ul {
+        li {
           display: flex;
           align-items: center;
           justify-content: flex-start;
