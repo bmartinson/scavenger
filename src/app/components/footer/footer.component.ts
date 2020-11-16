@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { environment } from '../../../environments/environment';
 
 @Component({
   selector: 'scavenger-footer',
@@ -7,7 +8,10 @@ import { Component } from '@angular/core';
 })
 export class FooterComponent {
 
+  public version: string;
+
   constructor() {
+    this.version = `v${environment.version}`;
   }
 
 }

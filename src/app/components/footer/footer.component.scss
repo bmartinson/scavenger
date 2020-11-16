@@ -40,12 +40,18 @@
 
       div {
         display: flex;
+        flex-direction: column;
         justify-content: center;
-        align-items: center;
+        align-items: flex-start;
         font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
         font-size: $font-size-xxl;
         color: $darkest-grey;
         padding-bottom: .25em;
+      }
+
+      .version {
+        color: $dark-grey;
+        font-size: $font-size-xxs;
       }
     }
 

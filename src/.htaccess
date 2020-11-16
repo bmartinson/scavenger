@@ -10,11 +10,10 @@ RewriteRule ^(.*)$ http://www.scavenger.games/$1 [L,R=301,NC]
 # Enforce HTTPS Traffic
 #
 RewriteCond %{SERVER_PORT} 80
-RewriteRule ^(.*)$ https://www.brianmartinson.com/$1 [R,L]
+RewriteRule ^(.*)$ https://www.scavenger.games/$1 [R,L]
 
 #
 # API RewriteRules
 #
-## Utility
 # RewriteRule ^api/health-check/?$ /api/utility/health-check.php [NC,L]
 # RewriteRule ^api/health-check.json/?$ /api/utility/health-check.php?json=1 [QSA,NC,L]
