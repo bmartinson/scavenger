@@ -6,7 +6,7 @@ import { ScavengerRouteComponent } from '../scavenger-route/scavenger-route.comp
 @Component({
   selector: 'scavenger-terms',
   templateUrl: './terms.component.html',
-  styleUrls: ['../../styles/route-component-base.scss', '../../styles/route-component-centered.scss']
+  styleUrls: ['../../styles/route-component-base.scss', '../../styles/route-component-centered.scss', '../../styles/route-component-full-page.scss']
 })
 export class TermsComponent extends ScavengerRouteComponent {
 

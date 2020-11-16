@@ -1,4 +1,6 @@
-<router-outlet [@fadeInOutQuickAnimation]></router-outlet>
+<router-outlet [@fadeInOutQuickAnimation]
+               (activate)="onActivate()">
+</router-outlet>
 <scavenger-footer *ngIf="appService.showNavigation"></scavenger-footer>
 
 <scavenger-navigation *ngIf="appService.showNavigation"
