@@ -2,9 +2,7 @@
 
 :host {
   position: relative;
-  display: flex;
-  justify-content: center;
-  align-items: center;
+  display: block;
   width: 100%;
   background-color: $lighter-grey;
 
@@ -18,104 +16,111 @@
     font-size: $root-normal;
   }
 
-  .footer-content {
+  .footer-wrapper {
     display: flex;
-    justify-content: space-between;
-    align-items: flex-start;
-    max-width: 800px;
+    justify-content: center;
+    align-items: center;
     width: 100%;
-    height: auto;
-    padding: 1.5em 0 2em 0;
 
-    .qr-logo {
+    .footer-content {
       display: flex;
-      justify-content: center;
-      align-items: center;
-      padding-left: .25em;
+      justify-content: space-between;
+      align-items: flex-start;
+      max-width: 800px;
+      width: 100%;
+      height: auto;
+      padding: 1.5em 0 2em 0;
 
-      img {
-        width: 4em;
-        height: 4em;
+      .qr-logo {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        padding-left: .25em;
+
+        img {
+          width: 4em;
+          height: 4em;
+        }
+
+        div {
+          display: flex;
+          flex-direction: column;
+          justify-content: center;
+          align-items: flex-start;
+          font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+          font-size: $font-size-xxl;
+          color: $darkest-grey;
+          padding-bottom: .25em;
+        }
+
+        .version {
+          color: $dark-grey;
+          font-size: $font-size-xxs;
+        }
       }
 
-      div {
+      .footer-links {
         display: flex;
-        flex-direction: column;
         justify-content: center;
         align-items: flex-start;
-        font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
-        font-size: $font-size-xxl;
-        color: $darkest-grey;
-        padding-bottom: .25em;
-      }
+        height: auto;
 
-      .version {
-        color: $dark-grey;
-        font-size: $font-size-xxs;
-      }
-    }
-
-    .footer-links {
-      display: flex;
-      justify-content: center;
-      align-items: flex-start;
-      height: auto;
-
-      ul {
-        list-style: none;
-        display: flex;
-        flex-direction: column;
-        height: 100%;
-        margin: 0 1em;
-        padding: 0;
-
-        li {
+        ul {
+          list-style: none;
           display: flex;
-          align-items: center;
-          justify-content: flex-start;
+          flex-direction: column;
           height: 100%;
-          outline: none;
-          transition: text-decoration 0.5s;
-          padding: 0 .5em;
-          min-width: 6em;
-          border-bottom: 5px solid transparent;
-          text-align: center;
-          margin: 0;
+          margin: 0 1em;
+          padding: 0;
 
-          &.header {
-            column-rule: $darker-grey;
-            font-weight: bold;
-            margin-bottom: .5em;
-          }
+          li {
+            display: flex;
+            align-items: center;
+            justify-content: flex-start;
+            height: 100%;
+            outline: none;
+            transition: text-decoration 0.5s;
+            padding: 0 .5em;
+            min-width: 6em;
+            border-bottom: 5px solid transparent;
+            text-align: center;
+            margin: 0;
 
-          a {
-            transition: color 0.5s, background-color 0.5s, box-shadow 0.5s, border-color 0.5s;
-            font-weight: unset;
-          }
+            &.header {
+              column-rule: $darker-grey;
+              font-weight: bold;
+              margin-bottom: .5em;
+            }
 
-          a:link {
-            text-decoration: none;
-            color: $dark-grey;
-            font-weight: unset;
-          }
+            a {
+              transition: color 0.5s, background-color 0.5s, box-shadow 0.5s, border-color 0.5s;
+              font-weight: unset;
+            }
 
-          a:visited {
-            text-decoration: none;
-            color: $dark-grey;
-            font-weight: unset;
-          }
+            a:link {
+              text-decoration: none;
+              color: $dark-grey;
+              font-weight: unset;
+            }
 
-          a:hover {
-            cursor: pointer;
-            text-decoration: underline;
-            color: $dark-grey;
-            font-weight: unset;
-          }
+            a:visited {
+              text-decoration: none;
+              color: $dark-grey;
+              font-weight: unset;
+            }
 
-          a:active {
-            text-decoration: none;
-            color: $dark-grey;
-            font-weight: unset;
+            a:hover {
+              cursor: pointer;
+              text-decoration: underline;
+              color: $dark-grey;
+              font-weight: unset;
+            }
+
+            a:active {
+              text-decoration: none;
+              color: $dark-grey;
+              font-weight: unset;
+            }
           }
         }
       }

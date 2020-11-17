@@ -127,5 +127,8 @@
       }
     }
   },
-  "defaultProject": "scavenger"
+  "defaultProject": "scavenger",
+  "cli": {
+    "analytics": "a11fc9cf-9556-4aab-aa5a-3115c05d6ab5"
+  }
 }
