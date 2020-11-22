@@ -16,7 +16,7 @@ RewriteRule ^(.*)$ https://www.scavenger.games/$1 [R,L]
 # Error Document
 # Fall back to angular routing by default
 #
-ErrorDocument 404 index.html
+ErrorDocument 404 /index.html
 
 #
 # API RewriteRules
