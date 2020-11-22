@@ -13,6 +13,12 @@ RewriteCond %{SERVER_PORT} 80
 RewriteRule ^(.*)$ https://www.scavenger.games/$1 [R,L]
 
 #
+# Error Document
+# Fall back to angular routing by default
+#
+ErrorDocument 404 index.html
+
+#
 # API RewriteRules
 #
 # RewriteRule ^api/health-check/?$ /api/utility/health-check.php [NC,L]
