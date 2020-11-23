@@ -7,10 +7,6 @@ $response->endpoint = $endpoint;
 $response->status = 'fail';
 $response->code = $e->GetCode();
 
-// create the <err> element with the error code and error message as attributes
-$errorElement = $responseDoc->createElement("err");
-$errorElement->setAttribute("code", $e->GetCode());
-
 $message = $e->GetMessage();
 $mArray = explode("|", $message);
 

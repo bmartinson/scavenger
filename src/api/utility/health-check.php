@@ -26,9 +26,9 @@ $endpoint = "health-check";
 function apiMain($database, &$response)
 {
   // create the meat of the response document
-  $response->check = (object)[
+  array_push($response->data, (object)[
     'isConnected' => 1
-  ];
+  ]);
 }
 
 // parse the _REQUEST parameters and execute the endpoint

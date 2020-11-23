@@ -168,7 +168,10 @@ function getUserIDFromAuthToken($authToken)
  */
 function needsAuthToken($endpoint)
 {
-  if ($endpoint == 'user' && $_SERVER['REQUEST_METHOD'] == 'POST') {
+  if (
+    $endpoint == 'health-check' ||
+    $endpoint == 'user' && $_SERVER['REQUEST_METHOD'] == 'POST'
+  ) {
     return false;
   } else {
     return true;
