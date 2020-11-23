@@ -1,24 +1,23 @@
 <?php
 
 // create a new response document
-$responseDoc = new DOMDocument();
+$response = (object)[];
 
-// create the <rsp> element with a status of fail
-$resultSect = $responseDoc->createElement("rsp");
-$resultSect->setAttribute("status", "fail");
-$resultSect->setAttribute("endpoint", $endpoint);
-$responseDoc->appendChild($resultSect);
+$response->endpoint = $endpoint;
+$response->status = 'fail';
+$response->code = $e->GetCode();
 
 // create the <err> element with the error code and error message as attributes
 $errorElement = $responseDoc->createElement("err");
 $errorElement->setAttribute("code", $e->GetCode());
+
 $message = $e->GetMessage();
 $mArray = explode("|", $message);
 
 if (count($mArray) > 1) {
-  $errorElement->setAttribute("data", $mArray[0]);
-  $errorElement->setAttribute("message", $mArray[1]);
+  $response->data = $mArray[0];
+  $response->message = $mArray[1];
 } else {
-  $errorElement->setAttribute("message", $mArray[0]);
+  $response->data = null;
+  $response->message = $mArray[0];
 }
-$resultSect->appendChild($errorElement);

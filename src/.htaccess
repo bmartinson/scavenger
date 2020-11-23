@@ -21,5 +21,5 @@ ErrorDocument 404 /index.html
 #
 # API RewriteRules
 #
-# RewriteRule ^api/health-check/?$ /api/utility/health-check.php [NC,L]
-# RewriteRule ^api/health-check.json/?$ /api/utility/health-check.php?json=1 [QSA,NC,L]
+RewriteRule ^api/health-check/?$ /api/utility/health-check.php [QSA,NC,L]
+RewriteRule ^api/user/?$ /api/user.php [QSA,NC,L]

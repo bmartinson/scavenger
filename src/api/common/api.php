@@ -80,13 +80,13 @@ function generateAuthToken($userId, $firstName, $apiKey, $remember, $returnKey =
 {
   global $kSecret;
 
-  $replaceSymbols = array("&", "+");
-  $firstName = str_replace($replaceSymbols, "", $firstName);
+  $replaceSymbols = array('&', '+');
+  $firstName = str_replace($replaceSymbols, '', $firstName);
 
   $expirationTime = time() + expiration_days; // now + 90 days
   $plainText = "t=$expirationTime&u=$userId&a=$apiKey&n=$firstName";
   $mac = hash_hmac('sha256', $plainText, $kSecret);
-  $authToken = $plainText . "&d=" . $mac;
+  $authToken = $plainText . '&d=' . $mac;
 
   if (!$returnKey) {
     if ($remember)
@@ -149,7 +149,7 @@ function getUserIDFromAuthToken($authToken)
 
   // check to see that the second parameter in the token exists and is an integer value
   if (isset($authArray) && sizeof($authArray) >= 2) {
-    $id = intval(str_replace("u=", "", $authArray[1]));
+    $id = intval(str_replace('u=', '', $authArray[1]));
     if (is_int($id)) {
       return $id;
     } else {
@@ -168,7 +168,7 @@ function getUserIDFromAuthToken($authToken)
  */
 function needsAuthToken($endpoint)
 {
-  if ($endpoint == "health-check") {
+  if ($endpoint == 'user' && $_SERVER['REQUEST_METHOD'] == 'POST') {
     return false;
   } else {
     return true;

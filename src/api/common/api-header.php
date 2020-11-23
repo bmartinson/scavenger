@@ -1,8 +1,13 @@
 <?php
 
 // create the input and response documents
-$requestDoc = new DOMDocument();
-$responseDoc = new DOMDocument();
+$request = (object)[];
+$response = (object)[];
+
+// set some default state on responses
+$response->status = 'ok';
+$response->endpoint = $endpoint;
+$response->data = [];
 
 // check for banned IP addresses
 if (isset($_SERVER['HTTP_X_FORWARDED_FOR'])) {
