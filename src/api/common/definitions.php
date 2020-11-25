@@ -19,6 +19,9 @@ define("err_param_missing", "Required parameter missing - ");
 define("errorno_param_invalid", 101);
 define("err_param_invalid", "Required parameter invalid - ");
 
+define("errorno_invalid_user", 102);
+define("err_invalid_user", "Invalid user credentials");
+
 // error codes - sql
 define("errno_sql_query", 1001);
 define("err_sql_query", "SQL error: sql query failed");

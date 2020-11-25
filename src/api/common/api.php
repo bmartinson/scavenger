@@ -21,7 +21,7 @@ function &ExecuteSQL($database, $sql)
 /**
  * Get the sanitized data value for SQL insertion.
  *
- * @param {database} $database - A refernce to an open database connection.
+ * @param {database} $database - A reference to an open database connection.
  * @param {*} $theValue - The value to sanitize.
  * @param {string} $theType - The data type.
  */
@@ -106,7 +106,7 @@ function generateAuthToken($userId, $firstName, $apiKey, $remember, $returnKey =
  * Verifies that an auth token is valid
  *
  * @param {string} $authToken - A SHA-256 encoded string that is to be verified for API access.
- * @return {boolean} - True, if this authToken is vaild.
+ * @return {boolean} - True, if this authToken is valid.
  */
 function verifyAuthToken($authToken)
 {
@@ -170,7 +170,8 @@ function needsAuthToken($endpoint)
 {
   if (
     $endpoint == 'health-check' ||
-    $endpoint == 'user' && $_SERVER['REQUEST_METHOD'] == 'POST'
+    $endpoint == 'user' && $_SERVER['REQUEST_METHOD'] == 'POST' ||
+    $endpoint == 'authorize' && $_SERVER['REQUEST_METHOD'] == 'POST'
   ) {
     return false;
   } else {

@@ -1,11 +1,8 @@
 <?php
 
 /**
- * Endpoint: authorize
- * Description: This endpoint serves as a public endpoint that requires no auth token to access. Based on
- * the request method and parameters, we wil either create, edit, or delete an account.
- *
- * Returns: Nothing, redirects to the correct app/workflow.
+ * Endpoint: user
+ * Description: This endpoint is the REST endpoint for managing user accounts.
  */
 
 define('ABSPATH', realpath(__DIR__ . '/') . '/');
@@ -21,7 +18,7 @@ function getUser($database, &$response, $id)
   // check to see if the user exists in the user table
   $fetchUser = &ExecuteSQL(
     $database,
-    sprintf("SELECT id, firstName, lastName, email, verified, created, modified FROM User WHERE id=%s", GetSQLValueStringi($database, $_REQUEST['id'], 'int'))
+    sprintf("SELECT id, firstName, lastName, email, verified, deleted, created, modified FROM User WHERE id=%s", GetSQLValueStringi($database, $_REQUEST['id'], 'int'))
   );
 
   if ($fetchUser->num_rows > 0) {
@@ -32,6 +29,7 @@ function getUser($database, &$response, $id)
         'lastName' => $row_User->lastName,
         'email' => $row_User->email,
         'verified' => $row_User->verified,
+        'deleted' => $row_User->deleted,
         'created' => $row_User->created,
         'modified' => $row_User->modified
       ]);
@@ -46,6 +44,10 @@ function editUser($database, &$response, $data)
 {
 }
 
+function deleteUser($database, &$response, $data)
+{
+}
+
 function createUser($database, &$response, $data)
 {
   // check to see if the user exists in the user table
@@ -56,22 +58,27 @@ function createUser($database, &$response, $data)
 
   if ($fetchUser->num_rows == 0) {
     if (!isset($data->email)) {
-      throw new Exception('Email is required', errorno_param_missing);
+      throw new Exception(err_param_missing . 'email', errorno_param_missing);
     }
 
     if (!isset($data->firstName)) {
-      throw new Exception('First name is required', errorno_param_missing);
+      throw new Exception(err_param_missing . 'firstName', errorno_param_missing);
     }
 
     if (!isset($data->lastName)) {
-      throw new Exception('Last name is required', errorno_param_missing);
+      throw new Exception(err_param_missing . 'lastName', errorno_param_missing);
+    }
+
+    if (!isset($data->password)) {
+      throw new Exception(err_param_missing . 'password', errorno_param_missing);
     }
 
     ExecuteSQL(
       $database,
       sprintf(
-        "INSERT INTO User (email, firstName, lastName, created) VALUES (%s, %s, %s, NOW())",
+        "INSERT INTO User (email, password, firstName, lastName, created) VALUES (%s, %s, %s, NOW())",
         GetSQLValueStringi($database, $data->email, "text"),
+        GetSQLValueStringi($database, $data->password, "text"),
         GetSQLValueStringi($database, $data->firstName, "text"),
         GetSQLValueStringi($database, $data->lastName, "text")
       )
@@ -83,7 +90,7 @@ function createUser($database, &$response, $data)
     // fetch latest record
     $fetchUser = &ExecuteSQL(
       $database,
-      sprintf("SELECT id, firstName, lastName, email, verified, created, modified FROM User WHERE email=%s", GetSQLValueStringi($database, $data->email, 'text'))
+      sprintf("SELECT id, firstName, lastName, email, verified, deleted, created, modified FROM User WHERE email=%s", GetSQLValueStringi($database, $data->email, 'text'))
     );
 
     if ($fetchUser->num_rows > 0) {
@@ -94,8 +101,9 @@ function createUser($database, &$response, $data)
           'lastName' => $row_User->lastName,
           'email' => $row_User->email,
           'verified' => $row_User->verified,
+          'deleted' => $row_User->deleted,
           'created' => $row_User->created,
-          'modified' => $row_User->modified
+          'modified' => $row_User->modified,
         ]);
       }
 
@@ -131,8 +139,9 @@ try {
     if ($_SERVER['REQUEST_METHOD'] == 'POST') {
       createUser($database, $response, $data);
     } else if ($_SERVER['REQUEST_METHOD'] === 'PATCH') {
-      createUser($database, $response, $data);
+      editUser($database, $response, $data);
     } else if ($_SERVER['REQUEST_METHOD'] == 'DELETE') {
+      deleteUser($database, $response, $data);
     }
   }
 } catch (Exception $e) {
