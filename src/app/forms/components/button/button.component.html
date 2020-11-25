@@ -1,11 +1,11 @@
-<s-element-wrapper [isControl]="false"
-                   [cursor]="cursor"
-                   [ngClass]="{
+<qf-element-wrapper [isControl]="false"
+                    [cursor]="cursor"
+                    [ngClass]="{
 										'qf-btn-justify-left': style === QFButtonStyle.LINK && align === QFControlAlignment.LEFT,
 										'qf-btn-justify-center': style === QFButtonStyle.LINK && align === QFControlAlignment.CENTER,
 										'qf-btn-justify-right': style === QFButtonStyle.LINK && align === QFControlAlignment.RIGHT
                    }"
-                   (click)="onWrapperClick($event)">
+                    (click)="onWrapperClick($event)">
   <!-- Important: We assign [attr.routerLink] to prevent phantom navigation from using [routerLink] -->
   <button #coreEl
           [tabindex]="tabIndex"
@@ -58,4 +58,4 @@
       </div>
     </ng-template>
   </button>
-</s-element-wrapper>
+</qf-element-wrapper>

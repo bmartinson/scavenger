@@ -28,7 +28,7 @@
            [required]="(!!required) ? true : null"
            [tabindex]="tabIndex"
            [autofocus]="(!!autoFocus) ? true : null"
-           [autocomplete]="(autoComplete && type !== STextInputType.PASSWORD) ? 'on' : 'off'"
+           [autocomplete]="(autoComplete && type !== QFTextInputType.PASSWORD) ? 'on' : 'off'"
            [attr.disabled]="(!!disabled === true) ? true : null"
            class="form-control"
            [ngClass]="{'text-align-left' : align === QFControlAlignment.LEFT,
