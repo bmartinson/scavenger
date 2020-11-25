@@ -18,6 +18,7 @@ import { SignUpComponent } from './components/sign-up/sign-up.component';
 import { SupportComponent } from './components/support/support.component';
 import { TermsComponent } from './components/terms/terms.component';
 import { WaypointComponent } from './components/waypoint/waypoint.component';
+import { QuickFormsModule } from './forms/quick-forms.module';
 
 @NgModule({
   declarations: [
@@ -40,7 +41,8 @@ import { WaypointComponent } from './components/waypoint/waypoint.component';
     AppRoutingModule,
     BrowserAnimationsModule,
     BrowserModule,
-    FontAwesomeModule
+    FontAwesomeModule,
+    QuickFormsModule
   ],
   providers: [],
   bootstrap: [AppComponent]

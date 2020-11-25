@@ -1,0 +1,55 @@
+<qf-element-wrapper [ngRequired]="ngRequired"
+                    [ngValid]="ngValid"
+                    [ngInvalid]="ngInvalid"
+                    [ngPristine]="ngPristine"
+                    [ngDirty]="ngDirty"
+                    [cursor]="cursor"
+                    [ngClass]="{'qf-wrapper-disabled': isDisabled}">
+  <div *ngIf="labelText?.length > 0 && !hideLabelText"
+       class="qf-control-label"
+       tabindex="-1">
+    <span>{{labelText}}</span>
+    <a *ngIf="!hideWhatsThis"
+       alt="What's this?"
+       aria-label="What's this?"
+       (click)="onWhatsThisClicked()">
+      What's this?
+    </a>
+  </div>
+
+  <label [ngClass]="{'qf-disabled': cursor === 'not-allowed'}">
+    <input #coreEl
+           [name]="name"
+           [id]="name"
+           [type]="type"
+           [ngModel]="value"
+           maxlength="{{maxLength}}"
+           [placeholder]="placeholderText"
+           [required]="(!!required) ? true : null"
+           [tabindex]="tabIndex"
+           [autofocus]="(!!autoFocus) ? true : null"
+           [autocomplete]="(autoComplete && type !== STextInputType.PASSWORD) ? 'on' : 'off'"
+           [attr.disabled]="(!!disabled === true) ? true : null"
+           class="form-control"
+           [ngClass]="{'text-align-left' : align === QFControlAlignment.LEFT,
+             'text-align-center' : align === QFControlAlignment.CENTER,
+             'text-align-right' : align === QFControlAlignment.RIGHT}"
+           (input)="onChange(coreEl.value)"
+           (change)="onChange(coreEl.value)"
+           (keyup)="onChange(coreEl.value)"
+           (paste)="onChange(coreEl.value)"
+           (autocomplete)="onChange(coreEl.value)"
+           (focus)="onFocus()"
+           (blur)="onBlur()" />
+  </label>
+
+  <p *ngIf="uiErrorText.length > 0 &&
+        !valid &&
+        (dirty || formSubmissionAttempted || !uiErrorTextRequiresUserInteraction) &&
+        !disabled &&
+        (hasBlurred || formSubmissionAttempted || !uiErrorTextRequiresUserInteraction) || uiErrorTextIsWarning"
+     class="qf-control-error"
+     tabindex="-1">
+    {{uiErrorText}}
+  </p>
+</qf-element-wrapper>

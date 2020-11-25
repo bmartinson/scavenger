@@ -1,0 +1,10 @@
+<qf-element-wrapper [isControl]="false"
+                    [cursor]="cursor">
+  <form #coreEl
+        [class.qf-control-row]="displayDirection === 'row'"
+        [class.qf-align-end]="displayDirection === 'row'"
+        [class.qf-no-margin]="displayDirection === 'row'"
+        (ngSubmit)="onNgSubmit()">
+    <ng-content></ng-content>
+  </form>
+</qf-element-wrapper>

@@ -1,0 +1,9 @@
+<div [ngClass]="{'qf-control-wrapper': isControl,
+         'ng-required': ngRequired,
+         'ng-invalid': ngInvalid,
+         'ng-valid': ngValid,
+         'ng-pristine': ngPristine,
+         'ng-dirty': ngDirty}"
+     [style.cursor]="cursor">
+  <ng-content></ng-content>
+</div>

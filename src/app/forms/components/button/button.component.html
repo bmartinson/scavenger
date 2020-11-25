@@ -1,0 +1,61 @@
+<s-element-wrapper [isControl]="false"
+                   [cursor]="cursor"
+                   [ngClass]="{
+										'qf-btn-justify-left': style === QFButtonStyle.LINK && align === QFControlAlignment.LEFT,
+										'qf-btn-justify-center': style === QFButtonStyle.LINK && align === QFControlAlignment.CENTER,
+										'qf-btn-justify-right': style === QFButtonStyle.LINK && align === QFControlAlignment.RIGHT
+                   }"
+                   (click)="onWrapperClick($event)">
+  <!-- Important: We assign [attr.routerLink] to prevent phantom navigation from using [routerLink] -->
+  <button #coreEl
+          [tabindex]="tabIndex"
+          [attr.queryParamsHandling]="'merge'"
+          [attr.routerLink]="(routerLink?.length !== 0) ? routerLink : null"
+          (click)="onClick($event)"
+          [ngClass]="{
+			'qf-btn': true,
+			'qf-btn-no-scale': noClickAnimation,
+			'qf-btn-compact': compact,
+			'qf-btn-green': style === QFButtonStyle.PRIMARY || style === QFButtonStyle.SECONDARY,
+			'btn btn-link' : style === QFButtonStyle.LINK || style === QFButtonStyle.B_LINK || style === QFButtonStyle.FREESTYLE,
+			'btn-freestyle' : style === QFButtonStyle.FREESTYLE,
+			'qf-btn-link' : style === QFButtonStyle.B_LINK || style === QFButtonStyle.FREESTYLE,
+			'qf-btn-solid': style !== QFButtonStyle.LINK && style !== QFButtonStyle.SECONDARY && style !== QFButtonStyle.B_LINK && style !== QFButtonStyle.FREESTYLE,
+			'qf-btn-outline': style === QFButtonStyle.SECONDARY,
+			'qf-btn-disabled': isDisabled,
+			'qf-disabled': isDisabled,
+			'qf-btn-shake': doShake
+			}"
+          [type]="type">
+    <ng-container>
+      <div *ngIf="!isLoading; else loader"
+           class="no-select qf-btn-content">
+        <ng-content></ng-content>
+      </div>
+    </ng-container>
+    <ng-template #loader>
+      <div class="qf-btn-loading-group">
+        <ng-container *ngIf="loading; else loadingCheck">
+          <div [ngClass]="'loading-spinner-' + loadingColor + ' qf-btn-spinner'"></div>
+          <div *ngIf="loadingText"
+               class="no-select ml-2">
+            {{loadingText}}
+          </div>
+        </ng-container>
+        <ng-template #loadingCheck>
+          <div class="qf-loading-result">
+            <div [ngClass]="{
+							'qf-btn-check-white': doLoadingCheck && (style === QFButtonStyle.PRIMARY),
+							'qf-btn-check-green': doLoadingCheck && (style === QFButtonStyle.B_LINK || style === QFButtonStyle.LINK || style === QFButtonStyle.SECONDARY),
+							'qf-btn-x-white': doLoadingX && (style === QFButtonStyle.PRIMARY),
+							'qf-btn-x-green': doLoadingX && (style === QFButtonStyle.B_LINK || style === QFButtonStyle.LINK || style === QFButtonStyle.SECONDARY),
+							'draw': doLoadingCheck || doLoadingX,
+							'qf-btn-complete': doLoadComplete
+						}">
+            </div>
+          </div>
+        </ng-template>
+      </div>
+    </ng-template>
+  </button>
+</s-element-wrapper>
