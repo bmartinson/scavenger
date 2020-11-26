@@ -142,9 +142,37 @@ export class AppService {
     const data: any = {
       email: encodeURIComponent(email),
       password: CryptoJS.MD5(password).toString(),
+    };
+
+    return this.request('POST', 'https://www.scavenger.games/api/authorize', params, data).then((rspData: any) => {
+      if (rspData.status === 'success' && rspData.data?.length === 1) {
+        this.validateToken(rspData.data[0].authToken);
+      }
+
+      return rspData;
+    });
+  }
+
+  public signUp(email: string, password: string, firstName: string, lastName: string, organization: string): Promise<any> {
+    const params = new HttpParams();
+    const data: any = {
+      email: encodeURIComponent(email),
+      password: CryptoJS.MD5(password).toString(),
+      firstName: encodeURIComponent(firstName),
+      lastName: encodeURIComponent(lastName),
+    };
+
+    if (!!organization) {
+      data.organization = encodeURIComponent(organization);
     }
 
-    return this.request('POST', 'https://www.scavenger.games/api/authorize', params, data);
+    return this.request('POST', 'https://www.scavenger.games/api/user', params, data).then((rspData: any) => {
+      if (rspData.status === 'success' && rspData.data?.length === 1) {
+        this.validateToken(rspData.data[0].authToken);
+      }
+
+      return rspData;
+    });
   }
 
   public logout(): void {
@@ -163,6 +191,8 @@ export class AppService {
 
     if (!isValid) {
       this.logout();
+    } else {
+      Cookies.set(AppService.COOKIE_AUTH_KEY, authToken, { expires: 30, path: '/' });
     }
 
     return isValid;
@@ -178,7 +208,9 @@ export class AppService {
    * @param params Optional parameters associated with the request.
    */
   private request(type: 'GET' | 'POST' | 'DELETE' | 'PATCH', url: string, params?: HttpParams, data?: any): Promise<any> {
-    const headers: HttpHeaders = new HttpHeaders().set('Authorization', `token ${Cookies.get(AppService.COOKIE_AUTH_KEY)}`);
+    const headers: HttpHeaders = new HttpHeaders();
+
+    // .set('Authorization', `token ${Cookies.get(AppService.COOKIE_AUTH_KEY)}`)
 
     if (type === 'GET') {
       return this.http.get(url, { headers, params }).pipe(shareReplay()).toPromise();

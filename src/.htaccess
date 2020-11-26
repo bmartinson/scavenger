@@ -1,5 +1,7 @@
 RewriteEngine On
 
+Header add Access-Control-Allow-Origin "*"
+
 #
 # Enforce WWW Traffic
 #

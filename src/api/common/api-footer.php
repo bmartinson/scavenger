@@ -7,6 +7,7 @@ if ($database)
 $response->commandid = $commandId;
 
 header("Content-type:application/json");
+header("Access-Control-Allow-Origin: *");
 
 if (isset($_GET['callback']) || isset($_POST['callback'])) {
   $useCallback = true;

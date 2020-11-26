@@ -18,7 +18,7 @@ function getUser($database, &$response, $id)
   // check to see if the user exists in the user table
   $fetchUser = &ExecuteSQL(
     $database,
-    sprintf("SELECT id, firstName, lastName, email, verified, deleted, created, modified FROM User WHERE id=%s", GetSQLValueStringi($database, $_REQUEST['id'], 'int'))
+    sprintf("SELECT id, firstName, lastName, organization, email, verified, deleted, created, modified FROM User WHERE id=%s", GetSQLValueStringi($database, $_REQUEST['id'], 'int'))
   );
 
   if ($fetchUser->num_rows > 0) {
@@ -27,6 +27,7 @@ function getUser($database, &$response, $id)
         'id' => $row_User->id,
         'firstName' => $row_User->firstName,
         'lastName' => $row_User->lastName,
+        'organization' => $row_User->organization,
         'email' => $row_User->email,
         'verified' => $row_User->verified,
         'deleted' => $row_User->deleted,
@@ -50,6 +51,8 @@ function deleteUser($database, &$response, $data)
 
 function createUser($database, &$response, $data)
 {
+  global $apiKey;
+
   // check to see if the user exists in the user table
   $fetchUser = &ExecuteSQL(
     $database,
@@ -73,16 +76,30 @@ function createUser($database, &$response, $data)
       throw new Exception(err_param_missing . 'password', errorno_param_missing);
     }
 
-    ExecuteSQL(
-      $database,
-      sprintf(
-        "INSERT INTO User (email, password, firstName, lastName, created) VALUES (%s, %s, %s, NOW())",
-        GetSQLValueStringi($database, $data->email, "text"),
-        GetSQLValueStringi($database, $data->password, "text"),
-        GetSQLValueStringi($database, $data->firstName, "text"),
-        GetSQLValueStringi($database, $data->lastName, "text")
-      )
-    );
+    if (isset($data->organization)) {
+      ExecuteSQL(
+        $database,
+        sprintf(
+          "INSERT INTO User (email, password, firstName, lastName, organization, created) VALUES (%s, %s, %s, %s, %s, NOW())",
+          GetSQLValueStringi($database, urldecode($data->email), "text"),
+          GetSQLValueStringi($database, $data->password, "text"),
+          GetSQLValueStringi($database, urldecode($data->firstName), "text"),
+          GetSQLValueStringi($database, urldecode($data->lastName), "text"),
+          GetSQLValueStringi($database, urldecode($data->organization), "text")
+        )
+      );
+    } else {
+      ExecuteSQL(
+        $database,
+        sprintf(
+          "INSERT INTO User (email, password, firstName, lastName, created) VALUES (%s, %s, %s, %s, NOW())",
+          GetSQLValueStringi($database, urldecode($data->email), "text"),
+          GetSQLValueStringi($database, $data->password, "text"),
+          GetSQLValueStringi($database, urldecode($data->firstName), "text"),
+          GetSQLValueStringi($database, urldecode($data->lastName), "text")
+        )
+      );
+    }
 
     // close the connection
     $fetchUser->close();
@@ -90,20 +107,25 @@ function createUser($database, &$response, $data)
     // fetch latest record
     $fetchUser = &ExecuteSQL(
       $database,
-      sprintf("SELECT id, firstName, lastName, email, verified, deleted, created, modified FROM User WHERE email=%s", GetSQLValueStringi($database, $data->email, 'text'))
+      sprintf("SELECT id, firstName, lastName, organization, email, verified, deleted, created, modified FROM User WHERE email=%s", GetSQLValueStringi($database, $data->email, 'text'))
     );
 
     if ($fetchUser->num_rows > 0) {
       while ($row_User = $fetchUser->fetch_object()) {
+        // generate the auth token for the user and set it for the cookie
+        $authToken = generateAuthToken($row_User->id, $row_User->firstName, $apiKey, true);
+
         array_push($response->data, (object)[
           'id' => $row_User->id,
           'firstName' => $row_User->firstName,
           'lastName' => $row_User->lastName,
+          'organization' => $row_User->organization,
           'email' => $row_User->email,
           'verified' => $row_User->verified,
           'deleted' => $row_User->deleted,
           'created' => $row_User->created,
           'modified' => $row_User->modified,
+          'authToken' => $authToken,
         ]);
       }
 
@@ -128,7 +150,7 @@ try {
       throw new Exception(err_param_missing, errorno_param_missing);
     }
 
-    // fetch the user
+    $database = &openWriteDatabase();
     getUser($database, $response, $id);
   } else {
     $json = file_get_contents('php://input');
@@ -137,10 +159,13 @@ try {
     $data = json_decode($json);
 
     if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+      $database = &openWriteDatabase();
       createUser($database, $response, $data);
     } else if ($_SERVER['REQUEST_METHOD'] === 'PATCH') {
+      $database = &openWriteDatabase();
       editUser($database, $response, $data);
     } else if ($_SERVER['REQUEST_METHOD'] == 'DELETE') {
+      $database = &openWriteDatabase();
       deleteUser($database, $response, $data);
     }
   }

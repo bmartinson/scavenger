@@ -1,5 +1,46 @@
 <h1>Sign Up</h1>
 
 <p>
-  We're not quite ready to accept sign-ups yet, but please check back soon for our initial beta release!
+  To host and manage your own scavenger hunts, you'll need to create an account. Fill out the form below to get started
+  now!
 </p>
+
+<h3 *ngIf="isFailed">Oops, it looks like that email is in use already</h3>
+
+<qf-form [disabled]="isLoading"
+         [hasSubmissionError]="isFailed"
+         (ngSubmit)="onSignUp($event)">
+  <qf-text-input [name]="'ctlEmail'"
+                 [labelText]="'E-mail Address'"
+                 [validatorFns]="[fnEmailValidator]"
+                 [errorText]="'Please enter a valid e-mail.'">
+  </qf-text-input>
+  <qf-text-input [name]="'ctlPassword'"
+                 [labelText]="'Password'"
+                 [type]="'password'"
+                 [errorText]="'Enter your password.'">
+  </qf-text-input>
+  <qf-text-input [name]="'ctlFirstName'"
+                 [labelText]="'First Name'"
+                 [errorText]="'Enter your first name.'">
+  </qf-text-input>
+  <qf-text-input [name]="'ctlLastName'"
+                 [labelText]="'Last Name'"
+                 [errorText]="'Enter your last name.'">
+  </qf-text-input>
+  <qf-text-input [name]="'ctlOrganization'"
+                 [placeholderText]="'Optional'"
+                 [labelText]="'Organization Name'"
+                 [required]="false">
+  </qf-text-input>
+
+  <div class="scavenger-row">
+    <qf-button [loading]="isLoading">Get Started</qf-button>
+    <qf-button [routerLink]="['/', 'sign-in']"
+               [style]="QFButtonStyle.B_LINK">
+      Already have an account? Sign in!
+    </qf-button>
+  </div>
+</qf-form>
+
+<div class="scavenger-page-break"></div>

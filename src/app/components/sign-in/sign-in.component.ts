@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { Validators } from '@angular/forms';
 import { Title } from '@angular/platform-browser';
+import { Router } from '@angular/router';
 import { QuickFormResponse } from '../../forms/components/form/quick-form-response';
 import { AppService } from '../../services/app.service';
 import { ScavengerRouteComponent } from '../scavenger-route/scavenger-route.component';
@@ -16,7 +17,7 @@ export class SignInComponent extends ScavengerRouteComponent {
   public isLoading: boolean;
   public isWrongUser: boolean;
 
-  constructor(public appService: AppService, protected titleService: Title) {
+  constructor(public appService: AppService, protected titleService: Title, private router: Router) {
     super(appService, titleService);
 
     this.titleService.setTitle(`${ScavengerRouteComponent.BASE_PAGE_TITLE} - Sign In!`);
@@ -32,6 +33,8 @@ export class SignInComponent extends ScavengerRouteComponent {
       console.warn('success', data);
       if (data.status === 'fail') {
         this.isWrongUser = true;
+      } else {
+        this.router.navigate(['/host']);
       }
     }).catch((e: any) => {
       this.isWrongUser = true;

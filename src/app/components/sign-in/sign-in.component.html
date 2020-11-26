@@ -4,7 +4,7 @@
   To host and manage your own scavenger hunts, sign in with an account or sign up today!
 </p>
 
-<p *ngIf="isWrongUser">Oops, it looks like your email or password is incorrect!</p>
+<h3 *ngIf="isWrongUser">Oops, it looks like your email or password is incorrect!</h3>
 
 <qf-form [disabled]="isLoading"
          [hasSubmissionError]="isWrongUser"
