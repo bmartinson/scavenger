@@ -76,7 +76,7 @@ function &openWriteDatabase()
 /**
  * Generates an auth token for a user
  */
-function generateAuthToken($userId, $firstName, $apiKey, $remember, $returnKey = false, &$ssoAuth = false)
+function generateAuthToken($userId, $firstName, $apiKey, $remember, $returnKey = true, &$ssoAuth = false)
 {
   global $kSecret;
 

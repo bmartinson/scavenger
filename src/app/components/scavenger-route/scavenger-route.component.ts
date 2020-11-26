@@ -1,6 +1,7 @@
 import { Component, HostBinding, OnDestroy, OnInit } from '@angular/core';
 import { Title } from '@angular/platform-browser';
 import { Subscription } from 'rxjs';
+import { QFButtonStyle } from '../../forms/components/button/button.component';
 import { AppService } from '../../services/app.service';
 
 @Component({
@@ -10,6 +11,7 @@ export abstract class ScavengerRouteComponent implements OnDestroy, OnInit {
 
   public static BASE_PAGE_TITLE = 'Scavenger Games';
   @HostBinding('style.margin-top.rem') protected marginTop: number;
+  public QFButtonStyle = QFButtonStyle;
   private navigationDisplaySubscription: Subscription;
 
   constructor(public appService: AppService, protected titleService: Title) {

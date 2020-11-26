@@ -1,0 +1,27 @@
+<h1>Sign In</h1>
+
+<p>
+  To host and manage your own scavenger hunts, sign in with an account or sign up today!
+</p>
+
+<qf-form [disabled]="isLoading"
+         (ngSubmit)="onSignIn($event)">
+  <qf-text-input [name]="'ctlEmail'"
+                 [labelText]="'E-mail Address'"
+                 [validatorFns]="[fnEmailValidator]"
+                 [errorText]="'Please enter a valid e-mail.'">
+  </qf-text-input>
+  <qf-text-input [name]="'ctlPassword'"
+                 [labelText]="'Password'"
+                 [type]="'password'"
+                 [errorText]="'Enter your password.'">
+  </qf-text-input>
+
+  <div class="scavenger-row">
+    <qf-button [loading]="isLoading">Sign In</qf-button>
+    <qf-button [routerLink]="'/sign-up'"
+               [style]="QFButtonStyle.B_LINK">
+      Don't have an account? Sign up now!
+    </qf-button>
+  </div>
+</qf-form>

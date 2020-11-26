@@ -5,65 +5,8 @@ label {
   flex-direction: column;
   width: 100%;
   margin: 0;
-}
-
-input::-webkit-outer-spin-button,
-input::-webkit-inner-spin-button {
-  appearance: none;
-  margin: 0;
-}
-
-input[type=number] {
-  appearance: textfield;
-}
-
-input {
-  &::-webkit-input-placeholder {
-    color: $light-grey !important;
-    font-weight: $font-weight-lite !important;
-  }
-
-  &:-moz-placeholder {
-    /* Firefox 18- */
-    color: $light-grey !important;
-    font-weight: $font-weight-lite !important;
-  }
-
-  &::-moz-placeholder {
-    /* Firefox 19+ */
-    color: $light-grey !important;
-    font-weight: $font-weight-lite !important;
-  }
-
-  &:-ms-input-placeholder {
-    color: $light-grey !important;
-    font-weight: $font-weight-lite !important;
-  }
-}
-
-:host-context(qf-text-input.open-style) {
-  input {
-    border: none;
-    border-bottom: 1px solid $light-grey;
-  }
-}
-
-:host-context(qf-text-input.open-style-xl) {
-  input {
-    border: none;
-    padding-top: 0;
-    border-bottom: 1px solid $black;
-    font-size: $font-size-xl;
-    text-align: center;
-  }
-}
-
-select {
-  appearance: none;
-}
-
-.relative {
-  position: relative;
+  font-weight: bolder;
+  color: $darker-grey;
 }
 
 .ng-disabled-color {
@@ -166,10 +109,6 @@ select {
   pointer-events: none !important;
 }
 
-.remove {
-  display: none !important;
-}
-
 .qf-control-wrapper {
   position: relative;
 
@@ -216,48 +155,4 @@ select {
 
   color: $bright-red;
   font-size: $font-size-xs;
-}
-
-.qf-arrow,
-.qf-arrow-left,
-.qf-arrow-up,
-.qf-arrow-down,
-.qf-arrow-large,
-.qf-arrow-large-left,
-.qf-arrow-large-up,
-.qf-arrow-large-down {
-  width: 0;
-  height: 0;
-
-  border-top: .3125rem solid transparent;
-  border-bottom: .3125rem solid transparent;
-  border-left-width: .625rem;
-
-  transform-origin: center;
-  border-left-style: solid;
-  border-left-color: inherit;
-
-  &.qf-arrow-large,
-  &.qf-arrow-large-left,
-  &.qf-arrow-large-up,
-  &.qf-arrow-large-down {
-    border-top: .4375rem solid transparent;
-    border-bottom: .4375rem solid transparent;
-    border-left-width: .875rem;
-  }
-
-  &.qf-arrow-down,
-  &.qf-arrow-large-down {
-    transform: rotate(90deg);
-  }
-
-  &.qf-arrow-left,
-  &.qf-arrow-large-left {
-    transform: rotate(180deg);
-  }
-
-  &.qf-arrow-up,
-  &.qf-arrow-large-up {
-    transform: rotate(270deg);
-  }
 }

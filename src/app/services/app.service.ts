@@ -1,6 +1,10 @@
+import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { NavigationEnd, Router } from '@angular/router';
-import { BehaviorSubject, Observable, Subject } from 'rxjs';
+import * as CryptoJS from 'crypto-js';
+import * as Cookies from 'js-cookie';
+import { BehaviorSubject, Observable } from 'rxjs';
+import { shareReplay } from 'rxjs/operators';
 import { ScavengerHuntType } from '../enum/scavenger-hunt-type.enum';
 import { ScavengerWaypointStatus } from '../enum/scavenger-waypoint.enum';
 import { IScavengerHunt } from '../interface/scavenger-hunt.interface';
@@ -12,7 +16,9 @@ import { ScavengerWaypoint } from '../model/scavenger-waypoint';
 })
 export class AppService {
 
+  public static EMAIL_REG_EX = `[A-Z0-9a-z._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]+`;
   private static SESSION_STORAGE_KEY = 'scavenger-games-current-session';
+  private static COOKIE_AUTH_KEY = 'scavenger-games-auth-token';
 
   /* * * * * UI Properties * * * * */
   private _showNavigation: boolean;
@@ -63,7 +69,11 @@ export class AppService {
     return !this.session?.hunt || !this.session?.active;
   }
 
-  constructor(private router: Router) {
+  public get isLoggedIn(): boolean {
+    return this.validateToken(Cookies.get(AppService.COOKIE_AUTH_KEY));
+  }
+
+  constructor(private router: Router, private http: HttpClient) {
     this.router.events.subscribe((event: any) => {
       if (event instanceof NavigationEnd) {
         this._url = (event as NavigationEnd).urlAfterRedirects;
@@ -124,6 +134,80 @@ export class AppService {
       localStorage.setItem(AppService.SESSION_STORAGE_KEY, JSON.stringify(this.session.toObject()));
     } catch (e) {
       console.error(`Could not save session`, e);
+    }
+  }
+
+  public signIn(email: string, password: string): Promise<any> {
+    const params = new HttpParams();
+    const data: any = {
+      email: encodeURIComponent(email),
+      password: CryptoJS.MD5(password).toString(),
+    }
+
+    return this.request('POST', 'https://www.scavenger.games/api/authorize', params, data);
+  }
+
+  public logout(): void {
+    Cookies.remove(AppService.COOKIE_AUTH_KEY);
+  }
+
+  public validateToken(authToken: string): boolean {
+    // If there is no authToken, then just return false here
+    if (!authToken) {
+      return false;
+    }
+
+    const authArray: string[] = authToken.split('&');
+    const timeStamp: number = Math.floor(Date.now() / 1000);
+    const isValid: boolean = ((+authArray[0].substr(2) - 86400) > timeStamp);
+
+    if (!isValid) {
+      this.logout();
+    }
+
+    return isValid;
+  }
+
+  /* * * * * Networking Support * * * * */
+
+  /**
+   * Performs an HTTP request based on the type and destination provided.
+   *
+   * @param type The type of HTTP request to perform.
+   * @param url The URL of the endpoint to request.
+   * @param params Optional parameters associated with the request.
+   */
+  private request(type: 'GET' | 'POST' | 'DELETE' | 'PATCH', url: string, params?: HttpParams, data?: any): Promise<any> {
+    const headers: HttpHeaders = new HttpHeaders().set('Authorization', `token ${Cookies.get(AppService.COOKIE_AUTH_KEY)}`);
+
+    if (type === 'GET') {
+      return this.http.get(url, { headers, params }).pipe(shareReplay()).toPromise();
+    } else if (type === 'POST') {
+      if (!data) {
+        Promise.reject('no data provided');
+      }
+
+      headers.set('Content-Type', 'application/json');
+
+      return this.http.post(url, JSON.stringify(data), { headers, params }).pipe(shareReplay()).toPromise();
+    } else if (type === 'PATCH') {
+      if (!data) {
+        Promise.reject('no data provided');
+      }
+
+      headers.set('Content-Type', 'application/json');
+
+      return this.http.patch(url, JSON.stringify(data), { headers, params }).pipe(shareReplay()).toPromise();
+    } else if (type === 'DELETE') {
+      if (!data) {
+        Promise.reject('no data provided');
+      }
+
+      headers.set('Content-Type', 'application/json');
+
+      // return this.http.delete(url, JSON.stringify(data), { headers, params }).pipe(shareReplay()).toPromise();
+    } else {
+      Promise.reject('invalid request type');
     }
   }
 

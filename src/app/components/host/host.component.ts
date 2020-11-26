@@ -4,19 +4,16 @@ import { AppService } from '../../services/app.service';
 import { ScavengerRouteComponent } from '../scavenger-route/scavenger-route.component';
 
 @Component({
-  selector: 'scavenger-sign-up',
-  templateUrl: './sign-up.component.html',
+  selector: 'scavenger-host',
+  templateUrl: './host.component.html',
   styleUrls: ['../../styles/route-component-base.scss', '../../styles/route-component-centered.scss']
 })
-export class SignUpComponent extends ScavengerRouteComponent {
+export class HostComponent extends ScavengerRouteComponent {
 
   constructor(public appService: AppService, protected titleService: Title) {
     super(appService, titleService);
 
-    // log out if we go to sign-up
-    this.appService.logout();
-
-    this.titleService.setTitle(`${ScavengerRouteComponent.BASE_PAGE_TITLE} - Sign Up!`);
+    this.titleService.setTitle(`${ScavengerRouteComponent.BASE_PAGE_TITLE} - Host A Hunt`);
   }
 
 }

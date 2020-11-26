@@ -1,5 +1,11 @@
 @import "../../../styles/common";
 
+:host {
+  margin: .5em;
+  user-select: none;
+  width: auto;
+}
+
 .qf-btn {
   font-family: $default-fonts;
   width: 100%;
@@ -327,6 +333,78 @@ fieldset[disabled] .qf-btn {
   transform: translate3d(0, 0, 0);
   backface-visibility: hidden;
   perspective: 1000px;
+}
+
+.qf-ellipsis {
+  position: absolute;
+  display: inline-block;
+  width: 80px;
+  height: 80px;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  margin: auto;
+}
+
+.qf-ellipsis div {
+  position: absolute;
+  top: 33px;
+  width: 13px;
+  height: 13px;
+  border-radius: 50%;
+  background: #ffffff;
+  animation-timing-function: cubic-bezier(0, 1, 1, 0);
+}
+
+.qf-ellipsis div:nth-child(1) {
+  left: 8px;
+  animation: qf-ellipsis1 0.6s infinite;
+}
+
+.qf-ellipsis div:nth-child(2) {
+  left: 8px;
+  animation: qf-ellipsis2 0.6s infinite;
+}
+
+.qf-ellipsis div:nth-child(3) {
+  left: 32px;
+  animation: qf-ellipsis2 0.6s infinite;
+}
+
+.qf-ellipsis div:nth-child(4) {
+  left: 56px;
+  animation: qf-ellipsis3 0.6s infinite;
+}
+
+@keyframes qf-ellipsis1 {
+  0% {
+    transform: scale(0);
+  }
+
+  100% {
+    transform: scale(1);
+  }
+}
+
+@keyframes qf-ellipsis3 {
+  0% {
+    transform: scale(1);
+  }
+
+  100% {
+    transform: scale(0);
+  }
+}
+
+@keyframes qf-ellipsis2 {
+  0% {
+    transform: translate(0, 0);
+  }
+
+  100% {
+    transform: translate(24px, 0);
+  }
 }
 
 @keyframes shake {

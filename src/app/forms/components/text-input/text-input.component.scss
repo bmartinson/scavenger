@@ -1,0 +1,43 @@
+@import "../../styles/quick-forms-core.scss";
+
+:host {
+  margin: .5em;
+}
+
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  appearance: none;
+  margin: 0;
+}
+
+input[type=number] {
+  appearance: textfield;
+}
+
+input {
+  border: 1px solid $grey;
+  font-size: $font-size-normal;
+  padding: 1em;
+
+  &::-webkit-input-placeholder {
+    color: $light-grey !important;
+    font-weight: $font-weight-lite !important;
+  }
+
+  &:-moz-placeholder {
+    /* Firefox 18- */
+    color: $light-grey !important;
+    font-weight: $font-weight-lite !important;
+  }
+
+  &::-moz-placeholder {
+    /* Firefox 19+ */
+    color: $light-grey !important;
+    font-weight: $font-weight-lite !important;
+  }
+
+  &:-ms-input-placeholder {
+    color: $light-grey !important;
+    font-weight: $font-weight-lite !important;
+  }
+}

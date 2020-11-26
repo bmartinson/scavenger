@@ -28,6 +28,10 @@ import { QFTextInputComponent } from './components/text-input/text-input.compone
   exports: [
     FormsModule,
     RouterModule,
+    QFButtonComponent,
+    QFElementWrapperComponent,
+    QFFormComponent,
+    QFTextInputComponent,
   ],
 })
 export class QuickFormsModule {

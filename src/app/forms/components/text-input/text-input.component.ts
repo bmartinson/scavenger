@@ -14,7 +14,7 @@ export enum QFTextInputType {
   // tslint:disable-next-line: component-selector
   selector: 'qf-text-input',
   templateUrl: './text-input.component.html',
-  styleUrls: ['../../styles/quick-forms-core.scss'],
+  styleUrls: ['./text-input.component.scss', '../../styles/quick-forms-core.scss'],
   providers: [
     {
       provide: NG_VALUE_ACCESSOR,

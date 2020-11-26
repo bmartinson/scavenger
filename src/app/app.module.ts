@@ -1,3 +1,4 @@
+import { HttpClientModule } from '@angular/common/http';
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -7,6 +8,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './components/app/app.component';
 import { FooterComponent } from './components/footer/footer.component';
 import { HomeComponent } from './components/home/home.component';
+import { HostComponent } from './components/host/host.component';
 import { IconHolderComponent } from './components/icon-holder/icon-holder.component';
 import { LoaderComponent } from './components/loader/loader.component';
 import { NavigationComponent } from './components/navigation/navigation.component';
@@ -14,6 +16,7 @@ import { NoWaypointComponent } from './components/no-waypoint/no-waypoint.compon
 import { PrivacyComponent } from './components/privacy/privacy.component';
 import { QRFindComponent } from './components/qr-find/qr-find.component';
 import { QRSearchComponent } from './components/qr-search/qr-search.component';
+import { SignInComponent } from './components/sign-in/sign-in.component';
 import { SignUpComponent } from './components/sign-up/sign-up.component';
 import { SupportComponent } from './components/support/support.component';
 import { TermsComponent } from './components/terms/terms.component';
@@ -25,6 +28,7 @@ import { QuickFormsModule } from './forms/quick-forms.module';
     AppComponent,
     FooterComponent,
     HomeComponent,
+    HostComponent,
     IconHolderComponent,
     LoaderComponent,
     NavigationComponent,
@@ -32,6 +36,7 @@ import { QuickFormsModule } from './forms/quick-forms.module';
     PrivacyComponent,
     QRFindComponent,
     QRSearchComponent,
+    SignInComponent,
     SignUpComponent,
     SupportComponent,
     TermsComponent,
@@ -42,6 +47,7 @@ import { QuickFormsModule } from './forms/quick-forms.module';
     BrowserAnimationsModule,
     BrowserModule,
     FontAwesomeModule,
+    HttpClientModule,
     QuickFormsModule
   ],
   providers: [],

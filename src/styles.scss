@@ -14,18 +14,23 @@ scavenger-root {
   color: $dark-grey;
 }
 
+*:focus,
+*:active {
+  outline: none;
+}
+
 scavenger-root {
   display: flex;
 }
 
 ::selection {
-  background: transparent;
-  color: $blue;
+  background: $blue;
+  color: $white;
 }
 
 ::-moz-selection {
-  background: transparent;
-  color: $blue;
+  background: $blue;
+  color: $white;
 }
 
 h1,
@@ -76,4 +81,9 @@ a:active {
   text-decoration: none;
   font-weight: bold;
   color: $darkest-grey;
+}
+
+.scavenger-row {
+  display: flex;
+  flex-direction: row;
 }

@@ -49,7 +49,6 @@ export class QFButtonComponent extends QuickFormComponent implements OnChanges {
 
   @Output() public clicked = new Subject<MouseEvent>();
   @Input() public style: QFButtonStyle = QFButtonStyle.PRIMARY;
-  @Input() public compact = false;
   @Input() public tabIndex = 0;
   @Input() public routerLink = [];
   @Input() public loadingText = '';
@@ -61,7 +60,7 @@ export class QFButtonComponent extends QuickFormComponent implements OnChanges {
   @Input() public align: QFControlAlignment = QFControlAlignment.CENTER;
   @Input() public noClickAnimation = false;
 
-  public SButtonStyle = QFButtonStyle;
+  public QFButtonStyle = QFButtonStyle;
   public QFControlAlignment = QFControlAlignment;
   public parent: QFFormComponent;
   public submit = false;

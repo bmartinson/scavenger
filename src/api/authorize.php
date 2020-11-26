@@ -17,6 +17,8 @@ function authorize($database, &$response, $data)
 {
   global $apiKey;
 
+  array_push($response->data, $data);
+
   // check to see if the user exists in the user table
   $fetchUser = &ExecuteSQL(
     $database,
@@ -26,6 +28,9 @@ function authorize($database, &$response, $data)
   if ($fetchUser->num_rows == 0) {
     while ($row_User = $fetchUser->fetch_object()) {
       if ($data->password == $row_User->password && $row_User->deleted == 0) {
+        // generate the auth token for the user and set it for the cookie
+        $authToken = generateAuthToken($row_User->id, $row_User->firstName, $apiKey, true);
+
         // return the user information
         array_push($response->data, (object)[
           'id' => $row_User->id,
@@ -34,11 +39,9 @@ function authorize($database, &$response, $data)
           'email' => $row_User->email,
           'verified' => $row_User->verified,
           'created' => $row_User->created,
-          'modified' => $row_User->modified
+          'modified' => $row_User->modified,
+          'authToken' => $authToken
         ]);
-
-        // generate the auth token for the user and set it for the cookie
-        generateAuthToken($row_User->id, $row_User->firstName, $apiKey, true);
       } else {
         throw new Exception(err_invalid_user, errorno_invalid_user);
       }

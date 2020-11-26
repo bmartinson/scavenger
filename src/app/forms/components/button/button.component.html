@@ -15,8 +15,7 @@
           [ngClass]="{
 			'qf-btn': true,
 			'qf-btn-no-scale': noClickAnimation,
-			'qf-btn-compact': compact,
-			'qf-btn-green': style === QFButtonStyle.PRIMARY || style === QFButtonStyle.SECONDARY,
+			'qf-btn-blue': style === QFButtonStyle.PRIMARY || style === QFButtonStyle.SECONDARY,
 			'btn btn-link' : style === QFButtonStyle.LINK || style === QFButtonStyle.B_LINK || style === QFButtonStyle.FREESTYLE,
 			'btn-freestyle' : style === QFButtonStyle.FREESTYLE,
 			'qf-btn-link' : style === QFButtonStyle.B_LINK || style === QFButtonStyle.FREESTYLE,
@@ -36,7 +35,13 @@
     <ng-template #loader>
       <div class="qf-btn-loading-group">
         <ng-container *ngIf="loading; else loadingCheck">
-          <div [ngClass]="'loading-spinner-' + loadingColor + ' qf-btn-spinner'"></div>
+          <div class="qf-ellipsis">
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+          </div>
+          <!-- <div [ngClass]="'loading-spinner-' + loadingColor + ' qf-btn-spinner'"></div> -->
           <div *ngIf="loadingText"
                class="no-select ml-2">
             {{loadingText}}
@@ -46,9 +51,9 @@
           <div class="qf-loading-result">
             <div [ngClass]="{
 							'qf-btn-check-white': doLoadingCheck && (style === QFButtonStyle.PRIMARY),
-							'qf-btn-check-green': doLoadingCheck && (style === QFButtonStyle.B_LINK || style === QFButtonStyle.LINK || style === QFButtonStyle.SECONDARY),
+							'qf-btn-check-blue': doLoadingCheck && (style === QFButtonStyle.B_LINK || style === QFButtonStyle.LINK || style === QFButtonStyle.SECONDARY),
 							'qf-btn-x-white': doLoadingX && (style === QFButtonStyle.PRIMARY),
-							'qf-btn-x-green': doLoadingX && (style === QFButtonStyle.B_LINK || style === QFButtonStyle.LINK || style === QFButtonStyle.SECONDARY),
+							'qf-btn-x-blue': doLoadingX && (style === QFButtonStyle.B_LINK || style === QFButtonStyle.LINK || style === QFButtonStyle.SECONDARY),
 							'draw': doLoadingCheck || doLoadingX,
 							'qf-btn-complete': doLoadComplete
 						}">
