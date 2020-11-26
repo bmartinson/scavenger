@@ -35,34 +35,10 @@
     height: auto;
     padding: 0 !important;
   }
-
-  &.btn-inline-send {
-    background-color: $blue !important;
-    border-style: none;
-    width: 30px;
-    height: 30px;
-    min-width: 30px;
-    border-radius: 15px;
-  }
 }
 
 .qf-btn-compact {
   min-width: unset !important;
-}
-
-.inline-send-chevron-wrap {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.inline-send-chevron {
-  filter: $white-filter;
-  width: 15px;
-  height: 15px;
-  transform: scaleX(-1);
-  position: relative;
-  left: 1px;
 }
 
 .qf-btn:not(.qf-btn-outline) {
@@ -104,6 +80,12 @@
 .qf-btn-link {
   width: auto;
   margin: 0;
+  color: $black;
+  font-weight: bold;
+
+  &:hover {
+    text-decoration: underline;
+  }
 }
 
 .btn-freestyle {
@@ -291,8 +273,8 @@ fieldset[disabled] .qf-btn {
         border-top: 2px solid $blue;
         content: '';
         position: absolute;
-        left: .72rem;
-        top: .6rem;
+        left: 12px;
+        top: 10px;
       }
 
       &.draw:after {
@@ -311,8 +293,8 @@ fieldset[disabled] .qf-btn {
         border-top: 2px solid $blue;
         content: '';
         position: absolute;
-        left: -.7rem;
-        top: -.6rem;
+        left: -13px;
+        top: -12px;
       }
     }
   }
