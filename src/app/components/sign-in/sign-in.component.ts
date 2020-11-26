@@ -14,22 +14,27 @@ export class SignInComponent extends ScavengerRouteComponent {
 
   public fnEmailValidator = Validators.pattern(AppService.EMAIL_REG_EX);
   public isLoading: boolean;
+  public isWrongUser: boolean;
 
   constructor(public appService: AppService, protected titleService: Title) {
     super(appService, titleService);
 
     this.titleService.setTitle(`${ScavengerRouteComponent.BASE_PAGE_TITLE} - Sign In!`);
 
-    this.isLoading = false;
+    this.isLoading = this.isWrongUser = false;
   }
 
   public onSignIn(response: QuickFormResponse): void {
     this.isLoading = true;
+    this.isWrongUser = false;
 
     this.appService.signIn(response.value.ctlEmail, response.value.ctlPassword).then((data: any) => {
       console.warn('success', data);
+      if (data.status === 'fail') {
+        this.isWrongUser = true;
+      }
     }).catch((e: any) => {
-      console.error('failed', e);
+      this.isWrongUser = true;
     }).finally(() => {
       this.isLoading = false;
     });

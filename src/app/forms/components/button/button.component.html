@@ -1,5 +1,6 @@
 <qf-element-wrapper [isControl]="false"
                     [cursor]="cursor"
+                    [attr.routerLink]="(routerLink?.length !== 0) ? routerLink : null"
                     [ngClass]="{
 										'qf-btn-justify-left': style === QFButtonStyle.LINK && align === QFControlAlignment.LEFT,
 										'qf-btn-justify-center': style === QFButtonStyle.LINK && align === QFControlAlignment.CENTER,

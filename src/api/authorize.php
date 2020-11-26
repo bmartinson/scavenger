@@ -17,15 +17,13 @@ function authorize($database, &$response, $data)
 {
   global $apiKey;
 
-  array_push($response->data, $data);
-
   // check to see if the user exists in the user table
   $fetchUser = &ExecuteSQL(
     $database,
-    sprintf("SELECT id, password, firstName, lastName, email, verified, deleted, created, modified FROM User WHERE email=%s", GetSQLValueStringi($database, $data->email, 'text'))
+    sprintf("SELECT id, password, firstName, lastName, email, verified, deleted, created, modified FROM User WHERE email=%s", GetSQLValueStringi($database, urldecode($data->email), 'text'))
   );
 
-  if ($fetchUser->num_rows == 0) {
+  if ($fetchUser->num_rows > 0) {
     while ($row_User = $fetchUser->fetch_object()) {
       if ($data->password == $row_User->password && $row_User->deleted == 0) {
         // generate the auth token for the user and set it for the cookie
@@ -43,10 +41,16 @@ function authorize($database, &$response, $data)
           'authToken' => $authToken
         ]);
       } else {
+        // close the connection
+        $fetchUser->close();
+
         throw new Exception(err_invalid_user, errorno_invalid_user);
       }
     }
   } else {
+    // close the connection
+    $fetchUser->close();
+
     throw new Exception(err_invalid_user, errorno_invalid_user);
   }
 
@@ -63,6 +67,7 @@ try {
     // convert the json request data into a php useable object
     $data = json_decode($json);
 
+    $database = &openWriteDatabase();
     authorize($database, $response, $data);
   }
 } catch (Exception $e) {
