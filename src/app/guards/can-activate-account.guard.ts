@@ -31,7 +31,7 @@ export class CanActivateAccountGuard extends CanActivateGuard implements
 
     const isLoggedIn: boolean = this.appService.isLoggedIn;
 
-    // if we aren't signe din, then route to sign in
+    // if we aren't signed in, then route to sign in
     if (!isLoggedIn) {
       this.router.navigate(['sign-in']);
     }
