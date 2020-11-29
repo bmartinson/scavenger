@@ -26,3 +26,5 @@ ErrorDocument 404 /index.html
 RewriteRule ^api/health-check/?$ /api/utility/health-check.php [QSA,NC,L]
 RewriteRule ^api/authorize/?$ /api/authorize.php [QSA,NC,L]
 RewriteRule ^api/user/?$ /api/user.php [QSA,NC,L]
+RewriteRule ^api/hunt/?$ /api/hunt.php [QSA,NC,L]
+RewriteRule ^api/hunts/?$ /api/hunts.php [QSA,NC,L]
