@@ -171,7 +171,8 @@ function needsAuthToken($endpoint)
   if (
     $endpoint == 'health-check' ||
     $endpoint == 'user' && $_SERVER['REQUEST_METHOD'] == 'POST' ||
-    $endpoint == 'authorize' && $_SERVER['REQUEST_METHOD'] == 'POST'
+    $endpoint == 'authorize' && $_SERVER['REQUEST_METHOD'] == 'POST' ||
+    $endpoint == 'hunt'
   ) {
     return false;
   } else {
