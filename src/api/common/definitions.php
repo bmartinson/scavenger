@@ -13,6 +13,9 @@ define("err_auth_no_token", "Access denied: no auth token");
 define("errno_auth_bad_token", 92);
 define("err_auth_bad_token", "Access denied: invalid auth token - ");
 
+define("errno_request", 93);
+define("err_request", "Request method unsupported");
+
 define("errorno_param_missing", 100);
 define("err_param_missing", "Required parameter missing - ");
 

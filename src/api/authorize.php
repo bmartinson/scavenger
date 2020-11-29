@@ -10,7 +10,6 @@ define('ABSPATH', realpath(__DIR__ . '/') . '/');
 require_once(ABSPATH . 'common/api.php');
 require_once(ABSPATH . 'common/definitions.php');
 
-// defines the name of this api endpoint
 $endpoint = "authorize";
 
 function authorize($database, &$response, $data)

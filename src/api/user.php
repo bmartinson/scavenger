@@ -10,7 +10,6 @@ define('ABSPATH', realpath(__DIR__ . '/') . '/');
 require_once(ABSPATH . 'common/api.php');
 require_once(ABSPATH . 'common/definitions.php');
 
-// defines the name of this api endpoint
 $endpoint = "user";
 
 function getUser($database, &$response, $id)
@@ -18,7 +17,7 @@ function getUser($database, &$response, $id)
   // check to see if the user exists in the user table
   $fetchUser = &ExecuteSQL(
     $database,
-    sprintf("SELECT id, firstName, lastName, organization, email, verified, deleted, created, modified FROM User WHERE id=%s", GetSQLValueStringi($database, $_REQUEST['id'], 'int'))
+    sprintf("SELECT id, firstName, lastName, organization, email, verified, deleted, created, modified FROM User WHERE id=%s", GetSQLValueStringi($database, $id, 'int'))
   );
 
   if ($fetchUser->num_rows > 0) {
@@ -167,6 +166,8 @@ try {
     } else if ($_SERVER['REQUEST_METHOD'] == 'DELETE') {
       $database = &openWriteDatabase();
       deleteUser($database, $response, $data);
+    } else {
+      throw new Exception(err_request, errno_request);
     }
   }
 } catch (Exception $e) {
