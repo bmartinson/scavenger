@@ -12,9 +12,16 @@
       </a>
     </li>
     <li>
-      <a routerLink="/host"
-         [class.viewing]="appService.url === 'host'">
+      <a routerLink="/account"
+         [class.viewing]="appService.url === 'account' || appService.url === 'sign-in'">
         Account
+      </a>
+    </li>
+    <li *ngIf="appService.isLoggedIn">
+      <a href="#"
+         (click)="appService.signOut()"
+         [class.viewing]="appService.url === 'sign-out'">
+        Sign Out
       </a>
     </li>
   </ul>

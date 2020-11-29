@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { ActivatedRouteSnapshot, CanActivate, CanActivateChild, CanLoad, Resolve, Router, RouterStateSnapshot, UrlTree } from '@angular/router';
+import { SignInComponent } from '../components/sign-in/sign-in.component';
 import { ScavengerHuntRouteData } from '../model/scavenger-hunt-route-data';
 import { AppService } from '../services/app.service';
 import { CanActivateGuard } from './can-activate.guard';
@@ -31,9 +32,18 @@ export class CanActivateAccountGuard extends CanActivateGuard implements
 
     const isLoggedIn: boolean = this.appService.isLoggedIn;
 
+    // if we are routing to the sign in component, we must route to account if we are logged in
+    if (next.component === SignInComponent) {
+      if (isLoggedIn) {
+        return this.router.navigate(['/', 'account']);
+      }
+
+      return true;
+    }
+
     // if we aren't signed in, then route to sign in
     if (!isLoggedIn) {
-      this.router.navigate(['sign-in']);
+      return this.router.navigate(['/', 'sign-in']);
     }
 
     return isLoggedIn;

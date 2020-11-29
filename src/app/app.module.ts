@@ -5,10 +5,10 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { FaIconLibrary, FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { faCheck, faFlagCheckered, faHiking, faMap, faMapSigns, faQrcode, faRoute, faStreetView, faTimes, faUndo } from '@fortawesome/free-solid-svg-icons';
 import { AppRoutingModule } from './app-routing.module';
+import { AccountComponent } from './components/account/account.component';
 import { AppComponent } from './components/app/app.component';
 import { FooterComponent } from './components/footer/footer.component';
 import { HomeComponent } from './components/home/home.component';
-import { HostComponent } from './components/host/host.component';
 import { IconHolderComponent } from './components/icon-holder/icon-holder.component';
 import { LoaderComponent } from './components/loader/loader.component';
 import { NavigationComponent } from './components/navigation/navigation.component';
@@ -28,7 +28,7 @@ import { QuickFormsModule } from './forms/quick-forms.module';
     AppComponent,
     FooterComponent,
     HomeComponent,
-    HostComponent,
+    AccountComponent,
     IconHolderComponent,
     LoaderComponent,
     NavigationComponent,

@@ -145,11 +145,19 @@ export class AppService {
     };
 
     return this.request('POST', 'https://www.scavenger.games/api/authorize', params, data).then((rspData: any) => {
-      if (rspData.status === 'success' && rspData.data?.length === 1) {
+      if (rspData.status === 'ok' && rspData.data?.length === 1) {
         this.validateToken(rspData.data[0].authToken);
-      }
 
-      return rspData;
+        return rspData;
+      } else {
+        return Promise.reject(rspData);
+      }
+    });
+  }
+
+  public signOut(): void {
+    this.logout();
+    this.router.navigate(['/']).catch(() => {
     });
   }
 
@@ -167,11 +175,13 @@ export class AppService {
     }
 
     return this.request('POST', 'https://www.scavenger.games/api/user', params, data).then((rspData: any) => {
-      if (rspData.status === 'success' && rspData.data?.length === 1) {
+      if (rspData.status === 'ok' && rspData.data?.length === 1) {
         this.validateToken(rspData.data[0].authToken);
-      }
 
-      return rspData;
+        return rspData;
+      } else {
+        return Promise.reject(rspData);
+      }
     });
   }
 

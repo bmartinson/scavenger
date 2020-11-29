@@ -38,13 +38,8 @@ export class SignUpComponent extends ScavengerRouteComponent {
       response.value.ctlFirstName,
       response.value.ctlLastName,
       response.value.ctlOrganization,
-    ).then((data: any) => {
-      console.warn('success', data);
-      if (data.status === 'fail') {
-        this.isFailed = true;
-      } else {
-        this.router.navigate(['/host']);
-      }
+    ).then(() => {
+      this.router.navigate(['/account']);
     }).catch(() => {
       this.isFailed = true;
     }).finally(() => {

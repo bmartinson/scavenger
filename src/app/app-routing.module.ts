@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+import { AccountComponent } from './components/account/account.component';
 import { HomeComponent } from './components/home/home.component';
-import { HostComponent } from './components/host/host.component';
 import { NoWaypointComponent } from './components/no-waypoint/no-waypoint.component';
 import { PrivacyComponent } from './components/privacy/privacy.component';
 import { SignInComponent } from './components/sign-in/sign-in.component';
@@ -23,7 +23,7 @@ const routes: Routes = [
   {
     path: 'sign-in',
     component: SignInComponent,
-    canActivate: [CanActivateGuard]
+    canActivate: [CanActivateAccountGuard]
   },
   {
     path: 'sign-up',
@@ -46,8 +46,8 @@ const routes: Routes = [
     canActivate: [CanActivateGuard]
   },
   {
-    path: 'host',
-    component: HostComponent,
+    path: 'account',
+    component: AccountComponent,
     canActivate: [CanActivateAccountGuard],
   },
   {

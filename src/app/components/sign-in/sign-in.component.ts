@@ -30,12 +30,7 @@ export class SignInComponent extends ScavengerRouteComponent {
     this.isWrongUser = false;
 
     this.appService.signIn(response.value.ctlEmail, response.value.ctlPassword).then((data: any) => {
-      console.warn('success', data);
-      if (data.status === 'fail') {
-        this.isWrongUser = true;
-      } else {
-        this.router.navigate(['/host']);
-      }
+      this.router.navigate(['/account']);
     }).catch((e: any) => {
       this.isWrongUser = true;
     }).finally(() => {
