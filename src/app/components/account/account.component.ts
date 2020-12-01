@@ -10,6 +10,28 @@ import { ScavengerRouteComponent } from '../scavenger-route/scavenger-route.comp
 })
 export class AccountComponent extends ScavengerRouteComponent {
 
+  public get name(): string {
+    let name = '';
+
+    if (this.appService.firstName) {
+      name += `${this.appService.firstName} `;
+    }
+
+    if (this.appService.lastName) {
+      name += `${this.appService.lastName} `;
+    }
+
+    if (this.appService.organization) {
+      if (name.trim() === '') {
+        name += `${this.appService.organization} `;
+      } else {
+        name += `(${this.appService.organization}) `;
+      }
+    }
+
+    return name.trim();
+  }
+
   constructor(public appService: AppService, protected titleService: Title) {
     super(appService, titleService);
 

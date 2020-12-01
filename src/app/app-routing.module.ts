@@ -14,6 +14,7 @@ import { CanActivateAccountGuard } from './guards/can-activate-account.guard';
 import { CanActivateWaypointGuard } from './guards/can-activate-waypoint.guard';
 import { CanActivateGuard } from './guards/can-activate.guard';
 import { AppPreloadingStrategyService } from './services/app-preloading-strategy.service';
+import { HuntsService } from './services/hunts.service';
 
 const routes: Routes = [
   {
@@ -54,6 +55,9 @@ const routes: Routes = [
       {
         path: 'hunts',
         component: HuntsComponent,
+        resolve: {
+          hunts: HuntsService,
+        }
       },
       {
         path: 'info',

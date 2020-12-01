@@ -8,6 +8,7 @@ import { shareReplay } from 'rxjs/operators';
 import { ScavengerHuntType } from '../enum/scavenger-hunt-type.enum';
 import { ScavengerWaypointStatus } from '../enum/scavenger-waypoint.enum';
 import { IScavengerHunt } from '../interface/scavenger-hunt.interface';
+import { ScavengerHunt } from '../model/scavenger-hunt';
 import { ScavengerSession } from '../model/scavenger-session';
 import { ScavengerWaypoint } from '../model/scavenger-waypoint';
 
@@ -57,6 +58,18 @@ export class AppService {
   public organization: string;
   public email: string;
   private hasUserData: boolean;
+
+  public get idUser(): number {
+    const authToken: string = Cookies.get(AppService.COOKIE_AUTH_KEY);
+
+    if (!authToken) {
+      return 0;
+    }
+
+    const authArray: string[] = authToken.split('&');
+
+    return +authArray[1].substr(2);
+  }
 
   public get url(): string {
     return this._url;
@@ -130,8 +143,6 @@ export class AppService {
     this.saveSession();
 
     console.warn(this.session);
-
-    this.getUserData('1');
   }
 
   public saveSession(): void {
@@ -146,8 +157,10 @@ export class AppService {
     }
   }
 
-  private getUserData(id: string): void {
-    const params = new HttpParams().set('id', String(id));
+  private getUserData(): void {
+    this.hasUserData = true;
+
+    const params = new HttpParams().set('id', String(this.idUser));
 
     this.request('GET', 'https://www.scavenger.games/api/user', params).then((rspData: any) => {
       this.hasUserData = true;
@@ -156,6 +169,25 @@ export class AppService {
       this.organization = rspData.data[0].organization;
       this.email = rspData.data[0].email;
     }).catch(() => {
+      this.hasUserData = false;
+    });
+  }
+
+  public getHuntsForUser(): Promise<ScavengerHunt[]> {
+    const params = new HttpParams().set('id', String(this.idUser));
+
+    return this.request('GET', 'https://www.scavenger.games/api/hunts', params).then((rspData: any) => {
+      if (rspData.status === 'ok' && rspData.data?.length === 1) {
+        const hunts: ScavengerHunt[] = [];
+
+        for (const huntData of rspData) {
+          hunts.push(new ScavengerHunt(huntData));
+        }
+
+        return Promise.resolve(hunts);
+      } else {
+        return Promise.reject(rspData);
+      }
     });
   }
 
@@ -236,7 +268,7 @@ export class AppService {
 
     // make sure user data is fetches when accessing the site
     if (!this.hasUserData) {
-      // this.getUserData(authArray[1].substr(2));
+      this.getUserData();
     }
 
     return isValid;

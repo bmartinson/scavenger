@@ -50,7 +50,12 @@ export class CanActivateAccountGuard extends CanActivateGuard implements
   }
 
   public resolve(): any {
-    return null;
+    return {
+      firstName: this.appService.firstName,
+      lastName: this.appService.lastName,
+      organization: this.appService.organization,
+      email: this.appService.email,
+    };
   }
 
 }
