@@ -11,16 +11,32 @@
         About
       </a>
     </li>
-    <li>
+    <li [scavengerSubNavigation]="accountSubNav"
+        [scavengerSubNavigationDisabled]="!appService.isLoggedIn">
       <a routerLink="/account"
          [class.viewing]="appService.url === 'account' || appService.url === 'sign-in'">
         Account
       </a>
     </li>
-    <li *ngIf="appService.isLoggedIn">
+  </ul>
+</div>
+
+<div #accountSubNav
+     class="sub-nav">
+  <ul>
+    <li>
+      <a routerLink="/">
+        Manage Hunts
+      </a>
+    </li>
+    <li>
+      <a routerLink="/">
+        Your Info
+      </a>
+    </li>
+    <li>
       <a href="#"
-         (click)="appService.signOut()"
-         [class.viewing]="appService.url === 'sign-out'">
+         (click)="appService.signOut()">
         Sign Out
       </a>
     </li>

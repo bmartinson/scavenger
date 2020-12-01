@@ -21,6 +21,7 @@ import { SignUpComponent } from './components/sign-up/sign-up.component';
 import { SupportComponent } from './components/support/support.component';
 import { TermsComponent } from './components/terms/terms.component';
 import { WaypointComponent } from './components/waypoint/waypoint.component';
+import { SubNavigationDirective } from './directives/sub-navigation.directive';
 import { QuickFormsModule } from './forms/quick-forms.module';
 
 @NgModule({
@@ -38,6 +39,7 @@ import { QuickFormsModule } from './forms/quick-forms.module';
     QRSearchComponent,
     SignInComponent,
     SignUpComponent,
+    SubNavigationDirective,
     SupportComponent,
     TermsComponent,
     WaypointComponent
