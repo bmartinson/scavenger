@@ -16,25 +16,36 @@ if (isset($_SERVER['HTTP_X_FORWARDED_FOR'])) {
     throw new Exception(err_auth_banned_ip, errno_auth_banned);
 }
 
+$headers = apache_request_headers();
+
+try {
+  $jsonDataCheck = file_get_contents('php://input');
+
+  $dataCheck = json_decode($jsonDataCheck);
+} catch (Exception $e) {
+}
+
 // retrieve the id of the issued command
-if (isset($_GET['commandid']))
+if (isset($headers['commandid'])) {
+  $commandId = $headers['commandid'];
+} else if (isset($_GET['commandid'])) {
   $commandId = $_GET['commandid'];
-else if (isset($_POST['commandid']))
-  $commandId = $_POST['commandid'];
-else
-  $commandId = '0';
+} else if (!!$dataCheck && $dataCheck->commandId) {
+  $commandId = $dataCheck->commandId;
+} else {
+  $commandId = "";
+}
 
 // get the authentication token
-if (isset($_GET['authToken']))
+if (isset($headers['Authorization'])) {
+  $authToken = $headers['Authorization'];
+} else if (isset($_GET['authToken'])) {
   $authToken = $_GET['authToken'];
-else if (isset($_GET['authtoken']))
-  $authToken = $_GET['authtoken'];
-else if (isset($_POST['authToken']))
-  $authToken = $_POST['authToken'];
-else if (isset($_POST['authtoken']))
-  $authToken = $_POST['authtoken'];
-else
+} else if (!!$dataCheck && $dataCheck->authToken) {
+  $authToken = $dataCheck->authToken;
+} else {
   $authToken = "";
+}
 
 // decode the auth token and any extra info that we need
 if (strlen($authToken) > 0) {

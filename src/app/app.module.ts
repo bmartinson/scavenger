@@ -26,6 +26,7 @@ import { QuickFormsModule } from './forms/quick-forms.module';
 
 @NgModule({
   declarations: [
+    AccountComponent,
     AppComponent,
     FooterComponent,
     HomeComponent,

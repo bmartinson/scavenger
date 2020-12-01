@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { AccountComponent } from './components/account/account.component';
 import { HomeComponent } from './components/home/home.component';
+import { HuntsComponent } from './components/hunts/hunts.component';
 import { NoWaypointComponent } from './components/no-waypoint/no-waypoint.component';
 import { PrivacyComponent } from './components/privacy/privacy.component';
 import { SignInComponent } from './components/sign-in/sign-in.component';
@@ -47,8 +48,23 @@ const routes: Routes = [
   },
   {
     path: 'account',
-    component: AccountComponent,
     canActivate: [CanActivateAccountGuard],
+    canActivateChild: [CanActivateAccountGuard],
+    children: [
+      {
+        path: 'hunts',
+        component: HuntsComponent,
+      },
+      {
+        path: 'info',
+        component: AccountComponent,
+      },
+      {
+        path: '**',
+        redirectTo: 'hunts',
+        pathMatch: 'full',
+      },
+    ]
   },
   {
     path: ':idHunt/:idWaypoint',

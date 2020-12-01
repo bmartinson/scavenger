@@ -52,6 +52,11 @@ export class AppService {
   /* * * * * Application State * * * * */
   private session: ScavengerSession;
   private _url: string;
+  public firstName: string;
+  public lastName: string;
+  public organization: string;
+  public email: string;
+  private hasUserData: boolean;
 
   public get url(): string {
     return this._url;
@@ -74,6 +79,8 @@ export class AppService {
   }
 
   constructor(private router: Router, private http: HttpClient) {
+    this.hasUserData = false;
+
     this.router.events.subscribe((event: any) => {
       if (event instanceof NavigationEnd) {
         this._url = (event as NavigationEnd).urlAfterRedirects;
@@ -123,6 +130,8 @@ export class AppService {
     this.saveSession();
 
     console.warn(this.session);
+
+    this.getUserData('1');
   }
 
   public saveSession(): void {
@@ -137,6 +146,19 @@ export class AppService {
     }
   }
 
+  private getUserData(id: string): void {
+    const params = new HttpParams().set('id', String(id));
+
+    this.request('GET', 'https://www.scavenger.games/api/user', params).then((rspData: any) => {
+      this.hasUserData = true;
+      this.firstName = rspData.data[0].firstName;
+      this.lastName = rspData.data[0].lastName;
+      this.organization = rspData.data[0].organization;
+      this.email = rspData.data[0].email;
+    }).catch(() => {
+    });
+  }
+
   public signIn(email: string, password: string): Promise<any> {
     const params = new HttpParams();
     const data: any = {
@@ -147,6 +169,12 @@ export class AppService {
     return this.request('POST', 'https://www.scavenger.games/api/authorize', params, data).then((rspData: any) => {
       if (rspData.status === 'ok' && rspData.data?.length === 1) {
         this.validateToken(rspData.data[0].authToken);
+
+        this.hasUserData = true;
+        this.firstName = rspData.data[0].firstName;
+        this.lastName = rspData.data[0].lastName;
+        this.organization = rspData.data[0].organization;
+        this.email = rspData.data[0].email;
 
         return rspData;
       } else {
@@ -187,6 +215,7 @@ export class AppService {
 
   public logout(): void {
     Cookies.remove(AppService.COOKIE_AUTH_KEY);
+    this.firstName = this.lastName = this.organization = this.email = null;
   }
 
   public validateToken(authToken: string): boolean {
@@ -201,8 +230,13 @@ export class AppService {
 
     if (!isValid) {
       this.logout();
-    } else {
+    } else if (!Cookies.get(AppService.COOKIE_AUTH_KEY)) {
       Cookies.set(AppService.COOKIE_AUTH_KEY, authToken, { expires: 30, path: '/' });
+    }
+
+    // make sure user data is fetches when accessing the site
+    if (!this.hasUserData) {
+      // this.getUserData(authArray[1].substr(2));
     }
 
     return isValid;
@@ -220,7 +254,14 @@ export class AppService {
   private request(type: 'GET' | 'POST' | 'DELETE' | 'PATCH', url: string, params?: HttpParams, data?: any): Promise<any> {
     const headers: HttpHeaders = new HttpHeaders();
 
-    // .set('Authorization', `token ${Cookies.get(AppService.COOKIE_AUTH_KEY)}`)
+    if (Cookies.get(AppService.COOKIE_AUTH_KEY)) {
+      // headers = headers.set('Authorization', `${Cookies.get(AppService.COOKIE_AUTH_KEY)}`);
+      params = params.set('authToken', Cookies.get(AppService.COOKIE_AUTH_KEY));
+
+      if (!!data) {
+        data.authToken = Cookies.get(AppService.COOKIE_AUTH_KEY);
+      }
+    }
 
     if (type === 'GET') {
       return this.http.get(url, { headers, params }).pipe(shareReplay()).toPromise();
@@ -229,7 +270,7 @@ export class AppService {
         Promise.reject('no data provided');
       }
 
-      headers.set('Content-Type', 'application/json');
+      // headers = headers.set('Content-Type', 'application/json');
 
       return this.http.post(url, JSON.stringify(data), { headers, params }).pipe(shareReplay()).toPromise();
     } else if (type === 'PATCH') {
@@ -237,7 +278,7 @@ export class AppService {
         Promise.reject('no data provided');
       }
 
-      headers.set('Content-Type', 'application/json');
+      // headers = headers.set('Content-Type', 'application/json');
 
       return this.http.patch(url, JSON.stringify(data), { headers, params }).pipe(shareReplay()).toPromise();
     } else if (type === 'DELETE') {
@@ -245,7 +286,7 @@ export class AppService {
         Promise.reject('no data provided');
       }
 
-      headers.set('Content-Type', 'application/json');
+      // headers = headers.set('Content-Type', 'application/json');
 
       // return this.http.delete(url, JSON.stringify(data), { headers, params }).pipe(shareReplay()).toPromise();
     } else {
