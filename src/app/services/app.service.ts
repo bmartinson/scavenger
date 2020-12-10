@@ -329,6 +329,7 @@ export class AppService {
   /* * * * * Waypoint Interactions * * * * */
 
   public async scanWaypoint(idHunt: string, idWaypoint: string): Promise<ScavengerWaypointStatus> {
+    console.warn('scanning waypoint!');
     if (!this.session.hunt) {
       // we do not have an active hunt, so we need to load from the server
       try {

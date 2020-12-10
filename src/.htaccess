@@ -1,3 +1,4 @@
+Options Indexes FollowSymLinks
 RewriteEngine On
 
 Header set Access-Control-Allow-Origin "*"
@@ -19,7 +20,7 @@ RewriteRule ^(.*)$ https://www.scavenger.games/$1 [R=301,L]
 # Error Document
 # Fall back to angular routing by default
 #
-ErrorDocument 404 /index.html
+# ErrorDocument 404 /index.html
 
 #
 # API RewriteRules
@@ -29,3 +30,8 @@ RewriteRule ^api/authorize/?$ /api/authorize.php [QSA,NC,L]
 RewriteRule ^api/user/?$ /api/user.php [QSA,NC,L]
 RewriteRule ^api/hunt/?$ /api/hunt.php [QSA,NC,L]
 RewriteRule ^api/hunts/?$ /api/hunts.php [QSA,NC,L]
+
+RewriteRule ^index\.html$ - [L]
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule . index.html [L]
