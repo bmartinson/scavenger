@@ -1,8 +1,12 @@
 <router-outlet [@fadeInOutQuickAnimation]
+               [style.marginTop.em]="appService.showNavigation ? 6 : 1"
                (activate)="onActivate()">
 </router-outlet>
 <scavenger-footer *ngIf="appService.showNavigation"></scavenger-footer>
 
+<scavenger-journal *ngIf="appService.showJournal"
+                   [@dropDownAnimation]>
+</scavenger-journal>
 <scavenger-navigation *ngIf="appService.showNavigation"
                       [@dropDownAnimation]>
 </scavenger-navigation>

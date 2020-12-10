@@ -23,6 +23,7 @@ export class AppService {
 
   /* * * * * UI Properties * * * * */
   private _showNavigation: boolean;
+  private _showJournal: boolean;
 
   public set showNavigation(value: boolean) {
     if (this._showNavigation !== value) {
@@ -39,8 +40,24 @@ export class AppService {
     return this._showNavigation;
   }
 
+  public set showJournal(value: boolean) {
+    if (this._showJournal !== value) {
+      if (!this._navigation$) {
+        this._navigation$ = new BehaviorSubject<boolean>(!!value);
+      }
+
+      this._showJournal = value;
+      this._navigation$.next(value);
+    }
+  }
+
+  public get showJournal(): boolean {
+    return this._showJournal;
+  }
+
   /* * * * * Observables * * * * */
   private _navigation$: BehaviorSubject<boolean>;
+  private _journal$: BehaviorSubject<boolean>;
 
   public get navigation$(): Observable<boolean> {
     if (!this._navigation$) {
@@ -48,6 +65,14 @@ export class AppService {
     }
 
     return this._navigation$.asObservable();
+  }
+
+  public get journal$(): Observable<boolean> {
+    if (!this._journal$) {
+      this._journal$ = new BehaviorSubject<boolean>(!!this.showJournal);
+    }
+
+    return this._journal$.asObservable();
   }
 
   /* * * * * Application State * * * * */
@@ -493,15 +518,15 @@ export class AppService {
     return Promise.resolve(
       {
         id: '1',
-        name: 'Testing Hunt',
+        name: 'Lindsay Wildlife Explorer',
         type: ScavengerHuntType.ORDERED,
         singlePathOnly: false,
         startingWaypoint: {
           id: '1',
-          name: 'Waypoint Tier 1: 1',
+          name: 'Welcome',
           value: 1,
           valid: true,
-          dialog: ['Welcome To The Test'],
+          dialog: ['Thanks for joining us at LWE!'],
           outOfOrderDialog: undefined,
           captured: false,
           waypoints: [

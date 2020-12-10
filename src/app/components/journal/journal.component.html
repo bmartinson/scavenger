@@ -1,0 +1,118 @@
+<qf-button *ngIf="!showDiscoveries"
+           [style]="QFButtonStyle.FREESTYLE"
+           (clicked)="onToggleDiscoveries(true)"
+           class="open-qf-button"
+           [@dropDownAnimation]>
+  <div class="button">
+    <fa-icon [icon]="['fas', 'book']"
+             class="icon">
+    </fa-icon>
+    <span>Your&nbsp;Discoveries</span>
+  </div>
+</qf-button>
+
+<div *ngIf="showDiscoveries"
+     [@contentDropDownAnimation]
+     class="content">
+  <qf-button *ngIf="showDiscoveries"
+             [style]="QFButtonStyle.FREESTYLE"
+             (clicked)="onToggleDiscoveries(false)">
+    <div class="button">
+      <fa-icon [icon]="['fas', 'angle-double-up']"
+               class="icon">
+      </fa-icon>
+      <span>Go&nbsp;Back</span>
+    </div>
+  </qf-button>
+
+  <div class="menu">
+    Discoveries here!
+    <br>
+    Discoveries here!
+    <br>
+    Discoveries here!
+    <br>
+    Discoveries here!
+    <br>
+    Discoveries here!
+    <br>
+    Discoveries here!
+    <br>
+    Discoveries here!
+    <br>
+    Discoveries here!
+    <br>
+    Discoveries here!
+    <br>
+    Discoveries here!
+    <br>
+    Discoveries here!
+    <br>
+    Discoveries here!
+    <br>
+    Discoveries here!
+    <br>
+    Discoveries here!
+    <br>
+    Discoveries here!
+    <br>
+    Discoveries here!
+    <br>
+    Discoveries here!
+    <br>
+    Discoveries here!
+    <br>
+    Discoveries here!
+    <br>
+    Discoveries here!
+    <br>
+    Discoveries here!
+    <br>
+    Discoveries here!
+    <br>
+    Discoveries here!
+    <br>
+    Discoveries here!
+    <br>
+    Discoveries here!
+    <br>
+    Discoveries here!
+    <br>
+    Discoveries here!
+    <br>
+    Discoveries here!
+    <br>
+    Discoveries here!
+    <br>
+    Discoveries here!
+    <br>
+    Discoveries here!
+    <br>
+    Discoveries here!
+    <br>
+    Discoveries here!
+    <br>
+    Discoveries here!
+    <br>
+    Discoveries here!
+    <br>
+    Discoveries here!
+    <br>
+    Discoveries here!
+    <br>
+    Discoveries here!
+    <br>
+    Discoveries here!
+    <br>
+    Discoveries here!
+    <br>
+    Discoveries here!
+    <br>
+    Discoveries here!
+    <br>
+    Discoveries here!
+    <br>
+    Discoveries here!
+    <br>
+  </div>
+</div>

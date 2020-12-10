@@ -1,5 +1,7 @@
 import { Injectable } from '@angular/core';
 import { ActivatedRouteSnapshot, CanActivate, CanActivateChild, CanLoad, Resolve, Router, RouterStateSnapshot, UrlTree } from '@angular/router';
+import { NoWaypointComponent } from '../components/no-waypoint/no-waypoint.component';
+import { WaypointComponent } from '../components/waypoint/waypoint.component';
 import { ScavengerWaypointStatus } from '../enum/scavenger-waypoint.enum';
 import { ScavengerHuntRouteData } from '../model/scavenger-hunt-route-data';
 import { ScavengerWaypoint } from '../model/scavenger-waypoint';

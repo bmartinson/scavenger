@@ -34,7 +34,7 @@ export const delayedDropDownAnimation = trigger(
       ':leave',
       [
         style({ top: '0' }),
-        animate('.5s .25s ease-in', style({ top: -100 })),
+        animate('.5s .25s ease-in', style({ top: -100, position: 'absolute' })),
       ],
     ),
   ],
