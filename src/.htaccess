@@ -1,8 +1,18 @@
-Options Indexes FollowSymLinks
-RewriteEngine On
 
 Header set Access-Control-Allow-Origin "*"
 Header set Access-Control-Allow-Headers "Origin, X-Requested-With, Content-Type, Accept"
+
+# Options Indexes FollowSymLinks
+Options FollowSymLinks
+# AllowOverride all
+Require all granted
+
+DirectoryIndex index.html
+
+#
+# Enable the RewriteEngine
+#
+RewriteEngine on
 
 #
 # Enforce WWW Traffic
@@ -17,12 +27,6 @@ RewriteCond %{SERVER_PORT} !=443
 RewriteRule ^(.*)$ https://www.scavenger.games/$1 [R=301,L]
 
 #
-# Error Document
-# Fall back to angular routing by default
-#
-# ErrorDocument 404 /index.html
-
-#
 # API RewriteRules
 #
 RewriteRule ^api/health-check/?$ /api/utility/health-check.php [QSA,NC,L]
@@ -31,7 +35,16 @@ RewriteRule ^api/user/?$ /api/user.php [QSA,NC,L]
 RewriteRule ^api/hunt/?$ /api/hunt.php [QSA,NC,L]
 RewriteRule ^api/hunts/?$ /api/hunts.php [QSA,NC,L]
 
-RewriteRule ^index\.html$ - [L]
-RewriteCond %{REQUEST_FILENAME} !-f
+#
+# Correctly navigate to the index file to use Angular routing
+#
 RewriteCond %{REQUEST_FILENAME} !-d
-RewriteRule . index.html [L]
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_URI} !^/assets/(.+)$
+RewriteRule ^(.*)$ /index.html [QSA,NC,L]
+
+#
+# Error Document
+# Fall back to angular routing by default
+#
+ErrorDocument 404 /index.html
