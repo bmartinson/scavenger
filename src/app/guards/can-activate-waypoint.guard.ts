@@ -43,6 +43,16 @@ export class CanActivateWaypointGuard extends CanActivateGuard implements
 
     this.waypoint = this.appService.getWaypoint(next.paramMap.get('idWaypoint'));
 
+    const discoveries: ScavengerWaypoint[] = this.appService.discoveries;
+    this.appService.showJournal = next.component === WaypointComponent || next.component === NoWaypointComponent;
+
+    // show the journal when there are any discoveries only when we are on an out of order or duplicate discovery
+    if (this.waypointStatus === ScavengerWaypointStatus.OUT_OF_ORDER || this.waypointStatus === ScavengerWaypointStatus.DUPLICATE) {
+      this.appService.showJournal = this.appService.showJournal && discoveries.length > 0;
+    } else {
+      this.appService.showJournal = this.appService.showJournal && discoveries.length > 1;
+    }
+
     switch (this.waypointStatus) {
       case ScavengerWaypointStatus.INVALID:
       case ScavengerWaypointStatus.START:

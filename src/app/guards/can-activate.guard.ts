@@ -19,7 +19,7 @@ export class CanActivateGuard implements CanActivate, CanActivateChild, CanLoad 
   ): Promise<boolean | UrlTree> {
 
     // manage the display of the navigation bar
-    this.appService.showJournal = next.component === WaypointComponent || next.component === NoWaypointComponent;
+    this.appService.showJournal = false;
     this.appService.showNavigation = next.component !== WaypointComponent &&
       next.component !== NoWaypointComponent;
 
