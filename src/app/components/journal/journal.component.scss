@@ -3,112 +3,89 @@
 :host {
   position: absolute;
   width: 100%;
-  height: 100%;
-  pointer-events: none;
+  height: auto;
+  background-color: $white;
 
-  .open-qf-button {
-    position: absolute;
-    margin-top: 1rem;
-    top: 0;
-    left: 50%;
-    transform: translateX(-50%);
-    pointer-events: all;
-  }
-
-  .icon {
-    font-size: 1em;
-    margin-right: .5em;
-  }
-
-  .button {
-    color: $white;
+  qf-button {
     display: flex;
-    flex-direction: row;
     justify-content: center;
     align-items: center;
+    margin-top: 2rem;
 
-    .icon {
-      font-size: 2em;
-      margin-right: .5em;
+    fa-icon {
+      margin-right: 1em;
     }
   }
 
-  .content {
+  .content-main {
+    position: fixed;
     width: 100%;
-    min-height: 100%;
+
+    &.animate {
+      transition: top 1s ease;
+    }
+  }
+
+  .content-main:before,
+  .content-main:after {
+    content: "";
+    height: 0;
+    width: 100%;
+    top: 0;
+    position: absolute;
+    transform: rotate(90deg);
+    -webkit-clip-path: polygon(0% 0%, 5% 100%, 10% 0%, 15% 100%, 20% 0%, 25% 100%, 30% 0%, 35% 100%, 40% 0%, 45% 100%, 50% 0%, 55% 100%, 60% 0%, 65% 100%, 70% 0%, 75% 100%, 80% 0%, 85% 100%, 90% 0%, 95% 100%, 100% 0%);
+  }
+
+  .content-main:before {
+    background-color: #eee;
+    left: -50%;
+  }
+
+  .content-main:after {
+    background-color: #fff;
+    right: -50%;
+  }
+
+  .content-main .content-box {
     height: auto;
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-start;
-    align-items: center;
-    background-color: $blue;
-    backdrop-filter: blur(10px);
-    pointer-events: all;
+    overflow: hidden;
+    padding: 0 1em .5em 1em;
+    background: #fff;
+    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.25);
+  }
 
-    .menu {
-      color: $white;
+  .content-main .content-box:before,
+  .content-main .content-box:after {
+    content: "";
+    height: 2px;
+    position: absolute;
+    left: 0;
+    right: 0;
+    -webkit-clip-path: polygon(0% 0%, 5% 100%, 10% 0%, 15% 100%, 20% 0%, 25% 100%, 30% 0%, 35% 100%, 40% 0%, 45% 100%, 50% 0%, 55% 100%, 60% 0%, 65% 100%, 70% 0%, 75% 100%, 80% 0%, 85% 100%, 90% 0%, 95% 100%, 100% 0%);
+  }
+
+  .content-main .content-box:before {
+    background-color: #eee;
+    top: 0;
+  }
+
+  .content-main .content-box:after {
+    background-color: #fff;
+    bottom: -2px;
+  }
+
+  ul {
+    position: relative;
+    list-style-type: none;
+    padding: 0;
+
+    li {
       display: flex;
-      flex-direction: column;
-      justify-content: center;
+      flex-direction: row;
       align-items: center;
-      height: 100%;
-    }
-
-    a {
-      color: $white;
-      margin: 0.5rem 0;
-    }
-
-    ul {
-      position: relative;
-      list-style-type: none;
-      padding: 0;
-      margin-right: 3rem;
-
-      &::before {
-        content: '';
-        position: absolute;
-        top: 2.5em;
-        left: 2.8125em;
-        display: inline-block;
-        width: .125em;
-        height: calc(100% - 6.2em);
-        background-color: $white;
-        z-index: 0;
-      }
-
-      li {
-        display: flex;
-        flex-direction: row;
-        align-items: center;
-        margin: 1em 0 2em 2em;
-        border-left: unset;
-
-        &.solid::before {
-          background-color: $white !important;
-        }
-
-        &.blank {
-          user-select: none;
-
-          &::before {
-            border-color: transparent !important;
-            background-color: transparent !important;
-          }
-        }
-
-        &::before {
-          content: '';
-          display: inline-block;
-          width: 1.5em;
-          height: 1.5em;
-          border-radius: 3em;
-          background-color: $white;
-          border: .125em solid $white;
-          margin-right: 2em;
-          z-index: 1;
-        }
-      }
+      margin: 1em 0 1em 2em;
+      border-left: unset;
     }
   }
 }

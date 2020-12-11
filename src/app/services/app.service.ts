@@ -123,11 +123,6 @@ export class AppService {
 
   public get isHuntComplete(): boolean {
     if (this.isHuntActive) {
-      console.warn(
-        'count check',
-        this.session.hunt.capturedWaypointCount,
-        this.session.hunt.validWaypointCount,
-      );
       return this.session.hunt.capturedWaypointCount === this.session.hunt.validWaypointCount;
     }
 
@@ -561,9 +556,10 @@ export class AppService {
         startingWaypoint: {
           id: '1',
           name: 'Getting Started',
-          description: `<p>Let's see how well you know Lindsay Wildlife Experience and the animal ambassador's that call it home! Use the clues that are listed on your screen at each waypoint to help you find the next stop on today's animal adventure. When you think you've found the next waypoint, just use your camera to scan the QR code and see if you're right!<p>`,
-          clues: [`He's 47 years old.`, `Has an almost 6' wingspan.`, `Lives outside.`],
-          interactiveType: 'none',
+          description: `<p>Let's see how well you know Lindsay Wildlife Experience and the animal ambassador's that call it home!</p><p>Use the clues that are listed on your screen at each waypoint to help you find the next stop on today's animal adventure. When you think you've found the next waypoint, just use your camera to scan the QR code and see if you're right!<p>`,
+          clues: [`I'm 46 years old.`, `I have a 6' wingspan.`, `You can find me out front.`],
+          interactiveType: 'image',
+          interactiveSrc: 'assets/hunt-content/explorer.png',
           value: 1,
           valid: true,
           dialog: ['Welcome to Lindsay!', 'Are you ready to explore?'],

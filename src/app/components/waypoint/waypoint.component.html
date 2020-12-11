@@ -22,7 +22,7 @@
     <div [innerHTML]="waypoint?.description"></div>
     <div
          *ngIf="(waypoint?.interactiveType === 'audio' || waypoint?.interactiveType === 'video') && waypoint?.interactiveSrc">
-      <vg-player [style.height.px]="waypoint?.interactiveType === 'audio' ? 55 : undefined">
+      <vg-player>
         <vg-overlay-play *ngIf="waypoint?.interactiveType === 'video'"></vg-overlay-play>
         <vg-buffering></vg-buffering>
 
@@ -45,9 +45,19 @@
           <vg-fullscreen *ngIf="waypoint?.interactiveType === 'video'"></vg-fullscreen>
         </vg-controls>
 
-        <video [vgMedia]="media"
+        <audio *ngIf="waypoint?.interactiveType === 'audio'"
+               [vgMedia]="audioMedia"
+               #audioMedia
+               id="interactiveAudio"
+               preload="auto"
+               [autoplay]="true"
+               crossorigin>
+          <source [src]="waypoint?.interactiveSrc">
+        </audio>
+        <video *ngIf="waypoint?.interactiveType === 'video'"
+               [vgMedia]="media"
                #media
-               id="interactiveContent"
+               id="interactiveVideo"
                preload="auto"
                [autoplay]="waypoint?.interactiveType === 'audio'"
                crossorigin>
@@ -55,9 +65,14 @@
         </video>
       </vg-player>
     </div>
+    <div *ngIf="waypoint?.interactiveType === 'image'"
+         class="image-container">
+      <img [src]="waypoint?.interactiveSrc">
+    </div>
 
-    <h2 *ngIf="waypoint?.clues?.length > 0">
-      Your Next Clues:
+    <h2 *ngIf="waypoint?.clues?.length > 0"
+        class="clue-section">
+      Your Next Clues
     </h2>
     <ul *ngIf="waypoint?.clues?.length > 0">
       <li *ngFor="let clue of waypoint.clues">{{clue}}</li>
