@@ -26,10 +26,15 @@
   </qf-button>
 
   <div class="menu">
-    <a *ngFor="let discovery of discoveries"
-       [routerLink]="['/', appService.huntId, discovery.id]"
-       (click)="onToggleDiscoveries(false)">
-      {{discovery.name}}
-    </a>
+    <ul>
+      <li *ngFor="let discovery of discoveries">
+        <div>
+          <a [routerLink]="['/', appService.huntId, discovery.id]"
+             (click)="onToggleDiscoveries(false)">
+            {{discovery.name}}
+          </a>
+        </div>
+      </li>
+    </ul>
   </div>
 </div>

@@ -576,7 +576,7 @@ export class AppService {
                   id: '32',
                   name: 'Fire',
                   description: `<p>You found Fire, one of our two <b>Red Tailed Hawks</b>. She has been with the organization since 1990 and was discovered in Castro Valley. You can spot Red Tailed Hawks frequently around the Bay Area by looking at their beautiful red tails.</p><p>Of all of the birds that call Lindsay home, she is the biggest! Weighing in at over 1kg!! Fire is one of two Red Tailed Hawks that live at Lindsay Wildlife, and like most bird species, she's bigger than her male counterparts. If you see Rufous around, take a look and notice how he's smaller in size.</p>`,
-                  clues: [],
+                  clues: [`I hover while looking for my prey.`, `My eyes will be bright red when I'm fully grown.`, `You can find me in the nature cove.`],
                   value: 1,
                   valid: true,
                   dialog: ['Well done!', 'You found Fire!', `The Red Tailed Hawk!`],
@@ -585,15 +585,28 @@ export class AppService {
                   waypoints: [
                     {
                       id: '4',
-                      name: 'Waypoint Tier 4: 1',
-                      description: '',
-                      clues: [],
+                      name: 'Dragon',
+                      description: `<p>Great job finding Dragon, the White-Tailed Kite! It is super special that Dragon lives with us because very few White-Tailed Kits live in captivity due to their social nature. Dragon, however, came to our rehabilitation hospital note once, but twice! And as a result of her head trauma, she is too friendly with humans to survive in the wild. She lives a super happy life out here in the Nature Cove and loves to yell.</p>`,
+                      clues: ['We hate to say goodbye, so walk by Hello!', `Continue your adventure inside!`],
                       value: 1,
                       valid: true,
-                      dialog: ['Finishing Clue'],
+                      dialog: [`You've found Dragon!`],
                       outOfOrderDialog: undefined,
                       captured: false,
-                      waypoints: [],
+                      waypoints: [
+                        {
+                          id: '5',
+                          name: 'The Exhibit Hall',
+                          description: `<p>Thank you so much for joining us and participating in our scavenger hunt. We hope you had fun. Please enjoy the rest of your day at Lindsay Wildelife!</p>`,
+                          clues: [],
+                          value: 1,
+                          valid: true,
+                          dialog: [`Way to go!`, `You're an expert animal explorer!`],
+                          outOfOrderDialog: undefined,
+                          captured: false,
+                          waypoints: [],
+                        }
+                      ],
                     }
                   ],
                 },
