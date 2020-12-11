@@ -467,7 +467,7 @@ export class AppService {
       ) {
         if (
           status === ScavengerWaypointStatus.VALID ||
-          status === ScavengerWaypointStatus.START ||
+          status === ScavengerWaypointStatus.START && !this.session.hunt.idCurrentWaypoint ||
           status === ScavengerWaypointStatus.FINISH
         ) {
           // track the current waypoint we are at

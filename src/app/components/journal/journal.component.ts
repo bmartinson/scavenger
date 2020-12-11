@@ -1,7 +1,5 @@
-import { animate, style, transition, trigger } from '@angular/animations';
 import { AfterViewInit, ChangeDetectorRef, Component, OnInit, ViewRef } from '@angular/core';
 import { Router } from '@angular/router';
-import { dropDownAnimation } from '../../animations/core-animations';
 import { QFButtonStyle } from '../../forms/components/button/button.component';
 import { ScavengerWaypoint } from '../../model/scavenger-waypoint';
 import { AppService } from '../../services/app.service';
@@ -9,26 +7,7 @@ import { AppService } from '../../services/app.service';
 @Component({
   selector: 'scavenger-journal',
   templateUrl: './journal.component.html',
-  styleUrls: ['../../styles/component-base.scss', './journal.component.scss'],
-  animations: [dropDownAnimation, trigger(
-    'contentDropDownAnimation',
-    [
-      transition(
-        ':enter',
-        [
-          style({ top: '-100%', position: 'absolute' }),
-          animate('.5s ease-out', style({ top: 0, position: 'absolute' })),
-        ],
-      ),
-      transition(
-        ':leave',
-        [
-          style({ top: '0' }),
-          animate('.5s ease-in', style({ top: '-100%', position: 'absolute' })),
-        ],
-      ),
-    ],
-  )]
+  styleUrls: ['../../styles/component-base.scss', './journal.component.scss']
 })
 export class JournalComponent implements AfterViewInit, OnInit {
 
