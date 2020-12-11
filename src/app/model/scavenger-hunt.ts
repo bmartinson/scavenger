@@ -53,7 +53,7 @@ export class ScavengerHunt extends ScavengerModel implements IScavengerHunt {
 
   public get capturedWaypoints(): ScavengerWaypoint[] {
     const waypoints: ScavengerWaypoint[] = [];
-    this.startingWaypoint.countWaypoints(false, true, waypoints);
+    this.startingWaypoint.countWaypoints(true, true, waypoints);
 
     return waypoints;
   }
