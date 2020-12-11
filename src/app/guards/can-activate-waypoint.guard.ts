@@ -53,8 +53,6 @@ export class CanActivateWaypointGuard extends CanActivateGuard implements
       this.appService.showJournal = this.appService.showJournal && discoveries.length > 1;
     }
 
-    console.warn('status', this.waypointStatus);
-
     switch (this.waypointStatus) {
       case ScavengerWaypointStatus.INVALID:
       case ScavengerWaypointStatus.START:

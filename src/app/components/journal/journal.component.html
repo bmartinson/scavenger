@@ -14,8 +14,7 @@
 <div *ngIf="showDiscoveries"
      [@contentDropDownAnimation]
      class="content">
-  <qf-button *ngIf="showDiscoveries"
-             [style]="QFButtonStyle.FREESTYLE"
+  <qf-button [style]="QFButtonStyle.FREESTYLE"
              (clicked)="onToggleDiscoveries(false)">
     <div class="button">
       <fa-icon [icon]="['fas', 'angle-double-up']"
@@ -29,7 +28,7 @@
     <ul>
       <li *ngFor="let discovery of discoveries">
         <div>
-          <a [routerLink]="['/', appService.huntId, discovery.id]"
+          <a [routerLink]="['/', appService.idHunt, discovery.id]"
              (click)="onToggleDiscoveries(false)">
             {{discovery.name}}
           </a>
@@ -37,4 +36,15 @@
       </li>
     </ul>
   </div>
+
+  <qf-button *ngIf="isHuntComplete"
+             [style]="QFButtonStyle.FREESTYLE"
+             (clicked)="onResetGame()">
+    <div class="button">
+      <fa-icon [icon]="['fas', 'undo']"
+               class="icon">
+      </fa-icon>
+      <span>Reset&nbsp;Game</span>
+    </div>
+  </qf-button>
 </div>

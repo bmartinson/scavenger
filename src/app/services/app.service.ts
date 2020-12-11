@@ -112,12 +112,25 @@ export class AppService {
     return !this.session?.hunt || !this.session?.active;
   }
 
-  public get huntId(): string {
+  public get idHunt(): string {
     if (this.isHuntActive) {
       return this.session.hunt.id;
     }
 
     return undefined;
+  }
+
+  public get isHuntComplete(): boolean {
+    if (this.isHuntActive) {
+      console.warn(
+        'count check',
+        this.session.hunt.capturedWaypointCount,
+        this.session.hunt.validWaypointCount,
+      );
+      return this.session.hunt.capturedWaypointCount === this.session.hunt.validWaypointCount;
+    }
+
+    return false;
   }
 
   public get discoveries(): ScavengerWaypoint[] {

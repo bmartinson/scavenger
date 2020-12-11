@@ -1,5 +1,6 @@
 import { animate, style, transition, trigger } from '@angular/animations';
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { dropDownAnimation } from '../../animations/core-animations';
 import { QFButtonStyle } from '../../forms/components/button/button.component';
 import { ScavengerWaypoint } from '../../model/scavenger-waypoint';
@@ -34,6 +35,7 @@ export class JournalComponent implements OnInit {
   public QFButtonStyle = QFButtonStyle;
   public showDiscoveries: boolean;
   private _discoveries: ScavengerWaypoint[];
+  public isHuntComplete: boolean;
 
   public get discoveries(): ScavengerWaypoint[] {
     if (!this._discoveries) {
@@ -43,16 +45,24 @@ export class JournalComponent implements OnInit {
     return this._discoveries;
   }
 
-  constructor(public appService: AppService) {
+  constructor(public appService: AppService, private router: Router) {
     this.showDiscoveries = false;
   }
 
   public ngOnInit(): void {
     this._discoveries = this.appService.discoveries;
+    this.isHuntComplete = this.appService.isHuntComplete;
   }
 
   public onToggleDiscoveries(state: boolean): void {
     this.showDiscoveries = !!state;
+  }
+
+  public onResetGame(): void {
+    localStorage.clear();
+
+    this.router.navigate(['/', this.appService.idHunt]).catch(() => {
+    });
   }
 
 }
