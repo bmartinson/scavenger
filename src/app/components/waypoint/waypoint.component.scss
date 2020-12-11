@@ -18,7 +18,8 @@
     animation: fadeIn ease 2s, shrinkUp ease 3s;
   }
 
-  ul {
+  ul,
+  ol {
     list-style-type: decimal;
   }
 
@@ -42,8 +43,69 @@
       }
     }
 
-    .clue-section {
+    .clues-section {
+      display: flex;
+      flex-direction: column;
       margin-top: 1rem;
+      color: $white;
+      background-color: $green;
+      width: 100%;
+
+      h2 {
+        color: $white;
+        margin-bottom: unset;
+      }
+
+      .clues {
+        display: flex;
+        flex-direction: row;
+
+        .icon {
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          padding: 1em;
+
+          fa-icon {
+            font-size: 4rem;
+          }
+        }
+
+        ul {
+          counter-reset: item;
+          margin: 0;
+          padding-left: 0;
+          width: 100%;
+        }
+
+        ul>li {
+          counter-increment: item;
+          list-style: none inside;
+          margin: 1em 0;
+          overflow: hidden;
+          font-size: 1em !important;
+          display: flex;
+          justify-content: flex-start;
+          align-items: center;
+          padding-right: .5em;
+        }
+
+        ul>li:before {
+          content: counter(item);
+          margin-right: 1rem;
+          display: block;
+          -webkit-border-radius: 50%;
+          -moz-border-radius: 50%;
+          border-radius: 50%;
+          min-width: 2.5rem;
+          font-size: 1.5rem;
+          padding: .25em 0;
+          background: $white;
+          color: $green;
+          text-align: center;
+          float: left;
+        }
+      }
     }
   }
 

@@ -1,4 +1,4 @@
-import { AfterViewInit, ChangeDetectorRef, Component, OnInit, ViewRef } from '@angular/core';
+import { AfterViewInit, ChangeDetectorRef, Component, ElementRef, OnInit, ViewRef } from '@angular/core';
 import { Router } from '@angular/router';
 import { QFButtonStyle } from '../../forms/components/button/button.component';
 import { ScavengerWaypoint } from '../../model/scavenger-waypoint';
@@ -25,7 +25,7 @@ export class JournalComponent implements AfterViewInit, OnInit {
     return this._discoveries;
   }
 
-  constructor(public appService: AppService, private router: Router, private changeRef: ChangeDetectorRef) {
+  constructor(public appService: AppService, private router: Router, private changeRef: ChangeDetectorRef, private elementRef: ElementRef) {
     this.showDiscoveries = false;
     this.initialized = false;
   }
@@ -49,6 +49,7 @@ export class JournalComponent implements AfterViewInit, OnInit {
 
   public onResetGame(): void {
     localStorage.clear();
+    this.onToggleDiscoveries(false);
 
     this.router.navigate(['/', this.appService.idHunt]).catch(() => {
     });

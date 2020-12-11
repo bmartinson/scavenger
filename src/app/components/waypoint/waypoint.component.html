@@ -70,13 +70,19 @@
       <img [src]="waypoint?.interactiveSrc">
     </div>
 
-    <h2 *ngIf="waypoint?.clues?.length > 0"
-        class="clue-section">
-      Your Next Clues
-    </h2>
-    <ul *ngIf="waypoint?.clues?.length > 0">
-      <li *ngFor="let clue of waypoint.clues">{{clue}}</li>
-    </ul>
+    <div *ngIf="waypoint?.clues?.length > 0"
+         class="clues-section">
+      <h2>Your Next Clues</h2>
+      <div class="clues">
+        <div class="icon">
+          <fa-icon [icon]="['fas', 'hiking']">
+          </fa-icon>
+        </div>
+        <ul>
+          <li *ngFor="let clue of waypoint.clues">{{clue}}</li>
+        </ul>
+      </div>
+    </div>
   </ng-container>
 
 </div>

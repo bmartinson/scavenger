@@ -572,7 +572,8 @@ export class AppService {
               // tslint:disable-next-line: max-line-length
               description: `<p>Lord Richard is one of the oldest Turkey Vultures in the world and has called Lindsay Wildlife home since 1986.</p><p>Turkey Vultures are cool because they have a nearly six foot wide wingspan. They also fly in a wobbly motion and soar for long distances using heat thermals in the air.</p>`,
               clues: ['I have red feathers.', `I'm a female bird.`, `I don't have a wing injury.`],
-              interactiveType: 'none',
+              interactiveType: 'video',
+              interactiveSrc: 'assets/hunt-content/t-vulture.mp4',
               value: 1,
               valid: true,
               dialog: ['This is Lord Richard!'],

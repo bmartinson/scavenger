@@ -12,6 +12,16 @@
           </a>
         </div>
       </li>
+      <li *ngIf="isHuntComplete">
+        <fa-icon [icon]="['fas', 'undo']"
+                 class="icon">
+        </fa-icon>
+        &nbsp;
+        <a [routerLink]="['/', appService.idHunt]"
+           (click)="onResetGame(false)">
+          Reset Game
+        </a>
+      </li>
     </ul>
 
     <qf-button [style]="QFButtonStyle.FREESTYLE"
