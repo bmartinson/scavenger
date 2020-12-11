@@ -5,7 +5,7 @@
     "ng": "ng",
     "start": "ng serve",
     "build": "ng build",
-    "build-publish": "ng build --prod && ssh u41081516@home175634851.1and1-data.host rm -rf ./scavenger && scp -r ./dist/scavenger u41081516@home175634851.1and1-data.host:/kunden/homepages/34/d175634851/htdocs/ && rm -rf ./dist",
+    "build-publish": "ng build --prod && ssh u41081516@home175634851.1and1-data.host mv ./scavenger/assets/hunt-content ./ && ssh u41081516@home175634851.1and1-data.host rm -rf ./scavenger && scp -r ./dist/scavenger u41081516@home175634851.1and1-data.host:/kunden/homepages/34/d175634851/htdocs/ && ssh u41081516@home175634851.1and1-data.host mv ./hunt-content/* ./scavenger/assets/hunt-content/ > /dev/null && ssh u41081516@home175634851.1and1-data.host rm -rf ./hunt-content && rm -rf ./dist",
     "publish-api": "ssh u41081516@home175634851.1and1-data.host rm -rf ./scavenger/api && ssh u41081516@home175634851.1and1-data.host rm -rf ./scavenger/.htaccess && scp -r ./src/api u41081516@home175634851.1and1-data.host:/kunden/homepages/34/d175634851/htdocs/scavenger/ && scp -r ./src/.htaccess u41081516@home175634851.1and1-data.host:/kunden/homepages/34/d175634851/htdocs/scavenger/",
     "publish-apache": "ssh u41081516@home175634851.1and1-data.host rm -rf ./scavenger/.htaccess && scp -r ./src/.htaccess u41081516@home175634851.1and1-data.host:/kunden/homepages/34/d175634851/htdocs/scavenger/",
     "test": "ng test",
