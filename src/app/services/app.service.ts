@@ -597,7 +597,7 @@ export class AppService {
                   id: '32',
                   name: 'Fire',
                   description: `<p>You found Fire, one of our two <b>Red Tailed Hawks</b>. She has been with the organization since 1990 and was discovered in Castro Valley. You can spot Red Tailed Hawks frequently around the Bay Area by looking at their beautiful red tails.</p><p>Of all of the birds that call Lindsay home, she is the biggest! Weighing in at over 1kg!! Fire is one of two Red Tailed Hawks that live at Lindsay Wildlife, and like most bird species, she's bigger than her male counterparts. If you see Rufous around, take a look and notice how he's smaller in size.</p>`,
-                  clues: [`I hover while looking for my prey.`, `My eyes will be bright red when I'm fully grown.`, `You can find me in the nature cove.`],
+                  clues: [`I hover while looking for my prey.`, `My eyes will be bright red when I'm fully grown.`, `I'm a rare captive species.`, `You can find me in the nature cove.`],
                   interactiveType: 'none',
                   value: 1,
                   valid: true,

@@ -70,19 +70,25 @@
       <img [src]="waypoint?.interactiveSrc">
     </div>
 
-    <div *ngIf="waypoint?.clues?.length > 0"
-         class="clues-section">
-      <h2>Your Next Clues</h2>
-      <div class="clues">
-        <div class="icon">
-          <fa-icon [icon]="['fas', 'hiking']">
-          </fa-icon>
+    <ng-container *ngIf="waypoint?.clues?.length > 0">
+      <div class="clues-header flip-vertical"></div>
+
+      <div class="clues-section">
+        <h2>Your Next Clues</h2>
+        <div class="clues">
+          <div class="icon">
+            <fa-icon [icon]="['fas', 'hiking']">
+            </fa-icon>
+          </div>
+          <ul>
+            <li *ngFor="let clue of waypoint.clues">{{clue}}</li>
+          </ul>
         </div>
-        <ul>
-          <li *ngFor="let clue of waypoint.clues">{{clue}}</li>
-        </ul>
       </div>
-    </div>
+
+      <div class="clues-footer"></div>
+    </ng-container>
+
   </ng-container>
 
 </div>
