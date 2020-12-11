@@ -83,6 +83,7 @@ export class AppService {
   public organization: string;
   public email: string;
   private hasUserData: boolean;
+  public embeddedCache: { [url: string]: HTMLEmbedElement };
 
   public get idUser(): number {
     const authToken: string = Cookies.get(AppService.COOKIE_AUTH_KEY);
@@ -147,6 +148,7 @@ export class AppService {
 
   constructor(private router: Router, private http: HttpClient) {
     this.hasUserData = false;
+    this.embeddedCache = {};
 
     this.router.events.subscribe((event: any) => {
       if (event instanceof NavigationEnd) {
@@ -414,6 +416,12 @@ export class AppService {
     let status: ScavengerWaypointStatus = ScavengerWaypointStatus.VALID;
     const isLeaf: boolean = waypoint && (!waypoint.waypoints || waypoint.waypoints?.length === 0);
 
+    // if we have a waypoint
+    if (waypoint && waypoint.interactiveType === 'audio') {
+      this.embeddedCache[waypoint.interactiveSrc] = document.createElement('embed');
+      this.embeddedCache[waypoint.interactiveSrc].src = waypoint.interactiveSrc;
+    }
+
     if (!waypoint) {
       // the way point requested does not exist but the hunt that was provided does
       return ScavengerWaypointStatus.NO_WAYPOINT;
@@ -555,6 +563,7 @@ export class AppService {
           name: 'Getting Started',
           description: `<p>Let's see how well you know Lindsay Wildlife Experience and the animal ambassador's that call it home! Use the clues that are listed on your screen at each waypoint to help you find the next stop on today's animal adventure. When you think you've found the next waypoint, just use your camera to scan the QR code and see if you're right!<p>`,
           clues: [`He's 47 years old.`, `Has an almost 6' wingspan.`, `Lives outside.`],
+          interactiveType: 'none',
           value: 1,
           valid: true,
           dialog: ['Welcome to Lindsay!', 'Are you ready to explore?'],
@@ -567,6 +576,7 @@ export class AppService {
               // tslint:disable-next-line: max-line-length
               description: `<p>Lord Richard is one of the oldest Turkey Vultures in the world and has called Lindsay Wildlife home since 1986.</p><p>Turkey Vultures are cool because they have a nearly six foot wide wingspan. They also fly in a wobbly motion and soar for long distances using heat thermals in the air.</p>`,
               clues: ['I have red feathers.', `I'm a female bird.`, `I don't have a wing injury.`],
+              interactiveType: 'none',
               value: 1,
               valid: true,
               dialog: ['This is Lord Richard!'],
@@ -578,6 +588,7 @@ export class AppService {
                   name: 'Red',
                   description: `<p>You found Red, the <b>Red Shouldered Hawk</b>. While magnificent in his own right, and while he does have red feathers, he doesn't match the description of your last clues! Check your discoveries and try again!</p>`,
                   clues: [],
+                  interactiveType: 'none',
                   value: 0,
                   valid: false,
                   dialog: ['Not quite!', 'This is Red!', 'A Red Shouldered Hawk'],
@@ -590,6 +601,7 @@ export class AppService {
                   name: 'Fire',
                   description: `<p>You found Fire, one of our two <b>Red Tailed Hawks</b>. She has been with the organization since 1990 and was discovered in Castro Valley. You can spot Red Tailed Hawks frequently around the Bay Area by looking at their beautiful red tails.</p><p>Of all of the birds that call Lindsay home, she is the biggest! Weighing in at over 1kg!! Fire is one of two Red Tailed Hawks that live at Lindsay Wildlife, and like most bird species, she's bigger than her male counterparts. If you see Rufous around, take a look and notice how he's smaller in size.</p>`,
                   clues: [`I hover while looking for my prey.`, `My eyes will be bright red when I'm fully grown.`, `You can find me in the nature cove.`],
+                  interactiveType: 'none',
                   value: 1,
                   valid: true,
                   dialog: ['Well done!', 'You found Fire!', `The Red Tailed Hawk!`],
@@ -600,6 +612,8 @@ export class AppService {
                       id: '4',
                       name: 'Dragon',
                       description: `<p>Great job finding Dragon, the White-Tailed Kite! It is super special that Dragon lives with us because very few White-Tailed Kits live in captivity due to their social nature. Dragon, however, came to our rehabilitation hospital note once, but twice! And as a result of her head trauma, she is too friendly with humans to survive in the wild. She lives a super happy life out here in the Nature Cove and loves to yell.</p>`,
+                      interactiveSrc: 'assets/hunt-content/white-tailed-kite.mp3',
+                      interactiveType: 'audio',
                       clues: ['We hate to say goodbye, so walk by Hello!', `Continue your adventure inside!`],
                       value: 1,
                       valid: true,
@@ -611,6 +625,7 @@ export class AppService {
                           id: '5',
                           name: 'The Exhibit Hall',
                           description: `<p>Thank you so much for joining us and participating in our scavenger hunt. We hope you had fun. Please enjoy the rest of your day at Lindsay Wildelife!</p>`,
+                          interactiveType: 'none',
                           clues: [],
                           value: 1,
                           valid: true,
@@ -628,6 +643,7 @@ export class AppService {
                   name: 'Rufous',
                   description: `<p>You're so close! You spotted the same species of hawk that we are looking for. Rufous is a <b>Red Tailed Hawk</b>. He's been at Lindsay Wildlife for a while.</p>`,
                   clues: ['Looks just like me.', `I'm a female.`, `I'm bigger.`],
+                  interactiveType: 'none',
                   value: 0,
                   valid: false,
                   dialog: ['So close!', 'This is Rufous!'],

@@ -3,7 +3,24 @@ import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { FaIconLibrary, FontAwesomeModule } from '@fortawesome/angular-fontawesome';
-import { faAngleDoubleUp, faBook, faCheck, faFlagCheckered, faHiking, faMap, faMapSigns, faQrcode, faRoute, faStreetView, faTimes, faUndo } from '@fortawesome/free-solid-svg-icons';
+import {
+  faAngleDoubleUp,
+  faBook,
+  faCheck,
+  faFlagCheckered,
+  faHiking,
+  faMap,
+  faMapSigns,
+  faQrcode,
+  faRoute,
+  faStreetView,
+  faTimes,
+  faUndo,
+} from '@fortawesome/free-solid-svg-icons';
+import { VgBufferingModule } from '@videogular/ngx-videogular/buffering';
+import { VgControlsModule } from '@videogular/ngx-videogular/controls';
+import { VgCoreModule } from '@videogular/ngx-videogular/core';
+import { VgOverlayPlayModule } from '@videogular/ngx-videogular/overlay-play';
 import { AppRoutingModule } from './app-routing.module';
 import { AccountComponent } from './components/account/account.component';
 import { AppComponent } from './components/app/app.component';
@@ -53,7 +70,11 @@ import { QuickFormsModule } from './forms/quick-forms.module';
     BrowserModule,
     FontAwesomeModule,
     HttpClientModule,
-    QuickFormsModule
+    QuickFormsModule,
+    VgCoreModule,
+    VgControlsModule,
+    VgOverlayPlayModule,
+    VgBufferingModule
   ],
   providers: [],
   bootstrap: [AppComponent]

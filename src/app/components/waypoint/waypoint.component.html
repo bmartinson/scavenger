@@ -20,8 +20,44 @@
   <ng-container *ngIf="!isOutOfOrder">
     <h1>{{waypoint?.name}}</h1>
     <div [innerHTML]="waypoint?.description"></div>
+    <div
+         *ngIf="(waypoint?.interactiveType === 'audio' || waypoint?.interactiveType === 'video') && waypoint?.interactiveSrc">
+      <vg-player [style.height.px]="waypoint?.interactiveType === 'audio' ? 55 : undefined">
+        <vg-overlay-play *ngIf="waypoint?.interactiveType === 'video'"></vg-overlay-play>
+        <vg-buffering></vg-buffering>
 
-    <h2 *ngIf="waypoint?.clues?.length > 0">Your Next Clues:</h2>
+        <vg-scrub-bar>
+          <vg-scrub-bar-current-time></vg-scrub-bar-current-time>
+          <vg-scrub-bar-buffering-time></vg-scrub-bar-buffering-time>
+        </vg-scrub-bar>
+
+        <vg-controls>
+          <vg-play-pause></vg-play-pause>
+
+          <vg-time-display vgProperty="current"
+                           vgFormat="mm:ss"></vg-time-display>
+
+          <vg-scrub-bar style="pointer-events: none;"></vg-scrub-bar>
+
+          <vg-mute></vg-mute>
+          <vg-volume></vg-volume>
+
+          <vg-fullscreen></vg-fullscreen>
+        </vg-controls>
+
+        <video [vgMedia]="media"
+               #media
+               id="interactiveContent"
+               preload="auto"
+               crossorigin>
+          <source [src]="waypoint?.interactiveSrc">
+        </video>
+      </vg-player>
+    </div>
+
+    <h2 *ngIf="waypoint?.clues?.length > 0">
+      Your Next Clues:
+    </h2>
     <ul *ngIf="waypoint?.clues?.length > 0">
       <li *ngFor="let clue of waypoint.clues">{{clue}}</li>
     </ul>

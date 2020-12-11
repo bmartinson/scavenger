@@ -15,6 +15,8 @@ export class ScavengerWaypoint extends ScavengerModel implements IScavengerWaypo
   public captured: boolean;
   public description: string;
   public clues: string[];
+  public interactiveSrc: string;
+  public interactiveType: 'none' | 'audio' | 'image' | 'video';
 
   /* * * * * Property Access * * * * */
 
@@ -68,6 +70,8 @@ export class ScavengerWaypoint extends ScavengerModel implements IScavengerWaypo
     this.captured = !!data?.captured;
     this.description = data?.description;
     this.clues = data?.clues;
+    this.interactiveSrc = data?.interactiveSrc;
+    this.interactiveType = data?.interactiveType;
 
     if (data?.waypoints?.length > 0) {
       this._waypoints = [];
@@ -98,6 +102,8 @@ export class ScavengerWaypoint extends ScavengerModel implements IScavengerWaypo
       captured: this.captured,
       description: this.description,
       clues: this.clues,
+      interactiveSrc: this.interactiveSrc,
+      interactiveType: this.interactiveType,
     });
   }
 
