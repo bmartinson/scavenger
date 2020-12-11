@@ -112,6 +112,22 @@ export class AppService {
     return !this.session?.hunt || !this.session?.active;
   }
 
+  public get huntId(): string {
+    if (this.isHuntActive) {
+      return this.session.hunt.id;
+    }
+
+    return undefined;
+  }
+
+  public get discoveries(): ScavengerWaypoint[] {
+    if (this.isHuntActive) {
+      return this.session.hunt.capturedWaypoints;
+    }
+
+    return [];
+  }
+
   public get isLoggedIn(): boolean {
     return this.validateToken(Cookies.get(AppService.COOKIE_AUTH_KEY));
   }
@@ -383,7 +399,7 @@ export class AppService {
 
     const waypoint: ScavengerWaypoint = this.session.hunt.getWaypoint(idWaypoint);
     let status: ScavengerWaypointStatus = ScavengerWaypointStatus.VALID;
-    const isLeaf: boolean = !waypoint.waypoints || waypoint.waypoints?.length === 0;
+    const isLeaf: boolean = waypoint && (!waypoint.waypoints || waypoint.waypoints?.length === 0);
 
     if (!waypoint) {
       // the way point requested does not exist but the hunt that was provided does
@@ -523,25 +539,32 @@ export class AppService {
         singlePathOnly: false,
         startingWaypoint: {
           id: '1',
-          name: 'Welcome',
+          name: 'Getting Started',
+          description: `<p>Let's see how well you know Lindsay Wildlife Experience and the animal ambassador's that call it home! Use the clues that are listed on your screen at each waypoint to help you find the next stop on today's animal adventure. When you think you've found the next waypoint, just use your camera to scan the QR code and see if you're right!<p>`,
+          clues: [`He's 47 years old.`, `Has an almost 6' wingspan.`, `Lives outside.`],
           value: 1,
           valid: true,
-          dialog: ['Thanks for joining us at LWE!'],
+          dialog: ['Welcome to Lindsay!', 'Are you ready to explore?'],
           outOfOrderDialog: undefined,
           captured: false,
           waypoints: [
             {
               id: '2',
-              name: 'Waypoint Tier 2: 1',
+              name: 'Lord Richard',
+              // tslint:disable-next-line: max-line-length
+              description: `<p>Lord Richard is one of the oldest Turkey Vultures in the world and has called Lindsay Wildlife home since 1986.</p><p>Turkey Vultures are cool because they have a nearly six foot wide wingspan. They also fly in a wobbly motion and soar for long distances using heat thermals in the air.</p>`,
+              clues: ['Has red feathers.', `Named Fire`],
               value: 1,
               valid: true,
-              dialog: ['Tier 2'],
+              dialog: ['This is Lord Richard!'],
               outOfOrderDialog: undefined,
               captured: false,
               waypoints: [
                 {
                   id: '31',
                   name: 'Waypoint Tier 3: 1',
+                  description: '',
+                  clues: [],
                   value: 0,
                   valid: false,
                   dialog: ['Tier 3', 'False Clue 1'],
@@ -552,6 +575,8 @@ export class AppService {
                 {
                   id: '32',
                   name: 'Waypoint Tier 3: 2',
+                  description: '',
+                  clues: [],
                   value: 1,
                   valid: true,
                   dialog: ['Tier 3', 'Clue'],
@@ -561,6 +586,8 @@ export class AppService {
                     {
                       id: '4',
                       name: 'Waypoint Tier 4: 1',
+                      description: '',
+                      clues: [],
                       value: 1,
                       valid: true,
                       dialog: ['Finishing Clue'],
@@ -573,6 +600,8 @@ export class AppService {
                 {
                   id: '33',
                   name: 'Waypoint Tier 3: 3',
+                  description: '',
+                  clues: [],
                   value: 0,
                   valid: false,
                   dialog: ['Tier 3', 'False Clue 2'],

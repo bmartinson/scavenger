@@ -1,7 +1,8 @@
 import { animate, style, transition, trigger } from '@angular/animations';
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { dropDownAnimation } from '../../animations/core-animations';
 import { QFButtonStyle } from '../../forms/components/button/button.component';
+import { ScavengerWaypoint } from '../../model/scavenger-waypoint';
 import { AppService } from '../../services/app.service';
 
 @Component({
@@ -28,13 +29,26 @@ import { AppService } from '../../services/app.service';
     ],
   )]
 })
-export class JournalComponent {
+export class JournalComponent implements OnInit {
 
   public QFButtonStyle = QFButtonStyle;
   public showDiscoveries: boolean;
+  private _discoveries: ScavengerWaypoint[];
+
+  public get discoveries(): ScavengerWaypoint[] {
+    if (!this._discoveries) {
+      this._discoveries = [];
+    }
+
+    return this._discoveries;
+  }
 
   constructor(public appService: AppService) {
     this.showDiscoveries = false;
+  }
+
+  public ngOnInit(): void {
+    this._discoveries = this.appService.discoveries;
   }
 
   public onToggleDiscoveries(state: boolean): void {

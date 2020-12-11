@@ -17,8 +17,14 @@
     waypoints leading to this one! Only then can you unlock this waypoint!
   </p>
 
-  <p *ngIf="!isOutOfOrder">
-    Some interactive content will be available here.
-  </p>
+  <ng-container *ngIf="!isOutOfOrder">
+    <h1>{{waypoint?.name}}</h1>
+    <div [innerHTML]="waypoint?.description"></div>
+
+    <h2 *ngIf="waypoint?.clues?.length > 0">Your Next Clues:</h2>
+    <ul *ngIf="waypoint?.clues?.length > 0">
+      <li *ngFor="let clue of waypoint.clues">{{clue}}</li>
+    </ul>
+  </ng-container>
 
 </div>

@@ -101,11 +101,11 @@ export class WaypointComponent extends ScavengerRouteComponent {
 
     if (this.waypointStatus === ScavengerWaypointStatus.OUT_OF_ORDER) {
       if (this.waypoint?.outOfOrderDialog && this.waypoint.outOfOrderDialog.length > 0) {
-        dialog = dialog.concat(this.waypoint.outOfOrderDialog);
+        dialog = [].concat(this.waypoint.outOfOrderDialog);
       }
     } else {
       if (this.waypoint?.dialog && this.waypoint.dialog.length > 0) {
-        dialog = dialog.concat(this.waypoint.dialog);
+        dialog = [].concat(this.waypoint.dialog);
       }
     }
 

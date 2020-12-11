@@ -38,4 +38,8 @@ export interface IScavengerWaypoint extends IScavengerModel {
   waypoints: IScavengerWaypoint[];
 
   captured: boolean;
+
+  description: string;
+  clues: string[];
+
 }

@@ -13,6 +13,8 @@ export class ScavengerWaypoint extends ScavengerModel implements IScavengerWaypo
   private _parent: ScavengerWaypoint;
   public status: ScavengerWaypointStatus;
   public captured: boolean;
+  public description: string;
+  public clues: string[];
 
   /* * * * * Property Access * * * * */
 
@@ -64,6 +66,8 @@ export class ScavengerWaypoint extends ScavengerModel implements IScavengerWaypo
     this._outOfOrderDialog = data?.outOfOrderDialog;
     this._parent = parent;
     this.captured = !!data?.captured;
+    this.description = data?.description;
+    this.clues = data?.clues;
 
     if (data?.waypoints?.length > 0) {
       this._waypoints = [];
@@ -92,6 +96,8 @@ export class ScavengerWaypoint extends ScavengerModel implements IScavengerWaypo
       outOfOrderDialog: this.outOfOrderDialog,
       waypoints: serializedWaypoints,
       captured: this.captured,
+      description: this.description,
+      clues: this.clues,
     });
   }
 
@@ -120,17 +126,20 @@ export class ScavengerWaypoint extends ScavengerModel implements IScavengerWaypo
    * Counts the number of waypoints that can be captured from and including this waypoint.
    *
    * @param countValidOnly If true, only valid waypoints are counted
+   * @param countCapturedOnly If true, we will only count captured waypoints.
+   * @param waypoints If provided, we will add waypoints to this array for the caller to use.
    */
-  public countWaypoints(countValidOnly?: boolean, countCapturedOnly?: boolean): number {
+  public countWaypoints(countValidOnly?: boolean, countCapturedOnly?: boolean, waypoints?: ScavengerWaypoint[]): number {
     let count = 0;
 
     if ((!countValidOnly || countValidOnly && this.valid) && (!countCapturedOnly || this.captured)) {
+      waypoints?.push(this);
       count++;
     }
 
     if (this.waypoints?.length > 0) {
       for (const waypoint of this.waypoints) {
-        count += waypoint.countWaypoints(countValidOnly, countCapturedOnly);
+        count += waypoint.countWaypoints(countValidOnly, countCapturedOnly, waypoints);
       }
     }
 
