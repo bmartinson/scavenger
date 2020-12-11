@@ -42,13 +42,14 @@
           <vg-mute></vg-mute>
           <vg-volume></vg-volume>
 
-          <vg-fullscreen></vg-fullscreen>
+          <vg-fullscreen *ngIf="waypoint?.interactiveType === 'video'"></vg-fullscreen>
         </vg-controls>
 
         <video [vgMedia]="media"
                #media
                id="interactiveContent"
                preload="auto"
+               [autoplay]="waypoint?.interactiveType === 'audio'"
                crossorigin>
           <source [src]="waypoint?.interactiveSrc">
         </video>
