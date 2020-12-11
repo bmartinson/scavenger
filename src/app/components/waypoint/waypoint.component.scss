@@ -30,4 +30,12 @@
     align-items: center;
     top: 13em;
   }
+
+  vg-player {
+    z-index: 0;
+  }
+
+  vg-volume {
+    margin-right: 1rem;
+  }
 }
