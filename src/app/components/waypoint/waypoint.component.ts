@@ -138,10 +138,4 @@ export class WaypointComponent extends ScavengerRouteComponent {
     }, Math.max(1500 + (100 * (dialog[index].length / dialog[0].length)), 1500));
   }
 
-  public onPlayAudio(): void {
-    if (this.waypoint?.interactiveType === 'audio' && this.appService.embeddedCache[this.waypoint.interactiveSrc]) {
-      (this.appService.embeddedCache[this.waypoint.interactiveSrc] as any).play();
-    }
-  }
-
 }

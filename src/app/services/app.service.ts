@@ -83,7 +83,6 @@ export class AppService {
   public organization: string;
   public email: string;
   private hasUserData: boolean;
-  public embeddedCache: { [url: string]: HTMLEmbedElement };
 
   public get idUser(): number {
     const authToken: string = Cookies.get(AppService.COOKIE_AUTH_KEY);
@@ -143,7 +142,6 @@ export class AppService {
 
   constructor(private router: Router, private http: HttpClient) {
     this.hasUserData = false;
-    this.embeddedCache = {};
 
     this.router.events.subscribe((event: any) => {
       if (event instanceof NavigationEnd) {
@@ -177,6 +175,7 @@ export class AppService {
 
         // if the hunt in local storage is older than a day, clear it
         if (new Date().getTime() - this.session.getStartTime().getTime() > 86400000) {
+          this.session = null;
           localStorage.clear();
         }
       } catch (e: any) {
@@ -417,12 +416,6 @@ export class AppService {
     let status: ScavengerWaypointStatus = ScavengerWaypointStatus.VALID;
     const isLeaf: boolean = waypoint && (!waypoint.waypoints || waypoint.waypoints?.length === 0);
 
-    // if we have a waypoint
-    if (waypoint && waypoint.interactiveType === 'audio') {
-      this.embeddedCache[waypoint.interactiveSrc] = document.createElement('embed');
-      this.embeddedCache[waypoint.interactiveSrc].src = waypoint.interactiveSrc;
-    }
-
     if (!waypoint) {
       // the way point requested does not exist but the hunt that was provided does
       return ScavengerWaypointStatus.NO_WAYPOINT;
@@ -484,9 +477,11 @@ export class AppService {
         waypoint.captured = true;
 
         // if we are marked to be a single path only while capturing, then we need to invalidate siblings
-        if (!!waypoint.valid && waypoint.parent.waypoints?.length > 0) {
+        if (!!waypoint.valid && waypoint?.parent?.waypoints?.length > 0) {
           for (const sibling of waypoint.parent.waypoints) {
-            sibling.valid = false;
+            if (sibling !== waypoint) {
+              sibling.valid = false;
+            }
           }
         }
       }

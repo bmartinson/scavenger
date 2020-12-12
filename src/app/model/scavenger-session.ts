@@ -24,7 +24,7 @@ export class ScavengerSession extends ScavengerModel implements IScavengerSessio
     this.user = !!data?.user ? data.user : `Explorer`;
     this._hunt = !!data?.hunt ? new ScavengerHunt(data?.hunt) : undefined;
     this.active = !!data?.active;
-    this.startTime = data?.startTime;
+    this.startTime = !!data?.startTime ? data.startTime : new Date().toString();
   }
 
   public toObject(): IScavengerSession {
