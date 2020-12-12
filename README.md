@@ -8,7 +8,7 @@ Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app w
 
 ## API Services
 
-The API services that are in use by the application always use the hosted live API deployed at https://www.scavenger.games/api/. In order to properly build and deploy these services, you must have a `db-definitions.php` file in `/src/api/common/` defining the database connection variables and keys required for connecting to the MySQL database that backs the project. This information is not tracked by this repository. If you need assistance setting up your own database or would like to request access to work on the production database for www.scavenger.games, please contact [Brian](mailto:brian@brianmartinson.com).
+The API services that are in use by the application always use the hosted live API deployed at www.scavenger.games/api/. In order to properly build and deploy these services, you must have a `db-definitions.php` file in `/src/api/common/` defining the database connection variables and keys required for connecting to the MySQL database that backs the project. This information is not tracked by this repository. If you need assistance setting up your own database or would like to request access to work on the production database for www.scavenger.games, please contact [Brian](mailto:brian@brianmartinson.com).
 
 ## Further help
 
