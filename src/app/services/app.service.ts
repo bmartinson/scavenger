@@ -484,7 +484,7 @@ export class AppService {
         waypoint.captured = true;
 
         // if we are marked to be a single path only while capturing, then we need to invalidate siblings
-        if (!waypoint.valid && waypoint.parent?.waypoints && waypoint.parent.waypoints.length > 0) {
+        if (!!waypoint.valid && waypoint.parent.waypoints?.length > 0) {
           for (const sibling of waypoint.parent.waypoints) {
             sibling.valid = false;
           }
