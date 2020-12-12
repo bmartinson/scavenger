@@ -123,7 +123,7 @@ export class AppService {
 
   public get isHuntComplete(): boolean {
     if (this.isHuntActive) {
-      return this.session.hunt.capturedWaypointCount === this.session.hunt.validWaypointCount;
+      return this.session.hunt.capturedValidWaypointCount === this.session.hunt.validWaypointCount;
     }
 
     return false;
@@ -627,7 +627,7 @@ export class AppService {
                         {
                           id: '5',
                           name: 'The Exhibit Hall',
-                          description: `<p>Thank you so much for joining us and participating in our scavenger hunt. We hope you had fun. Please enjoy the rest of your day at Lindsay Wildelife!</p>`,
+                          description: `<p>Thank you so much for joining us and participating in our scavenger hunt. We hope you had fun. Please enjoy the rest of your day at Lindsay Wildlife!</p>`,
                           interactiveType: 'none',
                           clues: [],
                           value: 1,
