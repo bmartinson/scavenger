@@ -8,6 +8,7 @@ export class ScavengerSession extends ScavengerModel implements IScavengerSessio
   public user: string;
   private _hunt: ScavengerHunt;
   public active: boolean;
+  public startTime: string;
 
   /* * * * * Property Access * * * * */
 
@@ -23,6 +24,7 @@ export class ScavengerSession extends ScavengerModel implements IScavengerSessio
     this.user = !!data?.user ? data.user : `Explorer`;
     this._hunt = !!data?.hunt ? new ScavengerHunt(data?.hunt) : undefined;
     this.active = !!data?.active;
+    this.startTime = data?.startTime;
   }
 
   public toObject(): IScavengerSession {
@@ -30,11 +32,16 @@ export class ScavengerSession extends ScavengerModel implements IScavengerSessio
       user: this.user,
       hunt: this.hunt?.toObject(),
       active: this.active,
+      startTime: this.startTime,
     });
   }
 
   public setHunt(data: IScavengerHunt): void {
     this._hunt = new ScavengerHunt(data);
+  }
+
+  public getStartTime(): Date {
+    return new Date(this.startTime);
   }
 
 }

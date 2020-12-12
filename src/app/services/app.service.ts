@@ -174,6 +174,11 @@ export class AppService {
       try {
         // load the current scavenger hunt in use by the user that is in storage
         this.session = new ScavengerSession(JSON.parse(rawSession));
+
+        // if the hunt in local storage is older than a day, clear it
+        if (new Date().getTime() - this.session.getStartTime().getTime() > 86400000) {
+          localStorage.clear();
+        }
       } catch (e: any) {
         // clear storage if we couldn't load an existing game - the data was corrupted
         localStorage.clear();
@@ -188,6 +193,7 @@ export class AppService {
         user: undefined,
         active: false,
         hunt: undefined,
+        startTime: new Date().toString(),
       });
     }
 

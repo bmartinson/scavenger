@@ -6,4 +6,5 @@ export interface IScavengerSession extends IScavengerModel {
   user: string;
   hunt: IScavengerHunt;
   active: boolean;
+  startTime: string;
 }
