@@ -9,4 +9,5 @@ export enum ScavengerWaypointStatus {
   OUT_OF_ORDER = 4,
   DUPLICATE = 5,
   FINISH = 6,
+  WRONG_HUNT = 7,
 }

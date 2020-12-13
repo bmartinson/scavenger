@@ -52,8 +52,8 @@ export class WaypointComponent extends ScavengerRouteComponent {
     return this.waypointStatus === ScavengerWaypointStatus.OUT_OF_ORDER;
   }
 
-  public get isInvalid(): boolean {
-    return this.waypointStatus === ScavengerWaypointStatus.INVALID;
+  public get isWrongHunt(): boolean {
+    return this.waypointStatus === ScavengerWaypointStatus.WRONG_HUNT;
   }
 
   private get defaultTitle(): string {
@@ -72,6 +72,9 @@ export class WaypointComponent extends ScavengerRouteComponent {
 
       case ScavengerWaypointStatus.OUT_OF_ORDER:
         return 'Not quite!';
+
+      case ScavengerWaypointStatus.WRONG_HUNT:
+        return `You're off the trail!`;
 
       default:
         return 'Great find!';
@@ -93,6 +96,7 @@ export class WaypointComponent extends ScavengerRouteComponent {
       case ScavengerWaypointStatus.DUPLICATE:
         return 'You found this waypoint earlier';
 
+      case ScavengerWaypointStatus.WRONG_HUNT:
       case ScavengerWaypointStatus.INVALID:
         return 'Check your clues';
 
@@ -116,12 +120,13 @@ export class WaypointComponent extends ScavengerRouteComponent {
       if (this.waypoint?.outOfOrderDialog && this.waypoint.outOfOrderDialog.length > 0) {
         dialog = [].concat(this.waypoint.outOfOrderDialog);
       }
-    } else if (this.waypointStatus !== ScavengerWaypointStatus.INVALID) {
+    } else {
       if (this.waypoint?.dialog && this.waypoint.dialog.length > 0) {
         // remove default text for certain cases only
         if (
           this.waypointStatus === ScavengerWaypointStatus.START ||
           this.waypointStatus === ScavengerWaypointStatus.FINISH ||
+          this.waypointStatus === ScavengerWaypointStatus.INVALID ||
           this.waypointStatus === ScavengerWaypointStatus.VALID
         ) {
           dialog = [];

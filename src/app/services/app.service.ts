@@ -422,8 +422,8 @@ export class AppService {
   private waypointCheck(idHunt: string, idWaypoint: string): ScavengerWaypointStatus {
     if (!this.session?.hunt) {
       return ScavengerWaypointStatus.NO_WAYPOINT;
-    } else if (this.session.hunt.id !== idHunt) {
-      return ScavengerWaypointStatus.INVALID;
+    } else if (this.isHuntActive && this.session.hunt.id !== idHunt) {
+      return ScavengerWaypointStatus.WRONG_HUNT;
     }
 
     const waypoint: ScavengerWaypoint = this.session.hunt.getWaypoint(idWaypoint);
@@ -687,7 +687,7 @@ export class AppService {
             interactiveSrc: 'assets/hunt-content/explorer.png',
             value: 1,
             valid: true,
-            dialog: ['Welcome to Lindsay!', 'Are you ready to explore?'],
+            dialog: ['Welcome to Lindsay!', `Let's go find some animals!`],
             outOfOrderDialog: undefined,
             captured: false,
             waypoints: [
@@ -745,7 +745,7 @@ export class AppService {
                 interactiveType: 'none',
                 interactiveSrc: undefined,
                 value: 1,
-                valid: true,
+                valid: false,
                 dialog: [`Don't be scared!`, `I'm not venomous!`],
                 outOfOrderDialog: undefined,
                 captured: false,
