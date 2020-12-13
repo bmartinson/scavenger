@@ -128,6 +128,10 @@ export class AppService {
     return false;
   }
 
+  public get isHuntSinglePathOnly(): boolean {
+    return this.session?.hunt?.singlePathOnly;
+  }
+
   public get discoveries(): ScavengerWaypoint[] {
     if (this.isHuntActive) {
       return this.session.hunt.capturedWaypoints;
@@ -477,7 +481,7 @@ export class AppService {
         waypoint.captured = true;
 
         // if we are marked to be a single path only while capturing, then we need to invalidate siblings
-        if (!!waypoint.valid && waypoint?.parent?.waypoints?.length > 0) {
+        if (this.isHuntSinglePathOnly && !!waypoint.valid && waypoint?.parent?.waypoints?.length > 0) {
           for (const sibling of waypoint.parent.waypoints) {
             if (sibling !== waypoint) {
               sibling.valid = false;
