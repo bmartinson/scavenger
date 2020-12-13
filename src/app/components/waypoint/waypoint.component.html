@@ -32,10 +32,18 @@
     </qf-button>
   </ng-container>
 
-  <p *ngIf="isOutOfOrder">
-    You found the wrong waypoint! Double check any previous clues you've discovered and use them to visit all of the
-    waypoints leading to this one! Only then can you unlock this waypoint!
-  </p>
+  <ng-container *ngIf="isOutOfOrder">
+    <p *ngIf="isUnorderedHunt; else orderedHuntOutOfOrder">
+      You found a scavenger hunt waypoint for a hunt that you didn't start! Please scan the starting waypoint to start
+      your adventure!
+    </p>
+    <ng-template #orderedHuntOutOfOrder>
+      <p>
+        You found the wrong waypoint! Double check any previous clues you've discovered and use them to visit all of the
+        waypoints leading to this one! Only then can you unlock this waypoint!
+      </p>
+    </ng-template>
+  </ng-container>
 
   <ng-container *ngIf="!isOutOfOrder && !isInvalid">
     <h1>{{waypoint?.name}}</h1>

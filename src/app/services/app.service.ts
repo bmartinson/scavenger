@@ -471,6 +471,10 @@ export class AppService {
       status = ScavengerWaypointStatus.OUT_OF_ORDER;
     }
 
+    if (this.session.hunt.type === ScavengerHuntType.UNORDERED && this.isHuntInactive && !waypoint.isStart) {
+      status = ScavengerWaypointStatus.OUT_OF_ORDER;
+    }
+
     if (this.session.hunt.type === ScavengerHuntType.ORDERED) {
       if (
         status === ScavengerWaypointStatus.INVALID ||
@@ -510,7 +514,8 @@ export class AppService {
         this.setCurrentWaypoint(idWaypoint);
 
         // unordered hunts are active if we are capturing a waypoint
-        this.session.active = true;
+        // removing this feature for now
+        // this.session.active = true;
 
         // mark the waypoint as captured
         waypoint.captured = true;

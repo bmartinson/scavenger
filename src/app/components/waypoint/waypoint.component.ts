@@ -31,6 +31,7 @@ export class WaypointComponent extends ScavengerRouteComponent {
 
   public get waypointStatusIcon(): ScavengerWaypointStatus {
     if (
+      this.huntType === ScavengerHuntType.ORDERED &&
       this.waypointStatus === ScavengerWaypointStatus.DUPLICATE &&
       this.waypoint && (!this.waypoint.waypoints || this.waypoint.waypoints.length === 0)
     ) {
@@ -54,6 +55,10 @@ export class WaypointComponent extends ScavengerRouteComponent {
 
   public get isWrongHunt(): boolean {
     return this.waypointStatus === ScavengerWaypointStatus.WRONG_HUNT;
+  }
+
+  public get isUnorderedHunt(): boolean {
+    return this.huntType === ScavengerHuntType.UNORDERED;
   }
 
   private get defaultTitle(): string {
