@@ -69,7 +69,7 @@ export class CanActivateWaypointGuard extends CanActivateGuard implements
   }
 
   public resolve(): ScavengerHuntRouteData {
-    return new ScavengerHuntRouteData(this.waypoint, this.waypointStatus);
+    return new ScavengerHuntRouteData(this.waypoint, this.waypointStatus, this.appService.huntType);
   }
 
 }

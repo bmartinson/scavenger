@@ -12,12 +12,32 @@
      class="content">
   <h2 [innerHTML]="subtitle"></h2>
 
+  <ng-container *ngIf="isInvalid">
+    <p>
+      You found a waypoint that belongs to a different scavenger hunt than the one you are already playing! Go back and
+      check your clues to make sure you stay on the right trail!
+    </p>
+
+    <p>
+      Do you want to quit the hunt you were already playing?
+    </p>
+
+    <qf-button [style]="QFButtonStyle.FREESTYLE"
+               (clicked)="onResetGame(false)">
+      <fa-icon [icon]="['fas', 'undo']"
+               class="icon">
+      </fa-icon>
+      &nbsp;
+      <a>Reset Game</a>
+    </qf-button>
+  </ng-container>
+
   <p *ngIf="isOutOfOrder">
     You found the wrong waypoint! Double check any previous clues you've discovered and use them to visit all of the
     waypoints leading to this one! Only then can you unlock this waypoint!
   </p>
 
-  <ng-container *ngIf="!isOutOfOrder">
+  <ng-container *ngIf="!isOutOfOrder && !isInvalid">
     <h1>{{waypoint?.name}}</h1>
     <div [innerHTML]="waypoint?.description"></div>
     <div

@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { Title } from '@angular/platform-browser';
 import { ActivatedRoute } from '@angular/router';
 import { inOutAnimation } from '../../animations/core-animations';
+import { ScavengerHuntType } from '../../enum/scavenger-hunt-type.enum';
 import { ScavengerWaypointStatus } from '../../enum/scavenger-waypoint.enum';
 import { ScavengerHuntRouteData } from '../../model/scavenger-hunt-route-data';
 import { ScavengerWaypoint } from '../../model/scavenger-waypoint';
@@ -43,8 +44,16 @@ export class WaypointComponent extends ScavengerRouteComponent {
     return (this.activatedRoute.snapshot?.data?.waypointData as ScavengerHuntRouteData)?.waypoint;
   }
 
+  public get huntType(): ScavengerHuntType {
+    return (this.activatedRoute.snapshot?.data?.waypointData as ScavengerHuntRouteData)?.huntType;
+  }
+
   public get isOutOfOrder(): boolean {
     return this.waypointStatus === ScavengerWaypointStatus.OUT_OF_ORDER;
+  }
+
+  public get isInvalid(): boolean {
+    return this.waypointStatus === ScavengerWaypointStatus.INVALID;
   }
 
   private get defaultTitle(): string {
@@ -72,7 +81,11 @@ export class WaypointComponent extends ScavengerRouteComponent {
   public get subtitle(): string {
     switch (this.waypointStatus) {
       case ScavengerWaypointStatus.START:
-        return 'You found the start of the trail';
+        if (this.huntType === ScavengerHuntType.ORDERED) {
+          return 'You found the start of the trail';
+        } else {
+          return `Let's get searching`;
+        }
 
       case ScavengerWaypointStatus.FINISH:
         return 'You completed the trail';
@@ -103,9 +116,18 @@ export class WaypointComponent extends ScavengerRouteComponent {
       if (this.waypoint?.outOfOrderDialog && this.waypoint.outOfOrderDialog.length > 0) {
         dialog = [].concat(this.waypoint.outOfOrderDialog);
       }
-    } else {
+    } else if (this.waypointStatus !== ScavengerWaypointStatus.INVALID) {
       if (this.waypoint?.dialog && this.waypoint.dialog.length > 0) {
-        dialog = [].concat(this.waypoint.dialog);
+        // remove default text for certain cases only
+        if (
+          this.waypointStatus === ScavengerWaypointStatus.START ||
+          this.waypointStatus === ScavengerWaypointStatus.FINISH ||
+          this.waypointStatus === ScavengerWaypointStatus.VALID
+        ) {
+          dialog = [];
+        }
+
+        dialog = dialog.concat(this.waypoint.dialog);
       }
     }
 
@@ -136,6 +158,11 @@ export class WaypointComponent extends ScavengerRouteComponent {
         this.renderDialog(dialog, index + 1);
       }, 750);
     }, Math.max(1500 + (100 * (dialog[index].length / dialog[0].length)), 1500));
+  }
+
+  public onResetGame(): void {
+    localStorage.clear();
+    window.location.reload();
   }
 
 }

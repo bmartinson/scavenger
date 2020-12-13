@@ -132,6 +132,14 @@ export class AppService {
     return this.session?.hunt?.singlePathOnly;
   }
 
+  public get huntType(): ScavengerHuntType {
+    if (!this.session?.hunt) {
+      return undefined;
+    }
+
+    return this.session?.hunt?.type;
+  }
+
   public get discoveries(): ScavengerWaypoint[] {
     if (this.isHuntActive) {
       return this.session.hunt.capturedWaypoints;
@@ -402,18 +410,20 @@ export class AppService {
         // assign the hunt
         this.session.setHunt(hunt);
 
-        return this.waypointCheck(idWaypoint);
+        return this.waypointCheck(idHunt, idWaypoint);
       } catch (e) {
         return ScavengerWaypointStatus.NO_WAYPOINT;
       }
     }
 
-    return this.waypointCheck(idWaypoint);
+    return this.waypointCheck(idHunt, idWaypoint);
   }
 
-  private waypointCheck(idWaypoint: string): ScavengerWaypointStatus {
+  private waypointCheck(idHunt: string, idWaypoint: string): ScavengerWaypointStatus {
     if (!this.session?.hunt) {
       return ScavengerWaypointStatus.NO_WAYPOINT;
+    } else if (this.session.hunt.id !== idHunt) {
+      return ScavengerWaypointStatus.INVALID;
     }
 
     const waypoint: ScavengerWaypoint = this.session.hunt.getWaypoint(idWaypoint);
@@ -548,118 +558,205 @@ export class AppService {
   /* * * * * TESTING * * * * */
 
   private async loadTestingHunt(idHunt: string): Promise<IScavengerHunt> {
-    if (idHunt !== '1') {
+    if (idHunt !== 'lwe-explorer' && idHunt !== 'lwe-venom') {
       return Promise.reject();
     }
 
-    return Promise.resolve(
-      {
-        id: '1',
-        name: 'Lindsay Wildlife Explorer',
-        type: ScavengerHuntType.ORDERED,
-        singlePathOnly: false,
-        startingWaypoint: {
-          id: '1',
-          name: 'Getting Started',
-          description: `<p>Let's see how well you know Lindsay Wildlife Experience and the animal ambassador's that call it home!</p><p>Use the clues that are listed on your screen at each waypoint to help you find the next stop on today's animal adventure. When you think you've found the next waypoint, just use your camera to scan the QR code and see if you're right!<p>`,
-          clues: [`I'm 46 years old.`, `I have a 6' wingspan.`, `You can find me out front.`],
-          interactiveType: 'image',
-          interactiveSrc: 'assets/hunt-content/explorer.png',
-          value: 1,
-          valid: true,
-          dialog: ['Welcome to Lindsay!', 'Are you ready to explore?'],
-          outOfOrderDialog: undefined,
-          captured: false,
-          waypoints: [
-            {
-              id: '2',
-              name: 'Lord Richard',
-              // tslint:disable-next-line: max-line-length
-              description: `<p>Lord Richard is one of the oldest Turkey Vultures in the world and has called Lindsay Wildlife home since 1986.</p><p>Turkey Vultures are cool because they have a nearly six foot wide wingspan. They also fly in a wobbly motion and soar for long distances using heat thermals in the air.</p>`,
-              clues: ['I have red feathers.', `I'm a female bird.`, `I don't have a wing injury.`],
-              interactiveType: 'video',
-              interactiveSrc: 'assets/hunt-content/t-vulture.mp4',
-              value: 1,
-              valid: true,
-              dialog: ['This is Lord Richard!'],
-              outOfOrderDialog: undefined,
-              captured: false,
-              waypoints: [
-                {
-                  id: '31',
-                  name: 'Red',
-                  description: `<p>You found Red, the <b>Red Shouldered Hawk</b>. While magnificent in his own right, and while he does have red feathers, he doesn't match the description of your last clues! Check your discoveries and try again!</p>`,
-                  clues: [],
-                  interactiveType: 'none',
-                  value: 0,
-                  valid: false,
-                  dialog: ['Not quite!', 'This is Red!', 'A Red Shouldered Hawk'],
-                  outOfOrderDialog: undefined,
-                  captured: false,
-                  waypoints: [],
-                },
-                {
-                  id: '32',
-                  name: 'Fire',
-                  description: `<p>You found Fire, one of our two <b>Red Tailed Hawks</b>. She has been with the organization since 1990 and was discovered in Castro Valley. You can spot Red Tailed Hawks frequently around the Bay Area by looking at their beautiful red tails.</p><p>Of all of the birds that call Lindsay home, she is the biggest! Weighing in at over 1kg!! Fire is one of two Red Tailed Hawks that live at Lindsay Wildlife, and like most bird species, she's bigger than her male counterparts. If you see Rufous around, take a look and notice how he's smaller in size.</p>`,
-                  clues: [`I hover while looking for my prey.`, `My eyes will be bright red when I'm fully grown.`, `I'm a rare captive species.`, `You can find me in the nature cove.`],
-                  interactiveType: 'none',
-                  value: 1,
-                  valid: true,
-                  dialog: ['Well done!', 'You found Fire!', `The Red Tailed Hawk!`],
-                  outOfOrderDialog: undefined,
-                  captured: false,
-                  waypoints: [
-                    {
-                      id: '4',
-                      name: 'Dragon',
-                      description: `<p>Great job finding Dragon, the White-Tailed Kite! It is super special that Dragon lives with us because very few White-Tailed Kits live in captivity due to their social nature. Dragon, however, came to our rehabilitation hospital note once, but twice! And as a result of her head trauma, she is too friendly with humans to survive in the wild. She lives a super happy life out here in the Nature Cove and loves to yell.</p>`,
-                      interactiveSrc: 'assets/hunt-content/white-tailed-kite.mp3',
-                      interactiveType: 'audio',
-                      clues: ['We hate to say goodbye, so walk by Hello!', `Continue your adventure inside!`],
-                      value: 1,
-                      valid: true,
-                      dialog: [`You've found Dragon!`],
-                      outOfOrderDialog: undefined,
-                      captured: false,
-                      waypoints: [
-                        {
-                          id: '5',
-                          name: 'The Exhibit Hall',
-                          description: `<p>Thank you so much for joining us and participating in our scavenger hunt. We hope you had fun. Please enjoy the rest of your day at Lindsay Wildlife!</p>`,
-                          interactiveType: 'none',
-                          clues: [],
-                          value: 1,
-                          valid: true,
-                          dialog: [`Way to go!`, `You're an expert animal explorer!`],
-                          outOfOrderDialog: undefined,
-                          captured: false,
-                          waypoints: [],
-                        }
-                      ],
-                    }
-                  ],
-                },
-                {
-                  id: '33',
-                  name: 'Rufous',
-                  description: `<p>You're so close! You spotted the same species of hawk that we are looking for. Rufous is a <b>Red Tailed Hawk</b>. He's been at Lindsay Wildlife for a while.</p>`,
-                  clues: ['Looks just like me.', `I'm a female.`, `I'm bigger.`],
-                  interactiveType: 'none',
-                  value: 0,
-                  valid: false,
-                  dialog: ['So close!', 'This is Rufous!'],
-                  outOfOrderDialog: undefined,
-                  captured: false,
-                  waypoints: [],
-                }
-              ],
-            }
-          ],
+    if (idHunt === 'lwe-explorer') {
+      return Promise.resolve(
+        {
+          id: 'lwe-explorer',
+          name: 'Lindsay Wildlife Explorer',
+          type: ScavengerHuntType.ORDERED,
+          singlePathOnly: false,
+          startingWaypoint: {
+            id: '1',
+            name: 'Getting Started',
+            description: `<p>Let's see how well you know Lindsay Wildlife Experience and the animal ambassador's that call it home!</p><p>Use the clues that are listed on your screen at each waypoint to help you find the next stop on today's animal adventure. When you think you've found the next waypoint, just use your camera to scan the QR code and see if you're right!<p>`,
+            clues: [`I'm 46 years old.`, `I have a 6' wingspan.`, `You can find me out front.`],
+            interactiveType: 'image',
+            interactiveSrc: 'assets/hunt-content/explorer.png',
+            value: 1,
+            valid: true,
+            dialog: ['Welcome to Lindsay!', 'Are you ready to explore?'],
+            outOfOrderDialog: undefined,
+            captured: false,
+            waypoints: [
+              {
+                id: '2',
+                name: 'Lord Richard',
+                // tslint:disable-next-line: max-line-length
+                description: `<p>Lord Richard is one of the oldest Turkey Vultures in the world and has called Lindsay Wildlife home since 1986.</p><p>Turkey Vultures are cool because they have a nearly six foot wide wingspan. They also fly in a wobbly motion and soar for long distances using heat thermals in the air.</p>`,
+                clues: ['I have red feathers.', `I'm a female bird.`, `I don't have a wing injury.`],
+                interactiveType: 'video',
+                interactiveSrc: 'assets/hunt-content/t-vulture.mp4',
+                value: 1,
+                valid: true,
+                dialog: ['This is Lord Richard!'],
+                outOfOrderDialog: undefined,
+                captured: false,
+                waypoints: [
+                  {
+                    id: '31',
+                    name: 'Red',
+                    description: `<p>You found Red, the <b>Red Shouldered Hawk</b>. While magnificent in his own right, and while he does have red feathers, he doesn't match the description of your last clues! Check your discoveries and try again!</p>`,
+                    clues: [],
+                    interactiveType: 'none',
+                    value: 0,
+                    valid: false,
+                    dialog: ['Not quite!', 'This is Red!', 'A Red Shouldered Hawk'],
+                    outOfOrderDialog: undefined,
+                    captured: false,
+                    waypoints: [],
+                  },
+                  {
+                    id: '32',
+                    name: 'Fire',
+                    description: `<p>You found Fire, one of our two <b>Red Tailed Hawks</b>. She has been with the organization since 1990 and was discovered in Castro Valley. You can spot Red Tailed Hawks frequently around the Bay Area by looking at their beautiful red tails.</p><p>Of all of the birds that call Lindsay home, she is the biggest! Weighing in at over 1kg!! Fire is one of two Red Tailed Hawks that live at Lindsay Wildlife, and like most bird species, she's bigger than her male counterparts. If you see Rufous around, take a look and notice how he's smaller in size.</p>`,
+                    clues: [`I hover while looking for my prey.`, `My eyes will be bright red when I'm fully grown.`, `I'm a rare captive species.`, `You can find me in the nature cove.`],
+                    interactiveType: 'none',
+                    value: 1,
+                    valid: true,
+                    dialog: ['Well done!', 'You found Fire!', `The Red Tailed Hawk!`],
+                    outOfOrderDialog: undefined,
+                    captured: false,
+                    waypoints: [
+                      {
+                        id: '4',
+                        name: 'Dragon',
+                        description: `<p>Great job finding Dragon, the White-Tailed Kite! It is super special that Dragon lives with us because very few White-Tailed Kits live in captivity due to their social nature. Dragon, however, came to our rehabilitation hospital note once, but twice! And as a result of her head trauma, she is too friendly with humans to survive in the wild. She lives a super happy life out here in the Nature Cove and loves to yell.</p>`,
+                        interactiveSrc: 'assets/hunt-content/white-tailed-kite.mp3',
+                        interactiveType: 'audio',
+                        clues: ['We hate to say goodbye, so walk by Hello!', `Continue your adventure inside!`],
+                        value: 1,
+                        valid: true,
+                        dialog: [`You've found Dragon!`],
+                        outOfOrderDialog: undefined,
+                        captured: false,
+                        waypoints: [
+                          {
+                            id: '5',
+                            name: 'The Exhibit Hall',
+                            description: `<p>Thank you so much for joining us and participating in our scavenger hunt. We hope you had fun. Please enjoy the rest of your day at Lindsay Wildlife!</p>`,
+                            interactiveType: 'none',
+                            clues: [],
+                            value: 1,
+                            valid: true,
+                            dialog: [`Way to go!`, `You're an expert animal explorer!`],
+                            outOfOrderDialog: undefined,
+                            captured: false,
+                            waypoints: [],
+                          }
+                        ],
+                      }
+                    ],
+                  },
+                  {
+                    id: '33',
+                    name: 'Rufous',
+                    description: `<p>You're so close! You spotted the same species of hawk that we are looking for. Rufous is a <b>Red Tailed Hawk</b>. He's been at Lindsay Wildlife for a while.</p>`,
+                    clues: ['Looks just like me.', `I'm a female.`, `I'm bigger.`],
+                    interactiveType: 'none',
+                    value: 0,
+                    valid: false,
+                    dialog: ['So close!', 'This is Rufous!'],
+                    outOfOrderDialog: undefined,
+                    captured: false,
+                    waypoints: [],
+                  }
+                ],
+              }
+            ],
+          },
+          idCurrentWaypoint: '',
         },
-        idCurrentWaypoint: '',
-      },
-    );
+      );
+    } else if (idHunt === 'lwe-venom') {
+      return Promise.resolve(
+        {
+          id: 'lwe-venom',
+          name: 'Lindsay Wildlife Venomous Finder',
+          type: ScavengerHuntType.UNORDERED,
+          singlePathOnly: false,
+          startingWaypoint: {
+            id: '1',
+            name: 'Getting Started',
+            description: `<p>Let's see if you know which animals to stay away from!</p><p>Use the clues that are listed on your screen to help you safely find and learn about the venomous animals that call Lindsay home. When you think you've found the next one, just use your camera to scan the QR code and see if you're right! You aren't done until you find them all!<p>`,
+            clues: [`You can find me inside.`, `Sometimes I don't have legs.`, `Other times, I have a pointy tail.`, `Sometimes I'm small and you don't notice me.`],
+            interactiveType: 'image',
+            interactiveSrc: 'assets/hunt-content/explorer.png',
+            value: 1,
+            valid: true,
+            dialog: ['Welcome to Lindsay!', 'Are you ready to explore?'],
+            outOfOrderDialog: undefined,
+            captured: false,
+            waypoints: [
+              {
+                id: '2',
+                name: 'Snek',
+                // tslint:disable-next-line: max-line-length
+                description: `<p>I'm probably one of the most common animals you think of when you think of venomous animals! I am a Western Diamondback Rattlesnake!</p><p>People think of me so often when they think of venomous animals that many other snakes that aren't venomous, like Gopher Snakes, will move their tails around to rustle in the grass so they sound like me!</p>`,
+                clues: undefined,
+                interactiveType: 'none',
+                interactiveSrc: undefined,
+                value: 1,
+                valid: true,
+                dialog: ['Great find!', `Did you hear me rattle?`],
+                outOfOrderDialog: undefined,
+                captured: false,
+                waypoints: undefined,
+              },
+              {
+                id: '3',
+                name: 'Elvira 8.0',
+                // tslint:disable-next-line: max-line-length
+                description: `<p>My name is Elvira and I am a Black Widow!</p><p>Did you know that male and female Black Widow spiders look different? The females, like me, are the most distinctive, with shiny black bodies and a red hourglass-shaped marking on the underside of their round abdomen. Just like in the bird world, female Black Widows are larger than our male counterparts.</p>`,
+                clues: undefined,
+                interactiveType: 'none',
+                interactiveSrc: undefined,
+                value: 1,
+                valid: true,
+                dialog: ['Nice!', 'Can you spot me in my enclosure?'],
+                outOfOrderDialog: undefined,
+                captured: false,
+                waypoints: undefined,
+              },
+              , {
+                id: '4',
+                name: 'Yuma',
+                // tslint:disable-next-line: max-line-length
+                description: `<p>I'm Yuma, and I am a Desert Scorpion! I don't inject venom by biting you or by using my pincher claws. Instead, I can inject venom into my prey when hunting using my tail!</p>`,
+                clues: undefined,
+                interactiveType: 'none',
+                interactiveSrc: undefined,
+                value: 1,
+                valid: true,
+                dialog: ['Good job!', 'Watch out for my tail!'],
+                outOfOrderDialog: undefined,
+                captured: false,
+                waypoints: undefined,
+              },
+              {
+                id: '5',
+                name: 'Harriet',
+                // tslint:disable-next-line: max-line-length
+                description: `<p>Don't worry, I'm not venomous! I'm a Tarantula, and although I'm larger than most spiders, I'm actually quite delicate and sweet. I can't kill you by injecting you with any venom.</p><p>Did you know that you can find lots of spiders just like me on Mount Diablo? Keep an eye out the next time you go on a Lindsay Wildlife Hike!</p>`,
+                clues: undefined,
+                interactiveType: 'none',
+                interactiveSrc: undefined,
+                value: 1,
+                valid: true,
+                dialog: [`Don't be scared!`, `I'm not venomous!`],
+                outOfOrderDialog: undefined,
+                captured: false,
+                waypoints: undefined,
+              }
+            ],
+          },
+          idCurrentWaypoint: '',
+        },
+      );
+    }
   }
 
 }
