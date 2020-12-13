@@ -1,5 +1,6 @@
-import { AfterViewInit, ChangeDetectorRef, Component, ElementRef, OnInit, ViewRef } from '@angular/core';
+import { AfterViewInit, ChangeDetectorRef, Component, OnInit, ViewRef } from '@angular/core';
 import { Router } from '@angular/router';
+import { ScavengerHuntType } from '../../enum/scavenger-hunt-type.enum';
 import { QFButtonStyle } from '../../forms/components/button/button.component';
 import { ScavengerWaypoint } from '../../model/scavenger-waypoint';
 import { AppService } from '../../services/app.service';
@@ -25,7 +26,7 @@ export class JournalComponent implements AfterViewInit, OnInit {
     return this._discoveries;
   }
 
-  constructor(public appService: AppService, private router: Router, private changeRef: ChangeDetectorRef, private elementRef: ElementRef) {
+  constructor(public appService: AppService, private router: Router, private changeRef: ChangeDetectorRef) {
     this.showDiscoveries = false;
     this.initialized = false;
   }
@@ -35,7 +36,14 @@ export class JournalComponent implements AfterViewInit, OnInit {
   }
 
   public ngOnInit(): void {
-    this._discoveries = this.appService.discoveries;
+    // only show discoveries for valid captures when performing ordered hunts
+    // if (this.appService.huntType === ScavengerHuntType.ORDERED) {
+    //   this._discoveries = this.appService.validDiscoveries;
+    // } else {
+    //   this._discoveries = this.appService.discoveries;
+    // }
+
+    this._discoveries = this.appService.validDiscoveries;
     this.isHuntComplete = this.appService.isHuntComplete;
 
     if (!(this.changeRef as ViewRef).destroyed) {

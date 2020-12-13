@@ -148,6 +148,14 @@ export class AppService {
     return [];
   }
 
+  public get validDiscoveries(): ScavengerWaypoint[] {
+    if (this.isHuntActive) {
+      return this.session.hunt.capturedWaypoints;
+    }
+
+    return [];
+  }
+
   public get isLoggedIn(): boolean {
     return this.validateToken(Cookies.get(AppService.COOKIE_AUTH_KEY));
   }
@@ -471,8 +479,9 @@ export class AppService {
       status = ScavengerWaypointStatus.OUT_OF_ORDER;
     }
 
+    // consider waypoints in unordered hunts that haven't been activated as oops conditions
     if (this.session.hunt.type === ScavengerHuntType.UNORDERED && this.isHuntInactive && !waypoint.isStart) {
-      status = ScavengerWaypointStatus.OUT_OF_ORDER;
+      status = ScavengerWaypointStatus.NO_WAYPOINT;
     }
 
     if (this.session.hunt.type === ScavengerHuntType.ORDERED) {
