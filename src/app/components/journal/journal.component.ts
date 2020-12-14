@@ -1,6 +1,5 @@
-import { AfterViewInit, ChangeDetectorRef, Component, OnInit, ViewRef } from '@angular/core';
+import { AfterViewInit, ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit, ViewRef } from '@angular/core';
 import { Router } from '@angular/router';
-import { ScavengerHuntType } from '../../enum/scavenger-hunt-type.enum';
 import { QFButtonStyle } from '../../forms/components/button/button.component';
 import { ScavengerWaypoint } from '../../model/scavenger-waypoint';
 import { AppService } from '../../services/app.service';
@@ -8,7 +7,7 @@ import { AppService } from '../../services/app.service';
 @Component({
   selector: 'scavenger-journal',
   templateUrl: './journal.component.html',
-  styleUrls: ['../../styles/component-base.scss', './journal.component.scss']
+  styleUrls: ['../../styles/component-base.scss', './journal.component.scss'],
 })
 export class JournalComponent implements AfterViewInit, OnInit {
 
@@ -33,6 +32,7 @@ export class JournalComponent implements AfterViewInit, OnInit {
 
   public ngAfterViewInit(): void {
     this.initialized = true;
+    this.ngDetectChanges();
   }
 
   public ngOnInit(): void {
@@ -46,9 +46,7 @@ export class JournalComponent implements AfterViewInit, OnInit {
     this._discoveries = this.appService.validDiscoveries;
     this.isHuntComplete = this.appService.isHuntComplete;
 
-    if (!(this.changeRef as ViewRef).destroyed) {
-      this.changeRef.detectChanges();
-    }
+    this.ngDetectChanges();
   }
 
   public onToggleDiscoveries(state: boolean): void {
@@ -76,6 +74,12 @@ export class JournalComponent implements AfterViewInit, OnInit {
       }
     } else {
       return '0px';
+    }
+  }
+
+  public ngDetectChanges(): void {
+    if (!(this.changeRef as ViewRef)?.destroyed) {
+      this.changeRef?.detectChanges();
     }
   }
 
