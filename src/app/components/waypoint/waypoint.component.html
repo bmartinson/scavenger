@@ -45,7 +45,7 @@
     </ng-template>
   </ng-container>
 
-  <ng-container *ngIf="!isOutOfOrder && !isInvalid">
+  <ng-container *ngIf="!isOutOfOrder && !isWrongHunt">
     <h1>{{waypoint?.name}}</h1>
     <div [innerHTML]="waypoint?.description"></div>
     <div
