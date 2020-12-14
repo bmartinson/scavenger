@@ -419,6 +419,8 @@ export class AppService {
           return this.scanWaypoint(idHunt, idWaypoint, true);
         }
       }
+
+      return Promise.resolve(status);
     };
 
     if (!this.session.hunt) {
