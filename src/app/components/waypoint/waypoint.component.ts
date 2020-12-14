@@ -113,7 +113,11 @@ export class WaypointComponent extends ScavengerRouteComponent {
     }
   }
 
-  constructor(public appService: AppService, private activatedRoute: ActivatedRoute, protected titleService: Title) {
+  constructor(
+    public appService: AppService,
+    private activatedRoute: ActivatedRoute,
+    protected titleService: Title,
+  ) {
     super(appService, titleService);
 
     this.titleService.setTitle(`${ScavengerRouteComponent.BASE_PAGE_TITLE} - Waypoint`);
