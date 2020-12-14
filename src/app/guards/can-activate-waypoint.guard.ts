@@ -41,6 +41,8 @@ export class CanActivateWaypointGuard extends CanActivateGuard implements
       next.paramMap.get('idWaypoint')
     );
 
+    console.warn('status', this.waypointStatus);
+
     this.waypoint = this.appService.getWaypoint(next.paramMap.get('idWaypoint'));
 
     const discoveries: ScavengerWaypoint[] = this.appService.discoveries;
