@@ -150,7 +150,7 @@ export class AppService {
 
   public get validDiscoveries(): ScavengerWaypoint[] {
     if (this.isHuntActive) {
-      return this.session.hunt.capturedWaypoints;
+      return this.session.hunt.capturedValidWaypoints;
     }
 
     return [];
