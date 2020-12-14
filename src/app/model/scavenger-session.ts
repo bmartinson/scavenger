@@ -37,7 +37,11 @@ export class ScavengerSession extends ScavengerModel implements IScavengerSessio
   }
 
   public setHunt(data: IScavengerHunt): void {
-    this._hunt = new ScavengerHunt(data);
+    if (!data) {
+      this._hunt = null;
+    } else {
+      this._hunt = new ScavengerHunt(data);
+    }
   }
 
   public getStartTime(): Date {

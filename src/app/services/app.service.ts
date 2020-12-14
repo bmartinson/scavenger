@@ -466,7 +466,10 @@ export class AppService {
 
       if (onDifferentHunt) {
         // reset the currently loaded hunt because we are switching hunts
-        localStorage.clear();
+        this.session.setHunt(null);
+
+        // save the session
+        this.saveSession();
 
         // re-invoke the scanning pathway
         return ScavengerWaypointStatus.START_NEW_HUNT;
