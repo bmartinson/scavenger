@@ -11,13 +11,19 @@ export class QRFindComponent {
   @Input() private waypointStatus: ScavengerWaypointStatus;
 
   public get isValid(): boolean {
-    return this.waypointStatus !== ScavengerWaypointStatus.INVALID && this.waypointStatus !== ScavengerWaypointStatus.OUT_OF_ORDER;
+    return this.waypointStatus !== ScavengerWaypointStatus.INVALID &&
+      this.waypointStatus !== ScavengerWaypointStatus.OUT_OF_ORDER &&
+      this.waypointStatus !== ScavengerWaypointStatus.WRONG_HUNT;
   }
 
   public get statusIcon(): string {
-    if (this.waypointStatus !== ScavengerWaypointStatus.INVALID && this.waypointStatus !== ScavengerWaypointStatus.OUT_OF_ORDER) {
+    if (
+      this.waypointStatus !== ScavengerWaypointStatus.INVALID &&
+      this.waypointStatus !== ScavengerWaypointStatus.OUT_OF_ORDER &&
+      this.waypointStatus !== ScavengerWaypointStatus.WRONG_HUNT
+    ) {
       return 'check';
-    } else if (this.waypointStatus === ScavengerWaypointStatus.OUT_OF_ORDER) {
+    } else if (this.waypointStatus === ScavengerWaypointStatus.OUT_OF_ORDER || this.waypointStatus === ScavengerWaypointStatus.WRONG_HUNT) {
       return 'undo';
     }
 
@@ -35,6 +41,7 @@ export class QRFindComponent {
       case ScavengerWaypointStatus.INVALID:
         return 'map';
 
+      case ScavengerWaypointStatus.WRONG_HUNT:
       case ScavengerWaypointStatus.OUT_OF_ORDER:
         return 'hiking';
 
@@ -45,6 +52,7 @@ export class QRFindComponent {
 
   public get statusIconTop(): number {
     switch (this.waypointStatus) {
+      case ScavengerWaypointStatus.WRONG_HUNT:
       case ScavengerWaypointStatus.OUT_OF_ORDER:
         return 0.5;
 
@@ -55,6 +63,7 @@ export class QRFindComponent {
 
   public get statusIconLeft(): number {
     switch (this.waypointStatus) {
+      case ScavengerWaypointStatus.WRONG_HUNT:
       case ScavengerWaypointStatus.OUT_OF_ORDER:
         return 1.25;
 

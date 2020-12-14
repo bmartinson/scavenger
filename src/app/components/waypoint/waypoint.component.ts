@@ -125,23 +125,25 @@ export class WaypointComponent extends ScavengerRouteComponent {
     let dialog: string[] = [];
     dialog.push(this.defaultTitle);
 
-    if (this.waypointStatus === ScavengerWaypointStatus.OUT_OF_ORDER) {
-      if (this.waypoint?.outOfOrderDialog && this.waypoint.outOfOrderDialog.length > 0) {
-        dialog = [].concat(this.waypoint.outOfOrderDialog);
-      }
-    } else {
-      if (this.waypoint?.dialog && this.waypoint.dialog.length > 0) {
-        // remove default text for certain cases only
-        if (
-          this.waypointStatus === ScavengerWaypointStatus.START ||
-          this.waypointStatus === ScavengerWaypointStatus.FINISH ||
-          this.waypointStatus === ScavengerWaypointStatus.INVALID ||
-          this.waypointStatus === ScavengerWaypointStatus.VALID
-        ) {
-          dialog = [];
+    if (this.waypointStatus !== ScavengerWaypointStatus.WRONG_HUNT) {
+      if (this.waypointStatus === ScavengerWaypointStatus.OUT_OF_ORDER) {
+        if (this.waypoint?.outOfOrderDialog && this.waypoint.outOfOrderDialog.length > 0) {
+          dialog = [].concat(this.waypoint.outOfOrderDialog);
         }
+      } else {
+        if (this.waypoint?.dialog && this.waypoint.dialog.length > 0) {
+          // remove default text for certain cases only
+          if (
+            this.waypointStatus === ScavengerWaypointStatus.START ||
+            this.waypointStatus === ScavengerWaypointStatus.FINISH ||
+            this.waypointStatus === ScavengerWaypointStatus.INVALID ||
+            this.waypointStatus === ScavengerWaypointStatus.VALID
+          ) {
+            dialog = [];
+          }
 
-        dialog = dialog.concat(this.waypoint.dialog);
+          dialog = dialog.concat(this.waypoint.dialog);
+        }
       }
     }
 

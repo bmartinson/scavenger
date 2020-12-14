@@ -60,6 +60,7 @@ export class CanActivateWaypointGuard extends CanActivateGuard implements
       case ScavengerWaypointStatus.OUT_OF_ORDER:
       case ScavengerWaypointStatus.DUPLICATE:
       case ScavengerWaypointStatus.VALID:
+      case ScavengerWaypointStatus.WRONG_HUNT:
         return true;
 
       default:
