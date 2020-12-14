@@ -69,6 +69,10 @@ export class ScavengerHunt extends ScavengerModel implements IScavengerHunt {
     return waypoints;
   }
 
+  public isFinished(): boolean {
+    return this.capturedWaypointCount === this.validWaypointCount;
+  }
+
   /* * * * * Core Class Implementation * * * * */
 
   constructor(data?: IScavengerHunt) {

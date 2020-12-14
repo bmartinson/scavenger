@@ -10,4 +10,5 @@ export enum ScavengerWaypointStatus {
   DUPLICATE = 5,
   FINISH = 6,
   WRONG_HUNT = 7,
+  START_NEW_HUNT = 8,
 }

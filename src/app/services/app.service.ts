@@ -404,7 +404,25 @@ export class AppService {
 
   /* * * * * Waypoint Interactions * * * * */
 
-  public async scanWaypoint(idHunt: string, idWaypoint: string): Promise<ScavengerWaypointStatus> {
+  public async scanWaypoint(idHunt: string, idWaypoint: string, noReScan?: boolean): Promise<ScavengerWaypointStatus> {
+    const checkForNewHunt: (status: ScavengerWaypointStatus) => Promise<ScavengerWaypointStatus> = (status: ScavengerWaypointStatus) => {
+      // if we need to start a new hunt, then attempt a new load
+      if (status === ScavengerWaypointStatus.START_NEW_HUNT) {
+        if (noReScan) {
+          /*
+          * If we are supposedly starting a new hunt but told not to re-scan, report the wrong hunt.
+          * This isn't a very realistic scenario, but in here as a safeguard.
+          */
+          return Promise.resolve(ScavengerWaypointStatus.WRONG_HUNT);
+        } else {
+          // most commonly when starting a new hunt, we just need to start the process once more to ensure that we load the correct hunt
+          return this.scanWaypoint(idHunt, idWaypoint, true);
+        }
+      }
+
+      return Promise.resolve(status);
+    };
+
     if (!this.session.hunt) {
       // we do not have an active hunt, so we need to load from the server
       try {
@@ -418,20 +436,22 @@ export class AppService {
         // assign the hunt
         this.session.setHunt(hunt);
 
-        return this.waypointCheck(idHunt, idWaypoint);
+        return checkForNewHunt(this.waypointCheck(idHunt, idWaypoint));
       } catch (e) {
         return ScavengerWaypointStatus.NO_WAYPOINT;
       }
     }
 
-    return this.waypointCheck(idHunt, idWaypoint);
+    return checkForNewHunt(this.waypointCheck(idHunt, idWaypoint));
   }
 
   private waypointCheck(idHunt: string, idWaypoint: string): ScavengerWaypointStatus {
+    let onDifferentHunt = false;
+
     if (!this.session?.hunt) {
       return ScavengerWaypointStatus.NO_WAYPOINT;
     } else if (this.isHuntActive && this.session.hunt.id !== idHunt) {
-      return ScavengerWaypointStatus.WRONG_HUNT;
+      onDifferentHunt = true;
     }
 
     const waypoint: ScavengerWaypoint = this.session.hunt.getWaypoint(idWaypoint);
@@ -444,7 +464,21 @@ export class AppService {
     } else if (waypoint.isStart) {
       this.session.active = true;
 
+      if (onDifferentHunt) {
+        // reset the currently loaded hunt because we are switching hunts
+        this.session.setHunt(null);
+
+        // save the session
+        this.saveSession();
+
+        // re-invoke the scanning pathway
+        return ScavengerWaypointStatus.START_NEW_HUNT;
+      }
+
       status = ScavengerWaypointStatus.START;
+    } else if (onDifferentHunt) {
+      // if we make it here, we are on a different hunt and not completed with said hunt, therefore, note they switched trails
+      return ScavengerWaypointStatus.WRONG_HUNT;
     } else if (!this.session.active && this.session.hunt.type === ScavengerHuntType.ORDERED) {
       // if we are hitting a waypoint before activating the hunt in ordered hunts, send them back
       return ScavengerWaypointStatus.NO_WAYPOINT;
