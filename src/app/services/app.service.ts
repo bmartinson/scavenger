@@ -490,13 +490,6 @@ export class AppService {
     } else if (this.session.hunt.type === ScavengerHuntType.ORDERED && isLeaf && waypoint.valid) {
       // we are an ordered hunt that is at a valid leaf node, we have therefore finished the hunt
       status = ScavengerWaypointStatus.FINISH;
-    } else if (
-      this.session.hunt.type === ScavengerHuntType.UNORDERED &&
-      this.session.hunt.capturedWaypointCount === this.session.hunt.validWaypointCount
-    ) {
-      // if we are an unordered scavenger hunt and we have gathered the total number of valid waypoints that need to be found
-      // then they are finished
-      status = ScavengerWaypointStatus.FINISH;
     }
 
     // check to see if we are out of order right now based on the current waypoint, otherwise consider ourselves captured
@@ -563,6 +556,16 @@ export class AppService {
         // mark the waypoint as captured
         waypoint.captured = true;
       }
+    }
+
+    if (
+      status === ScavengerWaypointStatus.VALID &&
+      this.session.hunt.type === ScavengerHuntType.UNORDERED &&
+      this.session.hunt.capturedWaypointCount === this.session.hunt.validWaypointCount
+    ) {
+      // if we are an unordered scavenger hunt and we have gathered the total number of valid waypoints that need to be found
+      // then they are finished
+      status = ScavengerWaypointStatus.FINISH;
     }
 
     // save the session activation change
@@ -741,7 +744,7 @@ export class AppService {
             waypoints: [
               {
                 id: '2',
-                name: 'Snek',
+                name: 'Tyro',
                 // tslint:disable-next-line: max-line-length
                 description: `<p>I'm probably one of the most common animals you think of when you think of venomous animals! I am a Western Diamondback Rattlesnake!</p><p>People think of me so often when they think of venomous animals that many other snakes that aren't venomous, like Gopher Snakes, will move their tails around to rustle in the grass so they sound like me!</p>`,
                 clues: undefined,
@@ -786,9 +789,9 @@ export class AppService {
               },
               {
                 id: '5',
-                name: 'Harriet',
+                name: 'Salamanders',
                 // tslint:disable-next-line: max-line-length
-                description: `<p>Don't worry, I'm not venomous! I'm a Tarantula, and although I'm larger than most spiders, I'm actually quite delicate and sweet. I can't kill you by injecting you with any venom.</p><p>Did you know that you can find lots of spiders just like me on Mount Diablo? Keep an eye out the next time you go on a Lindsay Wildlife Hike!</p>`,
+                description: `<p>Don't worry, I'm not venomous! Unlike venomous animals that inject their toxins into their prey, my toxins are picked up when consumed. So please don't eat me!</p>`,
                 clues: undefined,
                 interactiveType: 'none',
                 interactiveSrc: undefined,
