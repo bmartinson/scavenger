@@ -105,9 +105,10 @@
 
       <div class="clues-section"
            [style.backgroundColor]="waypoint.cluesBackgroundColor">
-        <h2>Your Next Clues</h2>
+        <h2 [style.color]="waypoint.cluesTextColor">Your Next Clues</h2>
         <div class="clues">
-          <div class="icon">
+          <div class="icon"
+               [style.color]="waypoint.cluesTextColor">
             <fa-icon [icon]="['fas', 'hiking']">
             </fa-icon>
           </div>
