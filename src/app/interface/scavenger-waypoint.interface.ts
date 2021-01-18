@@ -41,6 +41,8 @@ export interface IScavengerWaypoint extends IScavengerModel {
 
   description: string;
   clues: string[];
+  cluesBackgroundColor?: string;
+  cluesTextColor?: string;
   interactiveSrc?: string;
   interactiveType: 'none' | 'audio' | 'image' | 'video';
 

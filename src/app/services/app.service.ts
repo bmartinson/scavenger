@@ -734,6 +734,7 @@ export class AppService {
             name: 'Getting Started',
             description: `<p>Let's see if you know which animals to stay away from!</p><p>Use the clues that are listed on your screen to help you safely find and learn about the venomous animals that call Lindsay home. When you think you've found the next one, just use your camera to scan the QR code and see if you're right! You aren't done until you find them all!<p>`,
             clues: [`You can find me inside.`, `Sometimes I don't have legs.`, `Other times, I have a pointy tail.`, `Sometimes I'm small and you don't notice me.`],
+            cluesBackgroundColor: '#000CF5',
             interactiveType: 'image',
             interactiveSrc: 'assets/hunt-content/explorer.png',
             value: 1,

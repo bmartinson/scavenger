@@ -99,9 +99,12 @@
     </div>
 
     <ng-container *ngIf="waypoint?.clues?.length > 0">
-      <div class="clues-header"></div>
+      <div class="clues-header"
+           [style.backgroundColor]="changeColorLuminance(waypoint.cluesBackgroundColor, -.5)">
+      </div>
 
-      <div class="clues-section">
+      <div class="clues-section"
+           [style.backgroundColor]="waypoint.cluesBackgroundColor">
         <h2>Your Next Clues</h2>
         <div class="clues">
           <div class="icon">
@@ -109,12 +112,15 @@
             </fa-icon>
           </div>
           <ul>
-            <li *ngFor="let clue of waypoint.clues">{{clue}}</li>
+            <li *ngFor="let clue of waypoint.clues"
+                [style.color]="waypoint.cluesTextColor">{{clue}}</li>
           </ul>
         </div>
       </div>
 
-      <div class="clues-footer"></div>
+      <div class="clues-footer"
+           [style.backgroundColor]="changeColorLuminance(waypoint.cluesBackgroundColor, -.5)">
+      </div>
     </ng-container>
 
   </ng-container>

@@ -15,6 +15,8 @@ export class ScavengerWaypoint extends ScavengerModel implements IScavengerWaypo
   public captured: boolean;
   public description: string;
   public clues: string[];
+  public cluesBackgroundColor: string;
+  public cluesTextColor: string;
   public interactiveSrc: string;
   public interactiveType: 'none' | 'audio' | 'image' | 'video';
 
@@ -72,6 +74,8 @@ export class ScavengerWaypoint extends ScavengerModel implements IScavengerWaypo
     this.clues = data?.clues;
     this.interactiveSrc = data?.interactiveSrc;
     this.interactiveType = data?.interactiveType;
+    this.cluesBackgroundColor = data?.cluesBackgroundColor;
+    this.cluesTextColor = data?.cluesTextColor;
 
     if (data?.waypoints?.length > 0) {
       this._waypoints = [];
@@ -79,6 +83,14 @@ export class ScavengerWaypoint extends ScavengerModel implements IScavengerWaypo
       for (const waypoint of data.waypoints) {
         this._waypoints.push(new ScavengerWaypoint(waypoint, this));
       }
+    }
+
+    if (!this.cluesBackgroundColor) {
+      this.cluesBackgroundColor = undefined;
+    }
+
+    if (!this.cluesBackgroundColor) {
+      this.cluesBackgroundColor = undefined;
     }
   }
 
@@ -102,6 +114,8 @@ export class ScavengerWaypoint extends ScavengerModel implements IScavengerWaypo
       captured: this.captured,
       description: this.description,
       clues: this.clues,
+      cluesBackgroundColor: !!this.cluesBackgroundColor ? this.cluesBackgroundColor : undefined,
+      cluesTextColor: !!this.cluesTextColor ? this.cluesTextColor : undefined,
       interactiveSrc: this.interactiveSrc,
       interactiveType: this.interactiveType,
     });
