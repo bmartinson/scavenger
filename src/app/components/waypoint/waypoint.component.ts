@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ViewChild } from '@angular/core';
 import { Title } from '@angular/platform-browser';
 import { ActivatedRoute } from '@angular/router';
 import { inOutAnimation } from '../../animations/core-animations';
@@ -28,6 +28,7 @@ export class WaypointComponent extends ScavengerRouteComponent {
 
   /* * * * * Template Display Properties * * * * */
   public title: string;
+  @ViewChild('clueList', { static: false }) private clueList: HTMLUListElement;
 
   public get waypointStatusIcon(): ScavengerWaypointStatus {
     if (
@@ -174,6 +175,14 @@ export class WaypointComponent extends ScavengerRouteComponent {
         this.renderDialog(dialog, index + 1);
       }, 750);
     }, Math.max(1500 + (100 * (dialog[index].length / dialog[0].length)), 1500));
+  }
+
+  private matchLiBeforeElements(): void {
+    if (!!this.clueList && this.clueList.children.length > 0) {
+      for (let i = 0; i < this.clueList.children.length; i++) {
+        console.warn('checking node', this.clueList.children.item(i));
+      }
+    }
   }
 
   public onResetGame(): void {

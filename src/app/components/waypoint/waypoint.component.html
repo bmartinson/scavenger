@@ -112,7 +112,7 @@
             <fa-icon [icon]="['fas', 'hiking']">
             </fa-icon>
           </div>
-          <ul>
+          <ul #clueList>
             <li *ngFor="let clue of waypoint.clues"
                 [style.color]="waypoint.cluesTextColor">{{clue}}</li>
           </ul>
