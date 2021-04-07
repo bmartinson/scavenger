@@ -1,5 +1,10 @@
 import { animate, style, transition, trigger } from '@angular/animations';
 
+/**
+ * Transition animation that drops an element from -100px above its starting position
+ * to the defined position where it belongs. When leaving, the element is shifted up
+ * 100px.
+ */
 export const dropDownAnimation = trigger(
   'dropDownAnimation',
   [
@@ -20,6 +25,10 @@ export const dropDownAnimation = trigger(
   ],
 );
 
+/**
+ * Transition animation that is used to quickly hide content when leaving and fade
+ * in content over a half second period when entering.
+ */
 export const fadeInOutQuickAnimation = trigger(
   'fadeInOutQuickAnimation',
   [
@@ -40,6 +49,10 @@ export const fadeInOutQuickAnimation = trigger(
   ],
 );
 
+/**
+ * Transition animation that is used to fade out content over a half second period
+ * when leaving and fade in content over a second when entering.
+ */
 export const inOutAnimation = trigger(
   'inOutAnimation',
   [
