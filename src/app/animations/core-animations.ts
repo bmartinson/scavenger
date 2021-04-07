@@ -1,4 +1,4 @@
-import { animate, query, style, transition, trigger } from '@angular/animations';
+import { animate, style, transition, trigger } from '@angular/animations';
 
 export const dropDownAnimation = trigger(
   'dropDownAnimation',
@@ -21,7 +21,7 @@ export const dropDownAnimation = trigger(
 );
 
 export const delayedDropDownAnimation = trigger(
-  'dropDownAnimation',
+  'delayedDropDownAnimation',
   [
     transition(
       ':enter',
