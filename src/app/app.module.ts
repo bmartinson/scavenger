@@ -23,7 +23,6 @@ import { VgCoreModule } from '@videogular/ngx-videogular/core';
 import { VgOverlayPlayModule } from '@videogular/ngx-videogular/overlay-play';
 import { AppRoutingModule } from './app-routing.module';
 import { AccountComponent } from './components/account/account.component';
-import { AppComponent } from './components/app/app.component';
 import { FooterComponent } from './components/footer/footer.component';
 import { HomeComponent } from './components/home/home.component';
 import { IconHolderComponent } from './components/icon-holder/icon-holder.component';
@@ -34,6 +33,7 @@ import { NoWaypointComponent } from './components/no-waypoint/no-waypoint.compon
 import { PrivacyComponent } from './components/privacy/privacy.component';
 import { QRFindComponent } from './components/qr-find/qr-find.component';
 import { QRSearchComponent } from './components/qr-search/qr-search.component';
+import { RootComponent } from './components/root/root.component';
 import { SignInComponent } from './components/sign-in/sign-in.component';
 import { SignUpComponent } from './components/sign-up/sign-up.component';
 import { SupportComponent } from './components/support/support.component';
@@ -45,7 +45,6 @@ import { QuickFormsModule } from './forms/quick-forms.module';
 @NgModule({
   declarations: [
     AccountComponent,
-    AppComponent,
     FooterComponent,
     HomeComponent,
     JournalComponent,
@@ -57,6 +56,7 @@ import { QuickFormsModule } from './forms/quick-forms.module';
     PrivacyComponent,
     QRFindComponent,
     QRSearchComponent,
+    RootComponent,
     SignInComponent,
     SignUpComponent,
     SubNavigationDirective,
@@ -77,7 +77,7 @@ import { QuickFormsModule } from './forms/quick-forms.module';
     VgBufferingModule
   ],
   providers: [],
-  bootstrap: [AppComponent]
+  bootstrap: [RootComponent]
 })
 export class AppModule {
 

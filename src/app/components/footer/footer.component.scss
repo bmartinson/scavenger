@@ -5,7 +5,6 @@
   display: block;
   width: 100%;
   background-color: $lighter-grey;
-
   font-size: $root-xs;
 
   @include xs {
@@ -47,7 +46,8 @@
           flex-direction: column;
           justify-content: center;
           align-items: flex-start;
-          font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+          font-family: Dosis, Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+          font-weight: bold;
           font-size: $font-size-xxl;
           color: $darkest-grey;
           padding-bottom: .25em;

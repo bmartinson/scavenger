@@ -4,11 +4,11 @@ import { AppService } from '../../services/app.service';
 
 @Component({
   selector: 'scavenger-root',
-  templateUrl: './app.component.html',
-  styleUrls: ['../../styles/route-component-base.scss', './app.component.scss'],
+  templateUrl: './root.component.html',
+  styleUrls: ['../../styles/route-component-base.scss', './root.component.scss'],
   animations: [dropDownAnimation, fadeInOutQuickAnimation]
 })
-export class AppComponent {
+export class RootComponent {
 
   public constructor(public appService: AppService, private elRef: ElementRef) {
   }

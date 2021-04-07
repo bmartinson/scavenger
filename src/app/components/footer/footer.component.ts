@@ -10,7 +10,7 @@ export class FooterComponent {
 
   public version: string;
 
-  constructor() {
+  public constructor() {
     this.version = `v${environment.version}`;
   }
 
