@@ -1,11 +1,17 @@
+<!-- primary view router outlet that will animate and ensure appropriate page positioning on activation -->
 <router-outlet [@fadeInOutQuickAnimation]
                [style.marginTop.em]="appService.showNavigation ? 6 : 1"
                (activate)="onActivate()">
 </router-outlet>
+
+<!-- footer to be displayed only when standard navigation is also present -->
 <scavenger-footer *ngIf="appService.showNavigation"></scavenger-footer>
 
+<!-- game mode journal navigation bar -->
 <scavenger-journal *ngIf="appService.showJournal">
 </scavenger-journal>
+
+<!-- management web view navigation bar -->
 <scavenger-navigation *ngIf="appService.showNavigation"
                       [@dropDownAnimation]>
 </scavenger-navigation>

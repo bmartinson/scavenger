@@ -10,11 +10,11 @@ import { AppService } from '../../services/app.service';
 })
 export class AppComponent {
 
-  constructor(public appService: AppService, private elRef: ElementRef) {
+  public constructor(public appService: AppService, private elRef: ElementRef) {
   }
 
   /**
-   * Event handler for w hen the route changes so we can ensure we are always at the top of the page.
+   * Event handler for when the route changes so we can ensure we are always at the top of the page.
    */
   public onActivate(): void {
     this.elRef?.nativeElement?.scrollTo(0, 0);
